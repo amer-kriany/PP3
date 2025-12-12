@@ -6,35 +6,40 @@ public class Tasks {
     String desireProduct;
     int quantity;
     int taskNumber;
-    String startDate;
-    LocalDateTime deadLine ;
+    String startOppointment;
+    LocalDateTime deadLine =null;
     String situation;
-    // desire productLine
+    
     // progressing percentege
-    Tasks(String client,String desireProduct, int quantity, String endDate){
+    Tasks(){}
+    Tasks(String client,String desireProduct, int quantity){
         
         this.desireProduct=desireProduct;
         this.client=client;
         this.quantity=quantity;
         
-        //=========================================
-        LocalDateTime currenDateTime = LocalDateTime.now();
+        //========================================= start date/tiime
+        LocalDateTime start=LocalDateTime.now();
         DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        startDate= currenDateTime.format(formatter);
-        //=========================================
-        deadLine(endDate);
+        startOppointment = start.format(formatter);
+        
+       
         
 
     }
     public void deadLine(String endLine){
-        DateTimeFormatter formatterEnd=DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        try{
-            deadLine=LocalDateTime.parse(endLine,formatterEnd);
-        }catch(DateTimeParseException e){
-            System.out.println("date/time format is wrong!");
+        DateTimeFormatter formatterEnd = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+             try {
+            deadLine = LocalDateTime.parse(endLine, formatterEnd);
+            if(deadLine.isBefore(LocalDateTime.now())){
+                throw new IllegalArgumentException("DeadLine should't be before today");
+            }
+        } catch (DateTimeParseException e) {
+            System.out.println("date/time format is wrong! please try again");
+            
         }
-    }
-    // have from the item class
+        
+       
     // if item is empty of something send an alert of choices(delay the task  until the item is here , stop the task or reject it)
     //when starting the task all the item that the task desired is taken store it in DSA
     //when starting the task the item is decreasing or when it finished as you want
@@ -45,4 +50,5 @@ public class Tasks {
         
         
     }
+}
 
