@@ -2,21 +2,23 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 public class Tasks {
-    String client;
+    String clientName;
     String desireProduct;
     int quantity;
-    int taskNumber;
+    static int taskNumber=0;
     String startOppointment;
     LocalDateTime deadLine =null;
     String situation;
     
-    // progressing percentege
+    // progressing percentage
+    double progressPercentage;
     Tasks(){}
-    Tasks(String client,String desireProduct, int quantity){
+    Tasks(String clientName,String desireProduct, int quantity){
         
         this.desireProduct=desireProduct;
-        this.client=client;
+        this.clientName=clientName;
         this.quantity=quantity;
+        taskNumber++;
         
         //========================================= start date/tiime
         LocalDateTime start=LocalDateTime.now();
@@ -27,6 +29,7 @@ public class Tasks {
         
 
     }
+    // deadLine
     public void deadLine(String endLine){
         DateTimeFormatter formatterEnd = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
              try {
