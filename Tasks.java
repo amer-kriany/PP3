@@ -12,6 +12,7 @@ public class Tasks {
     
     // progressing percentage
     double progressPercentage;
+    
     Tasks(){}
     Tasks(String clientName,String desireProduct, int quantity){
         
