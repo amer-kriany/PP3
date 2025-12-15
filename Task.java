@@ -9,7 +9,7 @@ public class Task {
     private int quantity;
     static int counter=0;
     int taskID;
-    LocalDateTime startOppointment;
+    LocalDateTime startAppointment;
     LocalDateTime deadLine =null;
     
      enum TaskStatus {
@@ -23,7 +23,7 @@ TaskStatus Status;
     double progressPercentage;
     
     Task(){}
-    Task(String clientName,String desireProduct, int quantity){
+    Task(String clientName,String desireProduct, int quantity , String endDate){
         
         this.desireProduct=desireProduct;
         this.clientName=clientName;
@@ -31,10 +31,12 @@ TaskStatus Status;
         taskID=++counter;
         this.Status= TaskStatus.PENDING;
         
-        //========================================= start date/time
-       startOppointment=LocalDateTime.now();    
-
-    }
+        //========================================= start/end date/time
+       startAppointment=LocalDateTime.now();   
+      
+         setDeadLine(endDate); 
+         
+        }
     // deadLine
     public void setDeadLine(String endLine){
         DateTimeFormatter formatterEnd = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -62,10 +64,7 @@ TaskStatus Status;
     public TaskStatus getStatus(){
         return this.Status;
     }   
-    //============================================== assign product line
-    public void assignProductLine(ProductLine line){
-        this.productLine=line;
-    }
+    
     //============================================== Task lifecycle methods
     public void start() {
     if (Status != TaskStatus.PENDING) {
@@ -104,6 +103,8 @@ public String toString() {
            ", product=" + desireProduct  +
            ", quantity=" + quantity +
            ", status=" + Status +
+           ", startDate=" + startAppointment +
+           ", deadLine=" + deadLine +
            "}";
 }   
 }
