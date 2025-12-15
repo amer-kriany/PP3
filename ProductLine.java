@@ -1,22 +1,19 @@
 import java.util.*;
 
 public class ProductLine extends Thread {
-    public final int lineId;
-    private final String lineName;
+    public  int lineId;
+    private  String lineName;
     private String state;
-    public final ArrayList<Task> productLineTasks;
+    public  ArrayList<Task> productLineTasks;
 
-    // قائمة كل خطوط الإنتاج
-    private static final ArrayList<ProductLine> allLines = new ArrayList<>();
-
+    
+     ProductLine(){};
     public ProductLine(int lineId, String lineName, String state) {
         this.lineId = lineId;
         this.lineName = lineName;
         this.state = state;
         this.productLineTasks = new ArrayList<>();
-        synchronized (allLines) {
-            allLines.add(this);
-        }
+        
     }
     public String getLineName(){
         return lineName;
@@ -24,6 +21,9 @@ public class ProductLine extends Thread {
 
     public void addTask(Task task){
         productLineTasks.add(task);
+    }
+    public ArrayList<Task> getProductLineTasks(){
+        return productLineTasks;
     }
 
     // public static ProductLine addLine(int lineId, String lineName, String state,
@@ -71,6 +71,19 @@ public class ProductLine extends Thread {
 
     @Override
     public void run() {
+        Inventory inventory;
+
+
+
+
+
+
+
+
+
+
+
+
 
         try {
             if (state.equals("active")) {
