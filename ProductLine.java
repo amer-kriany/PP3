@@ -71,7 +71,9 @@ public class ProductLine extends Thread {
 
     @Override
     public void run() {
-        
+        RecipeManager r= new RecipeManager();
+        Inventory i=new Inventory();
+        i.consume(r.getRecipe(getProductLineTasks().get(0).getDesireProduct()), getProductLineTasks().get(0).getQuantity());
 
 
 

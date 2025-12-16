@@ -42,7 +42,7 @@ public class Inventory {
         }
      return true;
 }
-    public static void assume(Recipe recipe , int taskqty){
+    public static void consume(Recipe recipe , int taskqty){
     if(!hasEnough(recipe, taskqty)){
         throw new IllegalStateException("Not enough items in inventory");
     }
