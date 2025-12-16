@@ -32,44 +32,56 @@ public class ProductLine extends Thread {
         return productLineTasks;
     }
 
-    // public static ProductLine addLine(int lineId, String lineName, String state,
-    // List<String> tasks) {
-    // return new ProductLine(lineId, lineName, state, tasks);
-    // }
+    public static ProductLine addLine(int lineId, String lineName, State state,
+            List<Task> tasks) {
+        return new ProductLine(lineId, lineName, state, tasks);
+    }
 
-    // public static void addLineFromUser(Scanner input) {
+    public static void addLineFromUser() {
+        Scanner input = new Scanner(System.in);
+        State state = null;
+        int num = 1;
+        try {
+            System.out.print("Enter line id: ");
+            int id = input.nextInt();
+            input.nextLine(); 
 
-    // try {
-    // System.out.print("Enter line id: ");
-    // int id = input.nextInt();
-    // input.nextLine(); // تنظيف السطر
+            System.out.print("Enter line name: ");
+            String name = input.nextLine();
+            System.out.println("Enter 1 to Active\n" +
+                    "Enter 2 to STOP\n" +
+                    "Enter 3 to Maintenance");
 
-    // System.out.print("Enter line name: ");
-    // String name = input.nextLine();
+            while (state == null) {
+                System.out.println("Enter your choice: ");
+                num = input.nextInt();
+                switch (num) {
 
-    // System.out.print("Enter line state (active / stop / maintenance): ");
-    // String state = input.nextLine();
+                    case 1:
+                        state = State.ACTIVE;
+                        break;
+                    case 2:
+                        state = State.STOP;
+                        break;
+                    case 3:
+                        state = State.MAINTENANCE;
+                        break;
 
-    // System.out.print("Enter number of tasks: ");
-    // int taskCount = input.nextInt();
-    // input.nextLine();
+                    default:
+                        System.out.println("try agin");
+                        break;
 
-    // ArrayList<String> tasks = new ArrayList<>();
-    // for (int i = 0; i < taskCount; i++) {
-    // System.out.print("Enter task " + (i + 1) + ": ");
-    // tasks.add(input.nextLine());
-    // }
+                }
+            }
 
-    // // إضافة الخط
-    // ProductLine.addLine(id, name, state, tasks);
+            ProductLine.addLine(id, name, state, null);
+            System.out.println("✔ Line added successfully.\n");
 
-    // System.out.println("✔ Line added successfully.\n");
-
-    // } catch (Exception e) {
-    // System.out.println("❌ Invalid input: " + e.getMessage());
-    // input.nextLine(); // تنظيف
-    // }
-    // }
+        } catch (Exception e) {
+            System.out.println("❌ Invalid input: " + e);
+            input.nextLine();
+        }
+    }
 
     public void setState(State newState) {
         this.state = newState;
@@ -103,7 +115,6 @@ public class ProductLine extends Thread {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         } catch (IllegalArgumentException e) {
-            // إذا حالة غلط
             System.out.println("Error: " + e.getMessage());
         }
     }

@@ -37,6 +37,6 @@ class Main {
             Thread.currentThread().interrupt();
             System.out.println("Thread interrupted.");
         }
-
+        ProductLine.addLineFromUser();
     }
 }
