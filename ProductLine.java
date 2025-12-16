@@ -1,28 +1,35 @@
 import java.util.*;
 
 public class ProductLine extends Thread {
-    public final int lineId;
-    public final String lineName;
+    public int lineId;
+    private String lineName;
 
     enum State {
-        ACTIVE, STOP, MAINTENANCE
+        ACTIVE, STOP, MAINTENANCE;
     }
 
-    private State state;
+    State state;
 
-    public final ArrayList<Tasks> tasks;
+    public ArrayList<Task> productLineTasks;
 
-    // قائمة كل خطوط الإنتاج
-    public static final ArrayList<ProductLine> allLines = new ArrayList<>();
-
-    public ProductLine(int lineId, String lineName, State state, List<Tasks> tasks) {
+    public ProductLine(int lineId, String lineName, State state, List<Task> produdlinTasks) {
         this.lineId = lineId;
         this.lineName = lineName;
         this.state = state;
-        this.tasks = new ArrayList<>(tasks);
-        synchronized (allLines) {
-            allLines.add(this);
-        }
+        this.productLineTasks = new ArrayList<>(produdlinTasks);
+
+    }
+
+    public String getLineName() {
+        return lineName;
+    }
+
+    public void addTask(Task task) {
+        productLineTasks.add(task);
+    }
+
+    public ArrayList<Task> getProductLineTasks() {
+        return productLineTasks;
     }
 
     // public static ProductLine addLine(int lineId, String lineName, String state,
@@ -74,7 +81,7 @@ public class ProductLine extends Thread {
         try {
             if (state.equals(State.ACTIVE)) {
 
-                System.out.println("Line " + lineId + " (" + lineName + ") tasks: " + tasks);
+                System.out.println("Line " + lineId + " (" + lineName + ") tasks: " + productLineTasks);
                 Thread.sleep(5000); // تأخير اختياري
             }
 
@@ -100,4 +107,9 @@ public class ProductLine extends Thread {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+    // public static Task addTask(String string, String string2, int i) {
+    // // TODO Auto-generated method stub
+    // throw new UnsupportedOperationException("Unimplemented method 'addTask'");
+    // }
 }
