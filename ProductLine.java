@@ -71,7 +71,7 @@ public class ProductLine extends Thread {
 
     @Override
     public void run() {
-        Inventory inventory;
+        
 
 
 

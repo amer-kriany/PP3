@@ -19,23 +19,25 @@ public class main {
         // String deadLine=input.nextLine();
         // t.setDeadLine(deadLine);
         // }
-        ProductLine p=new ProductLine(0, "metal", "going");
-        ProductLine p1=new ProductLine(1, "cotton", "going");
-        ProductLine p2=new ProductLine(2, "feather", "going");
+ //  System.out.printf("Task created for client: %s \n Task Number is: %04d %n", task.getClientName(), task.taskID);
 
-         Task task=new Task("amer", "feather", 100,"20-12-2025 12:00:00");
-         Task task1=new Task("moha", "metal", 150, "23-12-2025 02:00:00");
+
+        //productLines
+        ProductLine p=new ProductLine(0, "Tablet", "going");
+        ProductLine p1=new ProductLine(1, "Syrub", "going");
          ArrayList<ProductLine> arr= new ArrayList<>();
          arr.add(p);
          arr.add(p1);
-         arr.add(p2);
-         ProductionManager PM = new ProductionManager(arr);
-         PM.addTask(task, p2.getLineName());
-         PM.addTask(task1, p.getLineName());
-         System.out.println(arr.get(0).productLineTasks.toString());
-        //  System.out.printf("Task created for client: %s \n Task Number is: %04d %n", task.getClientName(), task.taskID);
 
-          Item item1=new Item(101,"Aerosil",Item.MEDICINE,5000,120,60);
+         // tasks
+         Task task1=new Task("moha", "Syrup", 150, "23-12-2025 02:00:00");
+        
+         //producctionManager
+         ProductionManager PM = new ProductionManager(arr);
+         PM.addTask(task1, p.getLineName());
+       
+        //Item
+        Item item1=new Item(101,"Aerosil",Item.MEDICINE,5000,120,60);
         Item item2=new Item(102,"Paracetamol",Item.MEDICINE,3000,200,150);
         Item item3=new Item(103,"PVP",Item.MEDICINE,2200,130,90);
         Item item4=new Item(104,"Strach",Item.MEDICINE,6600,120,60);
@@ -49,21 +51,25 @@ public class main {
         Item item11=new Item(111,"CPVP",Item.MEDICINE,3475,275,215);
         Item item12=new Item(112,"MCC",Item.MEDICINE,5520,520,450);
         Item item13=new Item(113,"Acetylasalicylic Acid",Item.MEDICINE,10000,6000,4000);
-                Inventory inventory=new Inventory();
 
-          inventory.addItem(item1);
-        inventory.addItem(item2);
-        inventory.addItem(item3);
-        inventory.addItem(item4);
-        inventory.addItem(item5);
-        inventory.addItem(item6);
-        inventory.addItem(item7);
-        inventory.addItem(item8);
-        inventory.addItem(item9);
-        inventory.addItem(item10);
-        inventory.addItem(item11);
-        inventory.addItem(item12);
-        inventory.addItem(item13);
+        //Inventory
+
+        Inventory inventory=new Inventory();
+
+        inventory.addItem(item1 , 120);
+        inventory.addItem(item2 , 200);
+        inventory.addItem(item3 , 130);
+        inventory.addItem(item4 , 120);
+        inventory.addItem(item5 , 120);
+        inventory.addItem(item6 , 120);
+        inventory.addItem(item7 , 220);
+        inventory.addItem(item8 , 80);
+        inventory.addItem(item9 , 120);
+        inventory.addItem(item10 , 420);
+        inventory.addItem(item11 , 275);
+        inventory.addItem(item12 , 520);
+        inventory.addItem(item13 , 6000);
+
         //=======================================
 
 
