@@ -1,3 +1,4 @@
+import java.lang.Thread.State;
 import java.util.*;
 
 class Main {
@@ -18,12 +19,12 @@ class Main {
             line3Tasks.add(new Tasks("Mohammad", "Tablet", 7));
             // إنشاء الخطوط مع حالات صحيحة فقط
             List<ProductLine> lines = new ArrayList<>();
-            lines.add(new ProductLine(1, "Line A", "active", line1Tasks));
-            lines.add(new ProductLine(2, "Line B", "stop", line2Tasks));
-            lines.add(new ProductLine(3, "Line C", "maintenance", line3Tasks));
+            lines.add(new ProductLine(1, "Line A",ProductLine.State.ACTIVE, line1Tasks));
+            lines.add(new ProductLine(2, "Line B", ProductLine.State.STOP, line2Tasks));
+            lines.add(new ProductLine(3, "Line C", ProductLine.State.MAINTENANCE, line3Tasks));
             // ترتيب حسب lineId
             lines.sort(Comparator.comparingInt(l -> l.lineId));
-
+            
             // تشغيل الخطوط بالترتيب
             for (ProductLine line : lines) {
                 line.start();

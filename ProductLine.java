@@ -3,13 +3,19 @@ import java.util.*;
 public class ProductLine extends Thread {
     public final int lineId;
     public final String lineName;
-    private String state;
+
+    enum State {
+        ACTIVE, STOP, MAINTENANCE
+    }
+
+    private State state;
+
     public final ArrayList<Tasks> tasks;
 
     // قائمة كل خطوط الإنتاج
     public static final ArrayList<ProductLine> allLines = new ArrayList<>();
 
-    public ProductLine(int lineId, String lineName, String state, List<Tasks> tasks) {
+    public ProductLine(int lineId, String lineName, State state, List<Tasks> tasks) {
         this.lineId = lineId;
         this.lineName = lineName;
         this.state = state;
@@ -58,27 +64,27 @@ public class ProductLine extends Thread {
     // }
     // }
 
-    public void setState(String newState) {
-    this.state = newState;
+    public void setState(State newState) {
+        this.state = newState;
     }
 
     @Override
     public void run() {
 
         try {
-            if (state.equals("active")) {
-                
+            if (state.equals(State.ACTIVE)) {
+
                 System.out.println("Line " + lineId + " (" + lineName + ") tasks: " + tasks);
                 Thread.sleep(5000); // تأخير اختياري
             }
 
-            else if (state.equals("stop")) {
+            else if (state.equals(State.STOP)) {
                 System.out.println("Line " + lineId + " is STOPPED.");
                 Thread.sleep(5000);
                 return;
             }
 
-            else if (state.equals("maintenance")) {
+            else if (state.equals(State.MAINTENANCE)) {
                 System.out.println("Line " + lineId + " is under MAINTENANCE.");
                 Thread.sleep(5000);
                 return;
