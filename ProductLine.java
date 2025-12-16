@@ -1,4 +1,4 @@
-    import java.util.*;
+import java.util.*;
 
 public class ProductLine extends Thread {
     public int lineId;
@@ -118,8 +118,8 @@ public class ProductLine extends Thread {
         }
     }
 
-    // public static Task addTask(String string, String string2, int i) {
-    // // TODO Auto-generated method stub
-    // throw new UnsupportedOperationException("Unimplemented method 'addTask'");
-    // }
+    public static Task addTask(String string, String string2, int i) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'addTask'");
+    }
 }
