@@ -1,4 +1,4 @@
-import java.util.*;
+    import java.util.*;
 
 public class ProductLine extends Thread {
     public int lineId;
@@ -12,11 +12,11 @@ public class ProductLine extends Thread {
 
     public ArrayList<Task> productLineTasks;
 
-    public ProductLine(int lineId, String lineName, State state, List<Task> produdlinTasks) {
+    public ProductLine(int lineId, String lineName, State state, List<Task> productLineTasks) {
         this.lineId = lineId;
         this.lineName = lineName;
         this.state = state;
-        this.productLineTasks = new ArrayList<>(produdlinTasks);
+        this.productLineTasks = new ArrayList<>(productLineTasks);
 
     }
 
@@ -32,9 +32,8 @@ public class ProductLine extends Thread {
         return productLineTasks;
     }
 
-    public static ProductLine addLine(int lineId, String lineName, State state,
-            List<Task> tasks) {
-        return new ProductLine(lineId, lineName, state, tasks);
+    public static ProductLine addLine(int lineId, String lineName, State state) {
+        return new ProductLine(lineId, lineName, state, new ArrayList<>());
     }
 
     public static void addLineFromUser() {
@@ -44,7 +43,7 @@ public class ProductLine extends Thread {
         try {
             System.out.print("Enter line id: ");
             int id = input.nextInt();
-            input.nextLine(); 
+            input.nextLine();
 
             System.out.print("Enter line name: ");
             String name = input.nextLine();
@@ -74,11 +73,11 @@ public class ProductLine extends Thread {
                 }
             }
 
-            ProductLine.addLine(id, name, state, null);
-            System.out.println("✔ Line added successfully.\n");
+            ProductLine.addLine(id, name, state);
+            System.out.println("Line added successfully.\n");
 
         } catch (Exception e) {
-            System.out.println("❌ Invalid input: " + e);
+            System.out.println("Invalid input: " + e);
             input.nextLine();
         }
     }

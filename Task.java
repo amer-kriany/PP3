@@ -27,7 +27,7 @@ TaskStatus Status;
         
         this.desireProduct=desireProduct;
         this.clientName=clientName;
-        this.quantity=quantity;
+        this.quantity=quantity; 
         taskID=++counter;
         this.Status= TaskStatus.PENDING;
         
