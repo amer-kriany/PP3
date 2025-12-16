@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Inventory {
+public  class Inventory {
     private static final Map< Item,Integer> stock = new HashMap<>();
 
     public static void addItem(Item item , int qty) {

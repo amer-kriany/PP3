@@ -7,6 +7,8 @@ public class ProductionManager {
     public void addTask(Task task , String lineName){
         ProductLine taskLine= chooseLine(lineName);
         if(taskLine==null)throw new IllegalArgumentException("Product line not found");
+        Recipe recipe = RecipeManager.getRecipe(task.getDesireProduct());
+        Inventory.consume(recipe, task.getQuantity());
         taskLine.addTask(task);
 
     }
