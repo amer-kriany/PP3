@@ -33,13 +33,13 @@ public class ProductLine extends Thread {
     }
 
     public static ProductLine addLine(int lineId, String lineName, State state) {
-        return new ProductLine(lineId, lineName, state, new ArrayList<>());
+        List<Task> defult = new ArrayList<>();
+        return new ProductLine(lineId, lineName, state, defult);
     }
 
     public static void addLineFromUser() {
         Scanner input = new Scanner(System.in);
-        State state = null;
-        int num = 1;
+
         try {
             System.out.print("Enter line id: ");
             int id = input.nextInt();
@@ -47,33 +47,34 @@ public class ProductLine extends Thread {
 
             System.out.print("Enter line name: ");
             String name = input.nextLine();
-            System.out.println("Enter 1 to Active\n" +
-                    "Enter 2 to STOP\n" +
-                    "Enter 3 to Maintenance");
+            ProductLine line = ProductLine.addLine(id, name, State.STOP);
+            if (line.getProductLineTasks().isEmpty()) {
+                line.setState(State.STOP);
+                return;
+            } else {
+                boolean valid = true;
+                while (valid) {
+                    System.out.println("Enter 1 to Active\n" + "Enter 2 to Maintenance");
+                    int num = input.nextInt();
 
-            while (state == null) {
-                System.out.println("Enter your choice: ");
-                num = input.nextInt();
-                switch (num) {
+                    switch (num) {
+                        case 1:
+                            line.setState(State.ACTIVE);
+                            valid = false;
+                            break;
 
-                    case 1:
-                        state = State.ACTIVE;
-                        break;
-                    case 2:
-                        state = State.STOP;
-                        break;
-                    case 3:
-                        state = State.MAINTENANCE;
-                        break;
+                        case 2:
+                            line.setState(State.MAINTENANCE);
+                            valid = false;
+                            break;
 
-                    default:
-                        System.out.println("try agin");
-                        break;
+                        default:
+                            System.out.println("try agin");
+                            break;
 
+                    }
                 }
             }
-
-            ProductLine.addLine(id, name, state);
             System.out.println("Line added successfully.\n");
 
         } catch (Exception e) {
@@ -112,14 +113,14 @@ public class ProductLine extends Thread {
             }
 
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            System.out.println(e.getMessage());
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
     public static Task addTask(String string, String string2, int i) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'addTask'");
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addTask'");
     }
 }
