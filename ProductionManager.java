@@ -4,6 +4,7 @@ public class ProductionManager {
     public ProductionManager(ArrayList<ProductLine> producLines){
         this.productLines=producLines;
     }
+    
     public void addTask(Task task , String lineName){
         ProductLine taskLine= chooseLine(lineName);
         if(taskLine==null)throw new IllegalArgumentException("Product line not found");
