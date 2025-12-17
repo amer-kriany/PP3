@@ -25,22 +25,22 @@ public class main {
         
         //Inventory
 
-        Inventory inventory=new Inventory();
+        
 
-        inventory.addItem(item1 , 120);
-        inventory.addItem(item2 , 200);
-        inventory.addItem(item3 , 130);
-        inventory.addItem(item4 , 120);
-        inventory.addItem(item5 , 120);
-        inventory.addItem(item6 , 120);
-        inventory.addItem(item7 , 220);
-        inventory.addItem(item8 , 80);
-        inventory.addItem(item9 , 120);
-        inventory.addItem(item10 , 420);
-        inventory.addItem(item11 , 275);
-        inventory.addItem(item12 , 520);
-        inventory.addItem(item13 , 6000);
-        inventory.addItem(sugar, 100);
+        Inventory.addItem(item2 , 200);
+        Inventory.addItem(item3 , 130);
+        Inventory.addItem(item1 , 120);
+        Inventory.addItem(item4 , 120);
+        Inventory.addItem(item5 , 120);
+        Inventory.addItem(item6 , 120);
+        Inventory.addItem(item7 , 220);
+        Inventory.addItem(item8 , 80);
+        Inventory.addItem(item9 , 120);
+        Inventory.addItem(item10 , 420);
+        Inventory.addItem(item11 , 275);
+        Inventory.addItem(item12 , 520);
+        Inventory.addItem(item13 , 6000);
+        Inventory.addItem(sugar, 100);
         
 
         //productLines

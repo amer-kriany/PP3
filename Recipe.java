@@ -3,6 +3,7 @@ class Recipe{
     private String productName;
     private Map<Item,Integer> requiredItems;
     Recipe(String productName, Map<Item,Integer> requiredItems){
+        this.productName=productName;
         this.requiredItems=requiredItems;
     }
     // getters
