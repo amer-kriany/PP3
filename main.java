@@ -4,23 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 public class main {
     public static void main(String[] args) {
-        // Task t=new Task();
-        // Scanner input=new Scanner(System.in);
-        // System.out.print("Enter your name: ");
-        // String clientName=input.nextLine();
-        // System.out.print("Enter the desire Product : ");
-        // String desireProduct=input.nextLine();
-        // System.out.print("Enter the quantity : ");
-        // int quantity=input.nextInt();
-        // input.nextLine();
-
-        // while(t.deadLine==null){
-        // System.out.print("Enter the DeadLine: (dd-MM-yyyy HH:mm:ss): ");
-        // String deadLine=input.nextLine();
-        // t.setDeadLine(deadLine);
-        // }
- //  System.out.printf("Task created for client: %s \n Task Number is: %04d %n", task.getClientName(), task.taskID);
-
+        
         //Item
         Item item1=new Item(101,"Aerosil",Item.MEDICINE,5000,120,60);
         Item item2=new Item(102,"Paracetamol",Item.MEDICINE,3000,200,150);
@@ -36,6 +20,8 @@ public class main {
         Item item11=new Item(111,"CPVP",Item.MEDICINE,3475,275,215);
         Item item12=new Item(112,"MCC",Item.MEDICINE,5520,520,450);
         Item item13=new Item(113,"Acetylasalicylic Acid",Item.MEDICINE,10000,6000,4000);
+        Item sugar =new Item(102, "Sugar", Item.MEDICAL_DEVICES , 1000 , 100 , 50);
+       
         
         //Inventory
 
@@ -54,23 +40,34 @@ public class main {
         inventory.addItem(item11 , 275);
         inventory.addItem(item12 , 520);
         inventory.addItem(item13 , 6000);
+        inventory.addItem(sugar, 100);
+        
 
         //productLines
-        ProductLine p=new ProductLine(0, "Tablet", "going");
-        ProductLine p1=new ProductLine(1, "Syrub", "going");
+        ProductLine tabletLine=new ProductLine(0, "Tablet", ProductLine.State.ACTIVE);
+        ProductLine syrubLine=new ProductLine(1, "Syrub", ProductLine.State.ACTIVE);
          ArrayList<ProductLine> arr= new ArrayList<>();
-         arr.add(p);
-         arr.add(p1);
+         arr.add(tabletLine);
+         arr.add(syrubLine);
 
-         // tasks
-         Task task1=new Task("moha", "Syrup", 150, "23-12-2025 02:00:00");
+
+         System.out.println("Before: " + Inventory.getStock().get(sugar));
+
+ // tasks
+         Task task1=new Task("moha", "Syrub", 10, "23-12-2025 02:00:00");
         
          //producctionManager
          ProductionManager PM = new ProductionManager(arr);
-         PM.addTask(task1, p.getLineName());
+         PM.addTask(task1, syrubLine.getLineName());
+
+        Recipe r = RecipeManager.getRecipe(task1.getDesireProduct());
+
+
+            System.out.println("Task accepted");
        
-        
-       
+
+System.out.println("After: " + Inventory.getStock().get(sugar));
+
         //=======================================
 
 

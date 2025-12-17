@@ -35,9 +35,12 @@ public  class Inventory {
     // public static void clear() {
     //     stock.clear();
     // }
+    public static Map<Item,Integer> getStock (){
+        return stock;
+    }
     public static Boolean hasEnough(Recipe recipe, int taskqty){
         for(Map.Entry<Item,Integer> e : recipe.getRequiredItem().entrySet()){
-            int needed=e.getValue()*taskqty;
+            int needed=e.getValue() * taskqty;
             if(stock.getOrDefault(e.getKey(),0)<needed)return false;
         }
      return true;
@@ -48,7 +51,7 @@ public  class Inventory {
     }
         for(Map.Entry<Item,Integer> e : recipe.getRequiredItem().entrySet()){
             int needed= e.getValue() * taskqty;
-            stock.replace(e.getKey(), stock.get(e.getKey())-needed);
+            stock.put(e.getKey(), stock.get(e.getKey())-needed);
         }
     }
     
