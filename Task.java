@@ -17,10 +17,11 @@ public class Task {
        IN_PROGRESS,
        COMPLETED,
        CANCELED
-}
-TaskStatus Status;
+    }
+    TaskStatus Status;
     // progressing percentage
-    double progressPercentage;
+    private int productionProgressPercentege = 0;
+    
     
     Task(){}
     Task(String clientName,String desireProduct, int quantity , String endDate){
@@ -51,7 +52,14 @@ TaskStatus Status;
             throw new IllegalArgumentException(" Invalid date format. Please use dd-MM-yyyy HH:mm:ss");
             
         }
-    }// getters
+    }
+        // setter
+        public void updateProductionProgressPercentege(int progress){
+            this.productionProgressPercentege+=progress;
+            if(productionProgressPercentege>100)productionProgressPercentege=100;
+            
+        }
+    // getters
     public String getClientName(){
         return this.clientName;
     }
@@ -63,7 +71,10 @@ TaskStatus Status;
     }
     public TaskStatus getStatus(){
         return this.Status;
-    }   
+    }
+    int getProductionProgressPercentege(){
+        return productionProgressPercentege;
+    }
     
     //============================================== Task lifecycle methods
     public void start() {
@@ -72,7 +83,7 @@ TaskStatus Status;
                 "Task can only be started from PENDING state"
         );
     }
-    progressPercentage = 0;
+    productionProgressPercentege = 0;
     Status = TaskStatus.IN_PROGRESS;
 }
 
@@ -83,7 +94,7 @@ public void complete() {
         );
     }
     Status = TaskStatus.COMPLETED;
-    progressPercentage = 100;
+    productionProgressPercentege = 100;
 }
 
 public void cancel() {

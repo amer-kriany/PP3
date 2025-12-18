@@ -3,6 +3,14 @@ import java.util.Map;
 
 public  class Inventory {
     private static final Map< Item,Integer> stock = new HashMap<>();
+    
+    
+
+
+
+    public static int getItemQuantity(Item item) {
+        return stock.getOrDefault(item, 0);
+    }
 
     public static void addItem(Item item , int qty) {
         stock.put(item, stock.getOrDefault(item, 0)+qty);
@@ -28,13 +36,6 @@ public  class Inventory {
     }
 
 
-    // public static boolean hasItem(Item item) {
-    //     return stock.containsKey(item.getId());
-    // }
-
-    // public static void clear() {
-    //     stock.clear();
-    // }
     public static Map<Item,Integer> getStock (){
         return stock;
     }
@@ -45,14 +46,16 @@ public  class Inventory {
         }
      return true;
 }
-    public static void consume(Recipe recipe , int taskqty){
-    if(!hasEnough(recipe, taskqty)){
+    public static void consume(Recipe recipe ,int taskqty){
+    if(!hasEnough(recipe , taskqty)){
         throw new IllegalStateException("Not enough items in inventory");
     }
         for(Map.Entry<Item,Integer> e : recipe.getRequiredItem().entrySet()){
-            int needed= e.getValue() * taskqty;
+            int needed= e.getValue() ;
             stock.put(e.getKey(), stock.get(e.getKey())-needed);
         }
+        
+        
     }
     
 }

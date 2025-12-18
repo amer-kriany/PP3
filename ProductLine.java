@@ -26,6 +26,7 @@ public class ProductLine extends Thread {
 
     public void addTask(Task task) {
         productLineTasks.add(task);
+        task.start();
     }
 
     public ArrayList<Task> getProductLineTasks() {
@@ -46,7 +47,7 @@ public class ProductLine extends Thread {
 
         try {
             if (state.equals(State.ACTIVE)) {
-                System.out.println("Line " + lineId + " (" + lineName + ") tasks: " + productLineTasks);
+                System.out.println("Line " + lineId + " (" + lineName + ") tasks: " + getProductLineTasks());
                 Thread.sleep(5000);
             }
 

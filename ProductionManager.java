@@ -8,12 +8,14 @@ public class ProductionManager {
         ProductLine taskLine= chooseLine(lineName);
         if(taskLine==null)throw new IllegalArgumentException("Product line not found");
         Recipe recipe = RecipeManager.getRecipe(task.getDesireProduct());
-        Inventory.consume(recipe, task.getQuantity());
         taskLine.addTask(task);
-
+        
+        for(int i = 1; i <= task.getQuantity(); i++){
+            Inventory.consume(recipe, task.getQuantity());
+            task.updateProductionProgressPercentege((i*100)/task.getQuantity());
+        }
+        task.complete();
     }
-
-
     public ProductLine chooseLine( String lineName){
         for(ProductLine line: productLines){
             if(lineName.equals(line.getLineName())){
@@ -21,7 +23,5 @@ public class ProductionManager {
             }
         }
         return null;
-    }
-
-    
+    } 
 }

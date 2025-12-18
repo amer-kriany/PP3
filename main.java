@@ -67,6 +67,7 @@ public class main {
        
 
 System.out.println("After: " + Inventory.getStock().get(sugar));
+System.out.println("progress : "+ task1.getProductionProgressPercentege() + "%");
 
         //=======================================
 
