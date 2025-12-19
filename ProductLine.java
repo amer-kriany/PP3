@@ -10,25 +10,28 @@ public class ProductLine extends Thread {
 
     State state;
 
-    public ArrayList<Task> productLineTasks;
+    public List<Task> productLineTasks;
 
     public ProductLine(int lineId, String lineName, State state, List<Task> productLineTasks) {
         this.lineId = lineId;
         this.lineName = lineName;
         this.state = state;
-        this.productLineTasks = new ArrayList<>(productLineTasks);
-
+        this.productLineTasks = Collections.synchronizedList(new ArrayList<>(productLineTasks));
     }
 
     public String getLineName() {
         return lineName;
     }
 
+    public int getLineId() {
+        return lineId;
+    }
+
     public void addTask(Task task) {
         productLineTasks.add(task);
     }
 
-    public ArrayList<Task> getProductLineTasks() {
+    public List<Task> getProductLineTasks() {
         return productLineTasks;
     }
 
@@ -43,33 +46,35 @@ public class ProductLine extends Thread {
 
     @Override
     public void run() {
+        if (state == State.ACTIVE) {
+            System.out.println("Line " + lineId + " (" + lineName + ") starting tasks...");
 
-        try {
-            if (state.equals(State.ACTIVE)) {
-                System.out.println("Line " + lineId + " (" + lineName + ") tasks: " + productLineTasks);
-                Thread.sleep(5000);
+            synchronized (productLineTasks) {
+                for (Task task : productLineTasks) {
+                    new Thread(() -> {
+                        synchronized (Inventory.class) {
+                            try {
+                                Recipe recipe = RecipeManager.getRecipe(task.getDesireProduct());
+                                if (Inventory.hasEnough(recipe, task.getQuantity())) {
+                                    Inventory.consume(recipe, task.getQuantity());
+                                    task.start();
+                                    task.complete();
+                                    System.out.println("Task " + task.taskID + " completed successfully.");
+                                } else {
+                                    System.out.println("Not enough items in inventory for Task " + task.taskID);
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Error in Task " + task.taskID + ": " + e.getMessage());
+                            }
+                        }
+                    }).start();
+                }
             }
 
-            else if (state.equals(State.STOP)) {
-                System.out.println("Line " + lineId + " is STOPPED.");
-                Thread.sleep(5000);
-                return;
-            }
-
-            else if (state.equals(State.MAINTENANCE)) {
-                System.out.println("Line " + lineId + " is under MAINTENANCE.");
-                Thread.sleep(5000);
-                return;
-            } else {
-                throw new IllegalArgumentException(
-                        "Invalid state for line " + lineId + ". Allowed states: active, stop, maintenance");
-            }
-
-        } catch (InterruptedException e) {
-            System.out.println("Error: in Thread");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+        } else if (state == State.STOP) {
+            System.out.println("Line " + lineId + " is STOPPED.");
+        } else if (state == State.MAINTENANCE) {
+            System.out.println("Line " + lineId + " is under MAINTENANCE.");
         }
     }
-
 }
