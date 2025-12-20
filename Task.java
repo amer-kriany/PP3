@@ -55,7 +55,7 @@ public class Task {
     }
         // setter
         public void updateProductionProgressPercentege(int progress){
-            this.productionProgressPercentege+=progress;
+            this.productionProgressPercentege=progress;
             if(productionProgressPercentege>100)productionProgressPercentege=100;
             
         }

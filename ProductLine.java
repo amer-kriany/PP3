@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class ProductLine extends Thread {
-    public int lineId;
+    private int lineId;
     private String lineName;
 
     enum State {
@@ -10,31 +10,32 @@ public class ProductLine extends Thread {
 
     State state;
 
-    public ArrayList<Task> productLineTasks;
+    public List<Task> productLineTasks;
 
     public ProductLine(int lineId, String lineName, State state) {
         this.lineId = lineId;
         this.lineName = lineName;
         this.state = state;
-        this.productLineTasks = new ArrayList<>();
-
+         this.productLineTasks = Collections.synchronizedList(new ArrayList<>());
     }
 
     public String getLineName() {
         return lineName;
     }
 
-    public void addTask(Task task) {
-        productLineTasks.add(task);
-        task.start();
+    public int getLineId() {
+        return lineId;
     }
 
-    public ArrayList<Task> getProductLineTasks() {
+    public void addTask(Task task) {
+        productLineTasks.add(task);
+    }
+
+    public List<Task> getProductLineTasks() {
         return productLineTasks;
     }
 
     public static ProductLine addLine(int lineId, String lineName, State state) {
-        List<Task> defult = new ArrayList<>();
         return new ProductLine(lineId, lineName, state);
     }
 
@@ -42,35 +43,67 @@ public class ProductLine extends Thread {
         this.state = newState;
     }
 
-    @Override
-    public void run() {
-
-        try {
-            if (state.equals(State.ACTIVE)) {
-                System.out.println("Line " + lineId + " (" + lineName + ") tasks: " + getProductLineTasks());
-                Thread.sleep(5000);
+    private void executeTask(Task task) throws Exception {
+        synchronized (Inventory.class) {
+            Recipe recipe = RecipeManager.getRecipe(task.getDesireProduct());
+            if (recipe == null) {
+                throw new Exception("No recipe found for product: " + task.getDesireProduct());
             }
 
-            else if (state.equals(State.STOP)) {
-                System.out.println("Line " + lineId + " is STOPPED.");
-                Thread.sleep(5000);
-                return;
+            if (!Inventory.hasEnough(recipe, task.getQuantity())) {
+                throw new Exception("Not enough inventory for Task " + task.taskID);
             }
 
-            else if (state.equals(State.MAINTENANCE)) {
-                System.out.println("Line " + lineId + " is under MAINTENANCE.");
-                Thread.sleep(5000);
-                return;
-            } else {
-                throw new IllegalArgumentException(
-                        "Invalid state for line " + lineId + ". Allowed states: active, stop, maintenance");
+            Inventory.consume(recipe, task.getQuantity());
+            task.start();
+
+            for (int i = 1; i <= task.getQuantity(); i++) {
+                task.updateProductionProgressPercentege((i * 100) / task.getQuantity());
+                System.out.println("Task " + task.taskID + " progress: " + task.getProductionProgressPercentege() + "%");
+                Thread.sleep(50); // يعطي تأثير واقعي للتقدم
             }
 
-        } catch (InterruptedException e) {
-            System.out.println("Error: in Thread");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            task.complete();
+            System.out.println("Task " + task.taskID + " completed successfully.");
         }
     }
 
+    // =================== run() ===================
+    @Override
+    public void run() {
+        while (state == State.ACTIVE) {
+            synchronized (productLineTasks) {
+                for (Task task : productLineTasks) {
+                    if (task.getStatus() == Task.TaskStatus.PENDING) {
+                        new Thread(() -> {
+                            try {
+                                executeTask(task);
+                            } catch (Exception e) {
+                                // ترمي للـ console ويمكن للـ caller التعامل معها
+                                System.err.println("Error executing Task " + task.taskID + ": " + e.getMessage());
+                            }
+                        }).start();
+                    }
+                }
+            }
+
+            try {
+                Thread.sleep(1000); // كل ثانية يتأكد من أي task جديدة
+            } catch (InterruptedException e) {
+                System.err.println("Line thread interrupted: " + e.getMessage());
+            }
+        }
+
+        // بعد ما يخرج من loop
+        if (state == State.STOP) {
+            System.out.println("Line " + lineId + " is STOPPED.");
+        }
+        if (state == State.MAINTENANCE) {
+            System.out.println("Line " + lineId + " is under MAINTENANCE.");
+        }
+    }
 }
+    
+
+
+    

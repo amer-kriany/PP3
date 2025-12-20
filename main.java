@@ -20,7 +20,7 @@ public class main {
         Item item11=new Item(111,"CPVP",Item.MEDICINE,3475,275,215);
         Item item12=new Item(112,"MCC",Item.MEDICINE,5520,520,450);
         Item item13=new Item(113,"Acetylasalicylic Acid",Item.MEDICINE,10000,6000,4000);
-        Item sugar =new Item(102, "Sugar", Item.MEDICAL_DEVICES , 1000 , 100 , 50);
+        Item sugar =new Item(100, "Sugar", Item.MEDICAL_DEVICES , 1000 , 100 , 50);
        
         
         //Inventory
@@ -55,19 +55,19 @@ public class main {
 
  // tasks
          Task task1=new Task("moha", "Syrub", 10, "23-12-2025 02:00:00");
+         Task task2=new Task("amer", "Tablet", 5, "23-12-2025 02:00:00");
         
          //producctionManager
          ProductionManager PM = new ProductionManager(arr);
          PM.addTask(task1, syrubLine.getLineName());
-
-        Recipe r = RecipeManager.getRecipe(task1.getDesireProduct());
-
-
+         PM.addTask(task2, tabletLine.getLineName());
             System.out.println("Task accepted");
+            syrubLine.start();
+            tabletLine.start();
        
 
 System.out.println("After: " + Inventory.getStock().get(sugar));
-System.out.println("progress : "+ task1.getProductionProgressPercentege() + "%");
+
 
         //=======================================
 
