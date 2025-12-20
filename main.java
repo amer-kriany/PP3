@@ -4,27 +4,27 @@ class Main {
 
     public static void main(String[] args) {
 
-        // try {
-        //     ArrayList<ProductLine> lines = new ArrayList<>();
+        try {
+            ArrayList<ProductLine> lines = new ArrayList<>();
 
-        //     lines.add(new ProductLine(
-        //             1, "moha", ProductLine.State.ACTIVE, new ArrayList<>()));
+            lines.add(new ProductLine(
+                    1, "moha", ProductLine.State.ACTIVE, new ArrayList<>()));
 
-        //     ProductionManager manager = new ProductionManager(lines);
+            ProductionManager manager = new ProductionManager(lines);
 
-        //     manager.addTask(
-        //             new Task("Ali", "Tablet", 10, "20-12-2026 12:00:00"),
-        //             "moha");
+            manager.addTask(
+                    new Task("Ali", "Tablet", 10, "20-12-2026 12:00:00"),
+                    "moha");
 
-        //     manager.addTask(
-        //             new Task("Sara", "Tablet", 5, "22-12-2026 12:00:00"),
-        //             "moha");
+            manager.addTask(
+                    new Task("Sara", "Tablet", 5, "22-12-2026 12:00:00"),
+                    "moha");
 
-        //     manager.showLinesForSelectedTasksStrict(
-        //             "Tablet", Arrays.asList(1, 3));
-        // } catch (Exception e) {
-        //     System.out.println(e.getMessage());
-        // }
+            manager.showLinesForSelectedTasksStrict(
+                    "Tablet", Arrays.asList(1, 2));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         // try {
         // List<Task> line1Tasks = new ArrayList<>();
         // List<Task> line2Tasks = new ArrayList<>();

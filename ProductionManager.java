@@ -52,19 +52,18 @@ public class ProductionManager {
                     if (!task.getDesireProduct().equalsIgnoreCase(productName))throw new IllegalArgumentException("There is no product by that name.");
                     if (task.getDesireProduct().equalsIgnoreCase(productName)
                             && task.taskID == id) {
-                              if (!linePrinted) {
+                           if (!linePrinted) {
                             System.out.println("Line ID: " + line.getLineId() +
                                     " | Name: " + line.getLineName());
                             linePrinted = true;
                         }
 
                         System.out.println("   Task: " + task);
-                        found = true;
-                        break;           }
+                        found = true;   }
                 }
 
                 if (!found) 
-                     throw new IllegalArgumentException("This task does not exist.");
+                      throw new IllegalArgumentException("This task does not exist.");
                 
             }
         }
