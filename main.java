@@ -3,45 +3,68 @@ import java.util.*;
 class Main {
 
     public static void main(String[] args) {
-        try {
-            List<Task> line1Tasks = new ArrayList<>();
-            List<Task> line2Tasks = new ArrayList<>();
-            List<Task> line3Tasks = new ArrayList<>();
-            for (int i = 0; i < 3; i++) {
-                line1Tasks.add(new Task("Ali", "Tablet", 10, "20-12-2025 12:00:00"));
-                line2Tasks.add(new Task("Ali", "Tablet", 10, "20-12-2025 12:00:00"));
-                line3Tasks.add(new Task("Ali", "Tablet", 10, "20-12-2025 12:00:00"));
-            }
 
-            List<ProductLine> lines = new ArrayList<>();
-            lines.add(new ProductLine(1, "moha", ProductLine.State.ACTIVE, line1Tasks));
-            lines.add(new ProductLine(2, "Line B", ProductLine.State.STOP, line2Tasks));
-            lines.add(new ProductLine(3, "Line C", ProductLine.State.MAINTENANCE, line3Tasks));
+        // try {
+        //     ArrayList<ProductLine> lines = new ArrayList<>();
 
-            Inventory.addItem(new Item(0, "PVP", "jj", 1, 0, 0), 0);
-            Inventory.addItem(new Item(0, "LAC", "kkk", 2, 0, 0), 0);
-            Inventory.addItem(new Item(0, "Aerosil", "ssl", 3, 0, 0), 0);
-            Inventory.addItem(new Item(0, "Sugar", "slsl", 4, 0, 0), 0);
+        //     lines.add(new ProductLine(
+        //             1, "moha", ProductLine.State.ACTIVE, new ArrayList<>()));
 
-            RecipeManager.loadRecipes();
+        //     ProductionManager manager = new ProductionManager(lines);
 
-            Recipe tabletRecipe = RecipeManager.getRecipe("Tablet");
-            System.out.println(tabletRecipe);
+        //     manager.addTask(
+        //             new Task("Ali", "Tablet", 10, "20-12-2026 12:00:00"),
+        //             "moha");
 
-            for (ProductLine line : lines) {
-                line.start();
-            }
+        //     manager.addTask(
+        //             new Task("Sara", "Tablet", 5, "22-12-2026 12:00:00"),
+        //             "moha");
 
-            for (ProductLine line : lines) {
-                line.join();
-            }
+        //     manager.showLinesForSelectedTasksStrict(
+        //             "Tablet", Arrays.asList(1, 3));
+        // } catch (Exception e) {
+        //     System.out.println(e.getMessage());
+        // }
+        // try {
+        // List<Task> line1Tasks = new ArrayList<>();
+        // List<Task> line2Tasks = new ArrayList<>();
+        // List<Task> line3Tasks = new ArrayList<>();
+        // for (int i = 0; i < 3; i++) {
+        // line1Tasks.add(new Task("Ali", "Tablet", 10, "20-12-2025 12:00:00"));
+        // line2Tasks.add(new Task("Ali", "Tablet", 10, "20-12-2025 12:00:00"));
+        // line3Tasks.add(new Task("Ali", "Tablet", 10, "20-12-2025 12:00:00"));
+        // }
 
-            System.out.println("Program finished successfully.");
+        // List<ProductLine> lines = new ArrayList<>();
+        // lines.add(new ProductLine(1, "moha", ProductLine.State.ACTIVE, line1Tasks));
+        // lines.add(new ProductLine(2, "Line B", ProductLine.State.STOP, line2Tasks));
+        // lines.add(new ProductLine(3, "Line C", ProductLine.State.MAINTENANCE,
+        // line3Tasks));
 
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (InterruptedException e) {
-            System.out.println("Thread interrupted.");
-        }
+        // Inventory.addItem(new Item(0, "PVP", "jj", 1, 0, 0), 0);
+        // Inventory.addItem(new Item(0, "LAC", "kkk", 2, 0, 0), 0);
+        // Inventory.addItem(new Item(0, "Aerosil", "ssl", 3, 0, 0), 0);
+        // Inventory.addItem(new Item(0, "Sugar", "slsl", 4, 0, 0), 0);
+
+        // RecipeManager.loadRecipes();
+
+        // Recipe tabletRecipe = RecipeManager.getRecipe("Tablet");
+        // System.out.println(tabletRecipe);
+
+        // for (ProductLine line : lines) {
+        // line.start();
+        // }
+
+        // for (ProductLine line : lines) {
+        // line.join();
+        // }
+
+        // System.out.println("Program finished successfully.");
+
+        // } catch (IllegalArgumentException e) {
+        // System.out.println("Error: " + e.getMessage());
+        // } catch (InterruptedException e) {
+        // System.out.println("Thread interrupted.");
+        // }
     }
 }

@@ -132,7 +132,7 @@ public class Manager extends JFrame {
             ProductLine.State newState = (ProductLine.State) stateBox.getSelectedItem();
 
             for (ProductLine line : manager.getProductLines()) {
-                if (line.lineId == id) {
+                if (line.getLineId() == id) {
                     line.setState(newState);
                     JOptionPane.showMessageDialog(this,
                             "State updated successfully!",

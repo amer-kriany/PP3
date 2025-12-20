@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class ProductLine extends Thread {
-    public int lineId;
+    private int lineId;
     private String lineName;
 
     enum State {
