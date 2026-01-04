@@ -12,11 +12,11 @@ public class ProductLine extends Thread {
 
     public List<Task> productLineTasks;
 
-    public ProductLine(int lineId, String lineName, State state, List<Task> productLineTasks) {
+    public ProductLine(int lineId, String lineName, State state) {
         this.lineId = lineId;
         this.lineName = lineName;
         this.state = state;
-        this.productLineTasks = Collections.synchronizedList(new ArrayList<>(productLineTasks));
+        this.productLineTasks = Collections.synchronizedList(new ArrayList<>());
     }
 
     public String getLineName() {
@@ -35,45 +35,64 @@ public class ProductLine extends Thread {
         return productLineTasks;
     }
 
-    public static ProductLine addLine(int lineId, String lineName, State state) {
-        List<Task> defult = new ArrayList<>();
-        return new ProductLine(lineId, lineName, state, defult);
-    }
-
     public void setState(State newState) {
         this.state = newState;
     }
 
+    private void executeTask(Task task) throws Exception {
+        synchronized (Inventory.class) {
+            Recipe recipe = RecipeManager.getRecipe(task.getDesireProduct());
+            if (recipe == null) {
+                throw new Exception("No recipe found for product: " + task.getDesireProduct());
+            }
+
+            if (!Inventory.hasEnough(recipe, task.getQuantity())) {
+                throw new Exception("Not enough inventory for Task " + task.taskID);
+            }
+
+            Inventory.consume(recipe, task.getQuantity());
+            task.start();
+
+            for (int i = 1; i <= task.getQuantity(); i++) {
+                task.updateProductionProgressPercentege((i * 100) / task.getQuantity());
+                System.out
+                        .println("Task " + task.taskID + " progress: " + task.getProductionProgressPercentege() + "%");
+                Thread.sleep(50);
+            }
+
+            task.complete();
+            System.out.println("Task " + task.taskID + " completed successfully.");
+        }
+    }
+
     @Override
     public void run() {
-        if (state == State.ACTIVE) {
-            System.out.println("Line " + lineId + " (" + lineName + ") starting tasks...");
-
+        while (state == State.ACTIVE) {
             synchronized (productLineTasks) {
                 for (Task task : productLineTasks) {
-                    new Thread(() -> {
-                        synchronized (Inventory.class) {
+                    if (task.getStatus() == Task.TaskStatus.PENDING) {
+                        new Thread(() -> {
                             try {
-                                Recipe recipe = RecipeManager.getRecipe(task.getDesireProduct());
-                                if (Inventory.hasEnough(recipe, task.getQuantity())) {
-                                    Inventory.consume(recipe, task.getQuantity());
-                                    task.start();
-                                    task.complete();
-                                    System.out.println("Task " + task.taskID + " completed successfully.");
-                                } else {
-                                    System.out.println("Not enough items in inventory for Task " + task.taskID);
-                                }
+                                executeTask(task);
                             } catch (Exception e) {
-                                System.out.println("Error in Task " + task.taskID + ": " + e.getMessage());
+                                System.err.println("Error executing Task " + task.taskID + ": " + e.getMessage());
                             }
-                        }
-                    }).start();
+                        }).start();
+                    }
                 }
             }
 
-        } else if (state == State.STOP) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.err.println("Line thread interrupted: " + e.getMessage());
+            }
+        }
+
+        if (state == State.STOP) {
             System.out.println("Line " + lineId + " is STOPPED.");
-        } else if (state == State.MAINTENANCE) {
+        }
+        if (state == State.MAINTENANCE) {
             System.out.println("Line " + lineId + " is under MAINTENANCE.");
         }
     }

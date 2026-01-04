@@ -17,15 +17,12 @@ public class Manager extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // ====== Layout ======
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // مسافات حول المكونات
-        gbc.fill = GridBagConstraints.HORIZONTAL; // المكونات تملأ العرض
-
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         Font font = new Font("Arial", Font.BOLD, 40);
 
-        // ====== ID ======
         JLabel idLabel = new JLabel("Line ID:");
         idLabel.setFont(font);
         idLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -39,7 +36,6 @@ public class Manager extends JFrame {
         gbc.gridy = 0;
         add(idField, gbc);
 
-        // ====== Name ======
         JLabel nameLabel = new JLabel("Line Name:");
         nameLabel.setFont(font);
         nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -53,7 +49,6 @@ public class Manager extends JFrame {
         gbc.gridy = 1;
         add(nameField, gbc);
 
-        // ====== State ======
         JLabel stateLabel = new JLabel("State:");
         stateLabel.setFont(font);
         stateLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -67,29 +62,26 @@ public class Manager extends JFrame {
         gbc.gridy = 2;
         add(stateBox, gbc);
 
-        // ====== Buttons ======
         JButton addButton = new JButton("Add Line");
         addButton.setFont(font);
         gbc.gridx = 0;
         gbc.gridy = 3;
-        gbc.gridwidth = 2; // يأخذ عمودين
-        gbc.anchor = GridBagConstraints.CENTER; // في المنتصف
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
         add(addButton, gbc);
 
         JButton changeStateButton = new JButton("Change State");
         changeStateButton.setFont(font);
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.gridwidth = 2; // يأخذ عمودين
+        gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         add(changeStateButton, gbc);
 
-        // ====== Actions ======
         addButton.addActionListener(e -> addLine());
         changeStateButton.addActionListener(e -> changeLineState());
     }
 
-    // ================== METHODS ==================
     private void addLine() {
         try {
             int id = Integer.parseInt(idField.getText());
@@ -99,7 +91,7 @@ public class Manager extends JFrame {
             }
             ProductLine.State state = (ProductLine.State) stateBox.getSelectedItem();
 
-            ProductLine line = ProductLine.addLine(id, name, state);
+            ProductLine line = new ProductLine(id, name, state);
             manager.addLine(line);
 
             JOptionPane.showMessageDialog(this,
@@ -149,7 +141,7 @@ public class Manager extends JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                    "Invalid ID!", 
+                    "Invalid ID!",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -157,12 +149,10 @@ public class Manager extends JFrame {
 
     public static void main(String[] args) {
         ProductionManager pm = new ProductionManager(new ArrayList<>());
-        // 🔹 خطوط ثابتة
-        pm.addLine(ProductLine.addLine(1, "Line A", ProductLine.State.ACTIVE));
-        pm.addLine(ProductLine.addLine(2, "Line B", ProductLine.State.STOP));
-        pm.addLine(ProductLine.addLine(3, "Line C", ProductLine.State.MAINTENANCE));
+        pm.addLine(new ProductLine(1, "Line A", ProductLine.State.ACTIVE));
+        pm.addLine(new ProductLine(2, "Line B", ProductLine.State.STOP));
+        pm.addLine(new ProductLine(3, "Line C", ProductLine.State.MAINTENANCE));
 
-        // 🔹 فتح الواجهة
         SwingUtilities.invokeLater(() -> new Manager(pm).setVisible(true));
     }
 }
