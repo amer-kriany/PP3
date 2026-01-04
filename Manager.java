@@ -138,7 +138,7 @@ public class Manager extends JFrame {
         gbc.gridy = 7;
         add(new JLabel("Rating (1-10):"), gbc);
 
-        ratingSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
+        ratingSpinner = new JSpinner(new SpinnerNumberModel(5, 0, 10, 1));
         gbc.gridx = 1;
         gbc.gridy = 7;
         add(ratingSpinner, gbc);
