@@ -39,30 +39,48 @@ public class ProductLine extends Thread {
         this.state = newState;
     }
 
-    private void executeTask(Task task) throws Exception {
-        synchronized (Inventory.class) {
-            Recipe recipe = RecipeManager.getRecipe(task.getDesireProduct());
-            if (recipe == null) {
-                throw new Exception("No recipe found for product: " + task.getDesireProduct());
-            }
+    public int getLinePerformance() {
+        List<Task> tasks = getProductLineTasks();
+        if (tasks == null || tasks.isEmpty())
+            return 0;
 
+        double totalRequired = 0;
+        double totalProduced = 0;
+
+        for (Task task : tasks) {
+            totalRequired += task.getQuantity();
+            totalProduced += (task.getQuantity() * task.getProductionProgressPercentege()) / 100.0;
+        }
+
+        if (totalRequired == 0)
+            return 0;
+
+        return (int) Math.round((totalProduced / totalRequired) * 100);
+    }
+
+    private void executeTask(Task task) throws Exception {
+
+        Recipe recipe = RecipeManager.getRecipe(task.getDesireProduct());
+        if (recipe == null)
+            throw new Exception("No recipe found for product: " + task.getDesireProduct());
+
+        synchronized (Inventory.class) {
             if (!Inventory.hasEnough(recipe, task.getQuantity())) {
                 throw new Exception("Not enough inventory for Task " + task.taskID);
             }
-
             Inventory.consume(recipe, task.getQuantity());
-            task.start();
-
-            for (int i = 1; i <= task.getQuantity(); i++) {
-                task.updateProductionProgressPercentege((i * 100) / task.getQuantity());
-                System.out
-                        .println("Task " + task.taskID + " progress: " + task.getProductionProgressPercentege() + "%");
-                Thread.sleep(50);
-            }
-
-            task.complete();
-            System.out.println("Task " + task.taskID + " completed successfully.");
         }
+
+        task.start();
+
+        for (int i = 1; i <= task.getQuantity(); i++) {
+            task.updateProductionProgressPercentege((i * 100) / task.getQuantity());
+            System.out.println("Task " + task.taskID + " progress: " + task.getProductionProgressPercentege() + "%");
+            Thread.sleep(5000);    }
+
+        task.complete();
+        System.out.println("Task " + task.taskID + " completed successfully.");
+
     }
 
     @Override
