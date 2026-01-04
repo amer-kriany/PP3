@@ -167,7 +167,7 @@ public class Manager extends JFrame {
         gbc.fill = GridBagConstraints.NONE;
         add(saveButton, gbc);
 
-        Timer lineTimer = new Timer(1000, e -> refreshLinePerformance());
+        Timer lineTimer = new Timer(1, e -> refreshLinePerformance());
         lineTimer.start();
         addButton.addActionListener(e -> addLine());
         changeStateButton.addActionListener(e -> changeLineState());
