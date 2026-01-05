@@ -16,7 +16,6 @@ public class Manager extends JFrame {
     private JComboBox<ProductLine> lineBox;
     private JSpinner ratingSpinner;
     private JTextArea noteArea;
-    private JButton saveButton;
 
     public Manager(ProductionManager manager) {
         this.manager = manager;
@@ -185,6 +184,8 @@ public class Manager extends JFrame {
             ProductLine line = new ProductLine(id, name, state);
             manager.addLine(line);
 
+            lineBox.addItem(line);
+            refreshLinePerformance();
             JOptionPane.showMessageDialog(this,
                     "Line added successfully!",
                     "Success",
@@ -268,7 +269,7 @@ public class Manager extends JFrame {
             }
 
             JOptionPane.showMessageDialog(this, "Notes & Rating saved successfully!");
-            noteArea.setText(""); 
+            noteArea.setText("");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error saving to file: " + ex.getMessage());
         }
