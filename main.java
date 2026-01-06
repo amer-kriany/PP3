@@ -3,8 +3,60 @@ import java.util.*;
 
 class Main {
 
-    public static void main(String[] args) {
-        //   // ================== 1️⃣ إنشاء العناصر ==================
+    public static void main(String[] args) throws InterruptedException {
+           // 1️⃣ إنشاء Items
+        Item PVP = new Item(1, "PVP", Item.MEDICAL_DEVICES, 5.0, 0, 0);
+        Item LAC = new Item(2, "LAC", Item.MEDICAL_DEVICES, 3.0, 0, 0);
+        Item Aerosil = new Item(3, "Aerosil", Item.MEDICAL_DEVICES, 4.0, 0, 0);
+
+        // 2️⃣ إضافة Items للـ Inventory
+        Inventory.addItem(PVP, 10);
+        Inventory.addItem(LAC, 10);
+        Inventory.addItem(Aerosil, 10);
+
+        // 3️⃣ تحميل Recipes
+        RecipeManager.loadRecipes();
+
+        // 4️⃣ إنشاء خط الإنتاج
+        ProductLine line1 = new ProductLine(1, "Line-1", ProductLine.State.ACTIVE);
+        line1.start();
+
+        // 5️⃣ إنشاء Task صالح
+        Task t1 = new Task("Ahmad", "Tablet", 2, "31-12-2026 18:00:00");
+        line1.addTask(t1);
+
+        Thread.sleep(3000);
+
+
+        // // ⚠️ ملاحظة: ما رح نحمّل Recipes
+        // // RecipeManager.loadRecipes(); ← عمداً مش مستدعيها
+
+        // // إنشاء خط إنتاج
+        // ProductLine line1 = new ProductLine(
+        // 1,
+        // "Line-1",
+        // ProductLine.State.ACTIVE
+        // );
+
+        // line1.start();
+
+        // // Task بمنتج غير موجود بالـ Recipes
+        // Task t1 = new Task(
+        // "Ahmad",
+        // "UnknownProduct", // هذا السبب
+        // 5,
+        // "31-12-2026 18:00:00"
+        // );
+
+        // line1.addTask(t1);
+
+        // // ننتظر شوي حتى ينفذ
+        // Thread.sleep(3000);
+
+        // // نوقف الخط
+        // line1.setState(ProductLine.State.STOP);
+
+        // // ================== 1️⃣ إنشاء العناصر ==================
         // Item cpu = new Item(1, "CPU", Item.MEDICAL_DEVICES, 120.0, 100, 10);
         // Item ram = new Item(2, "RAM", Item.MEDICAL_DEVICES, 50.0, 100, 10);
         // Item ssd = new Item(3, "SSD", Item.MEDICAL_DEVICES, 80.0, 50, 5);
@@ -18,7 +70,7 @@ class Main {
         // Inventory.addItem(sugar, 20);
 
         // // ================== 2️⃣ تحميل Recipes ==================
-        // RecipeManager.loadRecipes();  // Recipes تعتمد على Items الموجودة في Inventory
+        // RecipeManager.loadRecipes(); // Recipes تعتمد على Items الموجودة في Inventory
 
         // // ================== 3️⃣ إنشاء خطوط الإنتاج ==================
         // ProductLine line1 = new ProductLine(1, "Line-A", ProductLine.State.ACTIVE);
@@ -50,9 +102,9 @@ class Main {
 
         // // ================== 7️⃣ إعطاء وقت للتنفيذ ==================
         // try {
-        //     Thread.sleep(5000); // محاكاة تنفيذ التاسكات
+        // Thread.sleep(5000); // محاكاة تنفيذ التاسكات
         // } catch (InterruptedException e) {
-        //     System.err.println(e.getMessage());
+        // System.err.println(e.getMessage());
         // }
 
         // // ================== 8️⃣ تقرير المنتج الأكثر طلبًا ==================
@@ -69,82 +121,82 @@ class Main {
         // // ================== 9️⃣ إيقاف خطوط الإنتاج ==================
         // line1.setState(ProductLine.State.STOP);
         // line2.setState(ProductLine.State.STOP);
-    
-    //     // ================== إنشاء خطوط الإنتاج ==================
-    //     ProductLine line1 =
-    //             new ProductLine(1, "Line-A", ProductLine.State.ACTIVE);
 
-    //     ProductLine line2 =
-    //             new ProductLine(2, "Line-B", ProductLine.State.ACTIVE);
+        // // ================== إنشاء خطوط الإنتاج ==================
+        // ProductLine line1 =
+        // new ProductLine(1, "Line-A", ProductLine.State.ACTIVE);
 
-    //     // ================== تجميع الخطوط ==================
-    //     ArrayList<ProductLine> lines = new ArrayList<>();
-    //     lines.add(line1);
-    //     lines.add(line2);
+        // ProductLine line2 =
+        // new ProductLine(2, "Line-B", ProductLine.State.ACTIVE);
 
-    //     // ================== ProductManager ==================
-    //     ProductionManager manager = new ProductionManager(lines);
+        // // ================== تجميع الخطوط ==================
+        // ArrayList<ProductLine> lines = new ArrayList<>();
+        // lines.add(line1);
+        // lines.add(line2);
 
-    //     // ================== تشغيل خطوط الإنتاج ==================
-    //     line1.start();
-    //     line2.start();
+        // // ================== ProductManager ==================
+        // ProductionManager manager = new ProductionManager(lines);
 
-    //     // ================== إنشاء وإضافة Tasks ==================
-    //     Task t1 = new Task(
-    //             "Ahmad",
-    //             "Laptop",
-    //             5,
-    //             "31-12-2026 18:00:00"
-    //     );
-    //     line1.addTask(t1);
+        // // ================== تشغيل خطوط الإنتاج ==================
+        // line1.start();
+        // line2.start();
 
-    //     Task t2 = new Task(
-    //             "Sara",
-    //             "Phone",
-    //             10,
-    //             "31-12-2026 20:00:00"
-    //     );
-    //     line2.addTask(t2);
+        // // ================== إنشاء وإضافة Tasks ==================
+        // Task t1 = new Task(
+        // "Ahmad",
+        // "Laptop",
+        // 5,
+        // "31-12-2026 18:00:00"
+        // );
+        // line1.addTask(t1);
 
-    //     Task t3 = new Task(
-    //             "Omar",
-    //             "Laptop",
-    //             7,
-    //             "31-12-2026 22:00:00"
-    //     );
-    //     line1.addTask(t3);
+        // Task t2 = new Task(
+        // "Sara",
+        // "Phone",
+        // 10,
+        // "31-12-2026 20:00:00"
+        // );
+        // line2.addTask(t2);
 
-    //     Task t4 = new Task(
-    //             "Lina",
-    //             "Tablet",
-    //             4,
-    //             "31-12-2026 23:00:00"
-    //     );
-    //     line2.addTask(t4);
+        // Task t3 = new Task(
+        // "Omar",
+        // "Laptop",
+        // 7,
+        // "31-12-2026 22:00:00"
+        // );
+        // line1.addTask(t3);
 
-    //     // نعطي وقت للتنفيذ
-    //     try {
-    //         Thread.sleep(5000);
-    //     } catch (InterruptedException e) {
-    //         System.err.println(e.getMessage());
-    //     }
+        // Task t4 = new Task(
+        // "Lina",
+        // "Tablet",
+        // 4,
+        // "31-12-2026 23:00:00"
+        // );
+        // line2.addTask(t4);
 
-    //     // ================== تقرير ==================
-    //     LocalDateTime from = LocalDateTime.now().minusDays(1);
-    //     LocalDateTime to = LocalDateTime.now().plusDays(1);
+        // // نعطي وقت للتنفيذ
+        // try {
+        // Thread.sleep(5000);
+        // } catch (InterruptedException e) {
+        // System.err.println(e.getMessage());
+        // }
 
-    //     String result =
-    //             manager.getMostRequestedProduct(from, to);
+        // // ================== تقرير ==================
+        // LocalDateTime from = LocalDateTime.now().minusDays(1);
+        // LocalDateTime to = LocalDateTime.now().plusDays(1);
 
-    //     System.out.println("\n===============================");
-    //     System.out.println("Most Requested Product");
-    //     System.out.println("===============================");
-    //     System.out.println(result);
+        // String result =
+        // manager.getMostRequestedProduct(from, to);
 
-    //     // ================== إيقاف خطوط الإنتاج ==================
-    //     line1.setState(ProductLine.State.STOP);
-    //     line2.setState(ProductLine.State.STOP);
-    // }
+        // System.out.println("\n===============================");
+        // System.out.println("Most Requested Product");
+        // System.out.println("===============================");
+        // System.out.println(result);
+
+        // // ================== إيقاف خطوط الإنتاج ==================
+        // line1.setState(ProductLine.State.STOP);
+        // line2.setState(ProductLine.State.STOP);
+        // }
         // ProductionManager pm = new ProductionManager(new ArrayList<>());
 
         // ProductLine lineA = new ProductLine(1, "Line A", ProductLine.State.ACTIVE);

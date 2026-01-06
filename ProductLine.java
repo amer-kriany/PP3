@@ -3,12 +3,12 @@ import java.util.*;
 public class ProductLine extends Thread {
     private int lineId;
     private String lineName;
+    private volatile State state;
+    private Object PauseLock = new Object();
 
     enum State {
         ACTIVE, STOP, MAINTENANCE;
     }
-
-    State state;
 
     public List<Task> productLineTasks;
 
@@ -37,6 +37,11 @@ public class ProductLine extends Thread {
 
     public void setState(State newState) {
         this.state = newState;
+        if (newState == State.ACTIVE) {
+            synchronized (PauseLock) {
+                PauseLock.notifyAll();
+            }
+        }
     }
 
     public int getLinePerformance() {
@@ -59,28 +64,33 @@ public class ProductLine extends Thread {
     }
 
     private void executeTask(Task task) throws Exception {
-
         Recipe recipe = RecipeManager.getRecipe(task.getDesireProduct());
         if (recipe == null)
-            throw new Exception("No recipe found for product: " + task.getDesireProduct());
+            throw new IllegalArgumentException("No recipe found for product: " + task.getDesireProduct());
 
         synchronized (Inventory.class) {
             if (!Inventory.hasEnough(recipe, task.getQuantity())) {
-                throw new Exception("Not enough inventory for Task " + task.taskID);
+                throw new IllegalStateException("Not enough inventory for Task " + task.taskID);
             }
             Inventory.consume(recipe, task.getQuantity());
         }
 
         task.start();
 
-        for (int i = 1; i <= task.getQuantity(); i++) {
-            task.updateProductionProgressPercentege((i * 100) / task.getQuantity());
+        for (int i = task.getProductionProgressPercentege(); i < task.getQuantity(); i++) {
+            synchronized (PauseLock) {
+                while (state != State.ACTIVE) {
+                    PauseLock.wait();
+                }
+            }
+
+            task.updateProductionProgressPercentege((i + 1) * 100 / task.getQuantity());
             System.out.println("Task " + task.taskID + " progress: " + task.getProductionProgressPercentege() + "%");
-            Thread.sleep(5000);    }
+            Thread.sleep(5000);
+        }
 
         task.complete();
         System.out.println("Task " + task.taskID + " completed successfully.");
-
     }
 
     @Override
@@ -88,12 +98,16 @@ public class ProductLine extends Thread {
         while (state == State.ACTIVE) {
             synchronized (productLineTasks) {
                 for (Task task : productLineTasks) {
-                    if (task.getStatus() == Task.TaskStatus.PENDING) {
+                    if (task.getStatus() == Task.TaskStatus.PENDING ||
+                            (task.getStatus() == Task.TaskStatus.IN_PROGRESS &&
+                                    task.getProductionProgressPercentege() < task.getQuantity())) {
                         new Thread(() -> {
                             try {
                                 executeTask(task);
                             } catch (Exception e) {
-                                System.err.println("Error executing Task " + task.taskID + ": " + e.getMessage());
+                                FileManager
+                                        .logError("Line " + lineId + " | Task " + task.taskID + " | " + e.getMessage());
+                                task.cancel();
                             }
                         }).start();
                     }
@@ -103,7 +117,7 @@ public class ProductLine extends Thread {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                System.err.println("Line thread interrupted: " + e.getMessage());
+                FileManager.logError("Line :" + lineId + "interrupted :" + e.getMessage());
             }
         }
 

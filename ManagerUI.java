@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Manager extends JFrame {
+public class ManagerUI extends JFrame {
 
     private JTextField idField;
     private JTextField nameField;
@@ -17,7 +17,7 @@ public class Manager extends JFrame {
     private JSpinner ratingSpinner;
     private JTextArea noteArea;
 
-    public Manager(ProductionManager manager) {
+    public ManagerUI(ProductionManager manager) {
         this.manager = manager;
 
         setTitle("Manager Panel");
@@ -135,7 +135,7 @@ public class Manager extends JFrame {
         // rat
         gbc.gridx = 0;
         gbc.gridy = 7;
-        add(new JLabel("Rating (1-10):"), gbc);
+        add(new JLabel("Rating (0-10):"), gbc);
 
         ratingSpinner = new JSpinner(new SpinnerNumberModel(5, 0, 10, 1));
         gbc.gridx = 1;
@@ -185,6 +185,7 @@ public class Manager extends JFrame {
             manager.addLine(line);
 
             lineBox.addItem(line);
+
             refreshLinePerformance();
             JOptionPane.showMessageDialog(this,
                     "Line added successfully!",
@@ -196,46 +197,52 @@ public class Manager extends JFrame {
                     "Invalid ID!",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
+            FileManager.logError("ManagerUI | Invalid Id!");
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this,
                     e.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
-
+            FileManager.logError("ManagerUI | " + e.getMessage());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                     "Invalid input!",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
+            FileManager.logError("ManagerUI | Invalid input!");
         }
     }
 
     private void changeLineState() {
         try {
-            int id = Integer.parseInt(idField.getText());
+            int id = Integer.parseInt(idField.getText().trim());
             ProductLine.State newState = (ProductLine.State) stateBox.getSelectedItem();
 
-            for (ProductLine line : manager.getProductLines()) {
-                if (line.getLineId() == id) {
-                    line.setState(newState);
-                    JOptionPane.showMessageDialog(this,
-                            "State updated successfully!",
-                            "Success",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
+            ProductLine line = manager.getProductLines()
+                    .stream()
+                    .filter(l -> l.getLineId() == id)
+                    .findFirst()
+                    .orElse(null);
+
+            if (line != null) {
+                line.setState(newState);
+                JOptionPane.showMessageDialog(this,
+                        "State updated successfully.",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                throw new NullPointerException("Line with ID " + id + " not found!");
             }
 
-            JOptionPane.showMessageDialog(this,
-                    "Line not found!",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            FileManager.logError("ManagerUI | " + e.getMessage());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid ID!", "Error", JOptionPane.ERROR_MESSAGE);
+            FileManager.logError("ManagerUI | Invalid ID!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Invalid ID!",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error updating line state!", "Error", JOptionPane.ERROR_MESSAGE);
+            FileManager.logError("ManagerUI | Error updating line state: ");
         }
     }
 
@@ -248,34 +255,43 @@ public class Manager extends JFrame {
     }
 
     private void saveNotesAndRating() {
+
         ProductLine selectedLine = (ProductLine) lineBox.getSelectedItem();
         int rating = (int) ratingSpinner.getValue();
         String note = noteArea.getText();
 
-        if (selectedLine == null) {
-            JOptionPane.showMessageDialog(this, "Please select a production line!");
-            return;
-        }
-
         try {
-            // حفظ الملاحظات
-            try (FileWriter noteWriter = new FileWriter("notes.txt", true)) {
-                noteWriter.write(selectedLine.getLineName() + ": " + note + "\n");
+            if (lineBox.getItemCount() == 0) {
+                throw new IllegalStateException("No production lines available to save notes and rating.");
+            }
+            if (!note.isEmpty()) {
+                try (FileWriter noteWriter = new FileWriter("notes.txt", true)) {
+                    noteWriter.write("Line: " + selectedLine.getLineName() + " | Note: " + note + "\n");
+                } catch (IOException e) {
+                    FileManager.logError("ManagerUI | Error writing note to file: ");
+                }
             }
 
-            // حفظ التقييم
             try (FileWriter ratingWriter = new FileWriter("rating.txt", true)) {
-                ratingWriter.write(selectedLine.getLineName() + ": " + rating + "\n");
+                ratingWriter.write("Line: " + selectedLine.getLineName() + " | Rating: " + rating + "\n");
             }
 
             JOptionPane.showMessageDialog(this, "Notes & Rating saved successfully!");
             noteArea.setText("");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error saving to file: " + ex.getMessage());
+        } catch (IllegalStateException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            FileManager.logError("ManagerUI | " + e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error saving notes and rating!", "Error", JOptionPane.ERROR_MESSAGE);
+            FileManager.logError("ManagerUI | Error saving notes and rating!");
         }
     }
 
     public static void main(String[] args) {
+        ProductionManager pm = new ProductionManager(new ArrayList<>());
+
         Item cpu = new Item(1, "CPU", Item.MEDICAL_DEVICES, 120.0, 100, 10);
         Item ram = new Item(2, "RAM", Item.MEDICAL_DEVICES, 50.0, 100, 10);
         Item ssd = new Item(3, "SSD", Item.MEDICAL_DEVICES, 80.0, 50, 5);
@@ -288,15 +304,15 @@ public class Manager extends JFrame {
         Inventory.addItem(screen, 50);
         Inventory.addItem(sugar, 20);
         RecipeManager.loadRecipes();
-        ProductionManager pm = new ProductionManager(new ArrayList<>());
+
         ProductLine lineA = new ProductLine(1, "Line A", ProductLine.State.ACTIVE);
         pm.addLine(lineA);
         ProductLine lineB = new ProductLine(2, "Line B", ProductLine.State.ACTIVE);
         pm.addLine(lineB);
 
-        Task t1 = new Task("Client 1", "Laptop", 5, "05-01-2026 20:00:00");
-        Task t3 = new Task("Client 1", "Laptop", 15, "05-01-2026 20:00:00");
-        Task t2 = new Task("Client 2", "Phone", 5, "05-01-2026 20:00:00");
+        Task t1 = new Task("Client 1", "Laptop", 5, "10-01-2026 20:00:00");
+        Task t3 = new Task("Client 1", "Laptop", 15, "10-01-2026 20:00:00");
+        Task t2 = new Task("Client 2", "Phone", 5, "10-01-2026 20:00:00");
 
         lineA.addTask(t1);
         lineA.addTask(t3);
@@ -305,6 +321,6 @@ public class Manager extends JFrame {
         lineA.start();
         lineB.start();
 
-        SwingUtilities.invokeLater(() -> new Manager(pm).setVisible(true));
+        SwingUtilities.invokeLater(() -> new ManagerUI(pm).setVisible(true));
     }
 }

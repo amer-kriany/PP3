@@ -14,7 +14,6 @@ public  class Inventory {
 
     public static void addItem(Item item , int qty) {
         stock.put(item, stock.getOrDefault(item, 0)+qty);
-        // System.out.println("the item has been added to the inventory successfully!");
     }
 
     public static Item getItemByName(String name) {
@@ -34,8 +33,7 @@ public  class Inventory {
         }
         return null;
     }
-
-
+    
     public static Map<Item,Integer> getStock (){
         return stock;
     }
