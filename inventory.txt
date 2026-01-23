@@ -1,0 +1,9 @@
+6,citamol4,medicine,4000.0,4,2
+3,prufein,medicine,4000.0,10,1
+5,citamol,medicine,300.0,0,3
+33,asdf,afdsa,222.0,200,10
+8,paracetamol,medicine,6500.0,3,2
+1,raw plastic,medical resources,6000.0,4,2
+2,Medicine Base,MEDICINE,50.0,50,10
+5,asfds,afas,299.0,100,50
+19,m;oha,oha,1000.0,100,20

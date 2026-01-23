@@ -1,0 +1,25 @@
+[2026-01-22 12:09:54] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 12:11:06] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 12:36:52] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 12:37:31] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 12:40:43] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 12:41:35] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 12:41:45] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 16:07:37] Line 3 | Task 7 | No recipe found for product: tona
+[2026-01-22 16:07:37] Line 3 | Task 8 | No recipe found for product: sardines
+[2026-01-22 16:07:37] Line 2 | Task 5 | No recipe found for product: JEANSE
+[2026-01-22 16:07:37] Line 2 | Task 4 | No recipe found for product: HOODIE
+[2026-01-22 16:07:37] Line 2 | Task 6 | No recipe found for product: JACKET
+[2026-01-22 16:07:37] Line 3 | Task 9 | No recipe found for product: Lanchun
+[2026-01-22 16:07:37] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-22 16:36:06] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-22 16:36:06] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-22 16:37:28] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-22 16:37:28] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-22 16:37:56] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-22 16:37:56] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-22 16:44:56] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-22 16:44:56] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-22 16:46:12] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-22 16:46:12] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-22 16:46:12] Error loading inventory: No enum constant Item.Categories.medicine
