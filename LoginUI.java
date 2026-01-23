@@ -147,13 +147,14 @@ public class LoginUI extends JFrame {
 
         loginButton.setEnabled(enable);
     }
-
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        new LoginUI();
-    }
 }
+
+//     public static void main(String[] args) {
+//         try {
+//             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+//         } catch (Exception e) {
+//             e.printStackTrace();
+//         }
+//         new LoginUI();
+//     }
+// }

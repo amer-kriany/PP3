@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -165,36 +166,61 @@ public class InventoryManagerUI extends JFrame {
         panel.add(minField);
 
         int result = JOptionPane.showConfirmDialog(this, panel, "Add New Item", JOptionPane.OK_CANCEL_OPTION);
+        
         if (result == JOptionPane.OK_OPTION) {
             try {
-                int id = Integer.parseInt(idField.getText().trim());
+                // 1. التحقق من الحقول الفارغة
+                String idText = idField.getText().trim();
                 String name = nameField.getText().trim();
-                String categoryStr = categoryField.getText().trim();
-                Item.Categories category;
-                try {
-                    category = Item.Categories.valueOf(categoryStr.toUpperCase());
-                } catch (IllegalArgumentException e) {
-                    category = null;
-                    for (Item.Categories c : Item.Categories.values()) {
-                        if (c.name().equalsIgnoreCase(categoryStr)) {
-                            category = c;
-                            break;
-                        }
-                    }
-                    if (category == null) {
-                        throw new IllegalArgumentException("Invalid category: " + categoryStr);
-                    }
+
+                if (idText.isEmpty() || name.isEmpty()) {
+                    throw new IllegalArgumentException("ID and Name cannot be empty!");
                 }
+
+                int id = Integer.parseInt(idText);
+
+                // 2. فحص الـ ID مكرر (باستخدام Inventory الـ Static)
+                if (Inventory.getItemById(id) != null) {
+                    JOptionPane.showMessageDialog(this, "Error: This ID (" + id + ") is already assigned!", "Duplicate ID", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // 3. فحص الاسم مكرر
+                if (Inventory.getItemByName(name) != null) {
+                    JOptionPane.showMessageDialog(this, "Error: The name '" + name + "' already exists!", "Duplicate Name", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // 4. قراءة باقي البيانات
+                String categoryStr = categoryField.getText().trim();
                 double price = Double.parseDouble(priceField.getText().trim());
                 int quantity = Integer.parseInt(quantityField.getText().trim());
                 int min = Integer.parseInt(minField.getText().trim());
 
-                Item newItem = new Item(id, name, category, price, quantity, min);
-                Inventory.addItem(newItem, newItem.getQuantity());
-                refreshTable();
-            } catch (Exception ex) {
+                // 5. تحديد القسم
+                Item.Categories category = null;
+                for (Item.Categories c : Item.Categories.values()) {
+                    if (c.name().equalsIgnoreCase(categoryStr)) {
+                        category = c;
+                        break;
+                    }
+                }
+                
+                if (category == null) {
+                    throw new IllegalArgumentException("Invalid category: " + categoryStr);
+                }
 
-                JOptionPane.showMessageDialog(this, "Invalid input!", "Error", JOptionPane.ERROR_MESSAGE);
+                // 6. إضافة المنتج للمخزن
+                Item newItem = new Item(id, name, category, price, quantity, min);
+                Inventory.addItem(newItem, quantity);
+                
+                refreshTable();
+                JOptionPane.showMessageDialog(this, "Item added successfully!");
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Please enter valid numbers for ID, Price, and Quantity.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -231,7 +257,7 @@ public class InventoryManagerUI extends JFrame {
         }
 
         int itemId = (int) table.getValueAt(selectedRow, 0);
-        inventory.removeItem(itemId);
+        Inventory.removeItem(itemId); 
         refreshTable();
     }
 
@@ -239,8 +265,4 @@ public class InventoryManagerUI extends JFrame {
         FileManager.saveInventory(inventory);
         JOptionPane.showMessageDialog(this, "Inventory saved successfully!", "Saved", JOptionPane.INFORMATION_MESSAGE);
     }
-
-    // public static void main(String[] args) {
-    //     SwingUtilities.invokeLater(() -> new InventoryManagerUI().setVisible(true));
-    // }
 }

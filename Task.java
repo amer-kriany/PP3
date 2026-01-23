@@ -16,7 +16,7 @@ public class Task {
     
     Status.taskStatus State;
     // progressing percentage
-    private int productionProgressPercentege = 0;
+    private int productionProgress = 0;
     
     
     Task(){}
@@ -51,9 +51,9 @@ public class Task {
         }
     }
         // setter
-        public void updateProductionProgressPercentege(int progress){
-            this.productionProgressPercentege=progress;
-            if(productionProgressPercentege>100)productionProgressPercentege=100;
+        public void updateProductionProgress(int progress){
+            this.productionProgress+=progress;
+            
             
         }
     // getters
@@ -69,8 +69,8 @@ public class Task {
     public Status.taskStatus getStatus(){
         return this.State;
     }
-    public int getProductionProgressPercentege(){
-        return productionProgressPercentege;
+    public int getProductionProgress(){
+        return productionProgress;
     }
     public int getTaskID(){
         return taskID;
@@ -85,6 +85,15 @@ public class Task {
     public String getTaskName(){
         return TaskName;
     }
+
+
+    public void setProductLine(ProductLine productLine) {
+    if (productLine == null) {
+        throw new IllegalArgumentException("ProductLine cannot be null");
+    }
+    this.productLine = productLine;
+}
+
     
     //============================================== Task lifecycle methods
     public void start() {
@@ -93,7 +102,7 @@ public class Task {
                 "Task can only be started from PENDING state"
         );
     }
-    productionProgressPercentege = 0;
+    productionProgress = 0;
     State = Status.taskStatus.IN_PROGRESS;
 }
 
@@ -104,7 +113,7 @@ public void complete() {
         );
     }
     State = Status.taskStatus.COMPLETED;
-    productionProgressPercentege = 100;
+    productionProgress = 100;
 }
 
 public void cancel() {
@@ -114,7 +123,7 @@ public void cancel() {
         );
     }
     State = Status.taskStatus.CANCELED;
-    productionProgressPercentege = 0;
+    productionProgress = 0;
     productLine.cancelTask(this);
 }
 

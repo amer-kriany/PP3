@@ -62,9 +62,7 @@ public class AddTaskButton extends JDialog {
         cancelButton.addActionListener(e -> dispose());
     }
 
-    private int generateAutoId() {
-        return nextId++;
-    }
+    
 
     private void createTask() {
 
