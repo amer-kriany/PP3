@@ -4,6 +4,7 @@ import java.time.format.DateTimeParseException;
 
 public class Task {
     private ProductLine productLine;
+    private String TaskName;
     private String clientName;
     private String desireProduct;
     private int quantity;
@@ -12,27 +13,21 @@ public class Task {
     LocalDateTime startAppointment;
     LocalDateTime deadLine = null;
 
-    enum TaskStatus {
-        PENDING,
-        IN_PROGRESS,
-        COMPLETED,
-        CANCELED
-    }
-
-    TaskStatus Status;
+    Status.taskStatus State;
     // progressing percentage
-    private int productionProgressPercentege = 0;
+    private int productionProgress = 0;
 
     Task() {
     }
 
-    Task(String clientName, String desireProduct, int quantity, String endDate) {
+    Task(String TaskName, String clientName, String desireProduct, int quantity, String endDate) {
 
         this.desireProduct = desireProduct;
         this.clientName = clientName;
         this.quantity = quantity;
         taskID = ++counter;
-        this.Status = TaskStatus.PENDING;
+        this.TaskName = TaskName;
+        this.State = Status.taskStatus.PENDING;
 
         // ========================================= start/end date/time
         startAppointment = LocalDateTime.now();
@@ -57,10 +52,8 @@ public class Task {
     }
 
     // setter
-    public void updateProductionProgressPercentege(int progress) {
-        this.productionProgressPercentege = progress;
-        if (productionProgressPercentege > 100)
-            productionProgressPercentege = 100;
+    public void updateProductionProgress(int progress) {
+        this.productionProgress += progress;
 
     }
 
@@ -77,54 +70,78 @@ public class Task {
         return this.quantity;
     }
 
-    public TaskStatus getStatus() {
-        return this.Status;
+    public Status.taskStatus getStatus() {
+        return this.State;
     }
+
+    public int getProductionProgress() {
+        return productionProgress;
+    }
+
+    public int getTaskID() {
+        return taskID;
+    }
+
     public LocalDateTime getStartAppointment() {
         return startAppointment;
     }
 
-    int getProductionProgressPercentege() {
-        return productionProgressPercentege;
+    public LocalDateTime getDeadLine() {
+        return deadLine;
     }
+
+    public String getTaskName() {
+        return TaskName;
+    }
+
+    public void setProductLine(ProductLine productLine) {
+        if (productLine == null) {
+            throw new IllegalArgumentException("ProductLine cannot be null");
+        }
+        this.productLine = productLine;
+    }
+
+    
 
     // ============================================== Task lifecycle methods
     public void start() {
-        if (Status != TaskStatus.PENDING) {
+        if (State != Status.taskStatus.PENDING) {
             throw new IllegalStateException(
                     "Task can only be started from PENDING state");
         }
-        productionProgressPercentege = 0;
-        Status = TaskStatus.IN_PROGRESS;
+        productionProgress = 0;
+        State = Status.taskStatus.IN_PROGRESS;
     }
 
     public void complete() {
-        if (Status != TaskStatus.IN_PROGRESS) {
+        if (State != Status.taskStatus.IN_PROGRESS) {
             throw new IllegalStateException(
                     "Task must be IN_PROGRESS to complete");
         }
-        Status = TaskStatus.COMPLETED;
-        productionProgressPercentege = 100;
+        State = Status.taskStatus.COMPLETED;
+        productionProgress = 100;
     }
 
     public void cancel() {
-        if (Status == TaskStatus.COMPLETED) {
+        if (State == Status.taskStatus.COMPLETED) {
             throw new IllegalStateException(
                     "Completed task cannot be canceled");
         }
-        Status = TaskStatus.CANCELED;
+        State = Status.taskStatus.CANCELED;
+        productionProgress = 0;
+        productLine.cancelTask(this);
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "id=" + taskID +
-                ", client= " + clientName +
-                ", product=" + desireProduct +
-                ", quantity=" + quantity +
-                ", status=" + Status +
-                ", startDate=" + startAppointment +
-                ", deadLine=" + deadLine +
+                "id=" + getTaskID() +
+                ", client= " + getClientName() +
+                ", product=" + getDesireProduct() +
+                ", quantity=" + getQuantity() +
+                ", status=" + getStatus() +
+                ", startDate=" + getStartAppointment() +
+                ", deadLine=" + getDeadLine() +
                 "}";
     }
 }

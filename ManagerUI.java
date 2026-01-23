@@ -3,7 +3,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class ManagerUI extends JFrame {
 
@@ -87,7 +86,7 @@ public class ManagerUI extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         add(changeStateButton, gbc);
         // table
-        String[] columns = { "Line Name", "Performance %" };
+        String[] columns = { "Line Id", "Line Name", "Performance" };
         linePerformanceModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -249,8 +248,8 @@ public class ManagerUI extends JFrame {
     private void refreshLinePerformance() {
         linePerformanceModel.setRowCount(0);
         for (ProductLine line : manager.getProductLines()) {
-            int progress = line.getLinePerformance();
-            linePerformanceModel.addRow(new Object[] { line.getLineName(), progress + "%" });
+            linePerformanceModel
+                    .addRow(new Object[] { line.getLineId(), line.getLineName(), line.getLinePerformance() });
         }
     }
 
@@ -287,40 +286,5 @@ public class ManagerUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Error saving notes and rating!", "Error", JOptionPane.ERROR_MESSAGE);
             FileManager.logError("ManagerUI | Error saving notes and rating!");
         }
-    }
-
-    public static void main(String[] args) {
-        // ProductionManager pm = new ProductionManager(new ArrayList<>());
-
-        // Item cpu = new Item(1, "CPU", Item.MEDICAL_DEVICES, 120.0, 100, 10);
-        // Item ram = new Item(2, "RAM", Item.MEDICAL_DEVICES, 50.0, 100, 10);
-        // Item ssd = new Item(3, "SSD", Item.MEDICAL_DEVICES, 80.0, 50, 5);
-        // Item screen = new Item(4, "Screen", Item.MEDICAL_DEVICES, 100.0, 50, 5);
-        // Item sugar = new Item(5, "Sugar", Item.MEDICINE, 10.0, 20, 5);
-
-        // Inventory.addItem(cpu, 100);
-        // Inventory.addItem(ram, 100);
-        // Inventory.addItem(ssd, 50);
-        // Inventory.addItem(screen, 50);
-        // Inventory.addItem(sugar, 20);
-        // RecipeManager.loadRecipes();
-
-        // ProductLine lineA = new ProductLine(1, "Line A", ProductLine.State.ACTIVE);
-        // pm.addLine(lineA);
-        // ProductLine lineB = new ProductLine(2, "Line B", ProductLine.State.ACTIVE);
-        // pm.addLine(lineB);
-
-        // Task t1 = new Task("Client 1", "Laptop", 5, "10-01-2026 20:00:00");
-        // Task t3 = new Task("Client 1", "Laptop", 15, "10-01-2026 20:00:00");
-        // Task t2 = new Task("Client 2", "Phone", 5, "10-01-2026 20:00:00");
-
-        // lineA.addTask(t1);
-        // lineA.addTask(t3);
-        // lineB.addTask(t2);
-
-        // lineA.start();
-        // lineB.start();
-
-        // SwingUtilities.invokeLater(() -> new ManagerUI(pm).setVisible(true));
     }
 }

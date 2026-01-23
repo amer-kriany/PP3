@@ -1,53 +1,58 @@
-[2026-01-06 13:59:40] Line 1 | Task 1 | No recipe found for product: UnknownProduct
-[2026-01-06 14:00:30] Line 1 | Task 1 | No recipe found for product: UnknownProduct
-[2026-01-06 14:13:20] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 14:14:07] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 14:16:50] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 14:21:06] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 14:21:07] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 14:21:08] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 14:21:09] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 14:21:10] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 14:21:11] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 14:21:12] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 14:21:13] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 14:21:14] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 14:21:15] Line 1 | Task 1 | Not enough inventory for Task: 1
-[2026-01-06 15:05:32] Manager | Invalid Id.
-[2026-01-06 15:08:34] ManagerUI | Please enter the line name!tt
-[2026-01-06 15:12:28] ManagerUI | Invalid Id.
-[2026-01-06 15:17:31] ManagerUI | Invalid Id.
-[2026-01-06 15:17:40] ManagerUI | Invalid Id.
-[2026-01-06 15:17:44] ManagerUI | Invalid Id.
-[2026-01-06 15:17:47] ManagerUI | Invalid Id.
-[2026-01-06 15:17:50] ManagerUI | Invalid Id.
-[2026-01-06 15:18:53] ManagerUI | Please enter the line name!
-[2026-01-06 15:18:56] ManagerUI | Please enter the line name!
-[2026-01-06 15:19:03] ManagerUI | Line ID already exists!
-[2026-01-06 15:19:12] ManagerUI | Line ID already exists!
-[2026-01-06 15:19:32] ManagerUI | Line name already exists!
-[2026-01-06 15:19:34] ManagerUI | Line name already exists!
-[2026-01-06 15:26:38] ManagerUI | Line not found.
-[2026-01-06 15:26:50] ManagerUI | Line not found.
-[2026-01-06 15:26:52] ManagerUI | Line not found.
-[2026-01-06 15:26:54] ManagerUI | Line not found.
-[2026-01-06 15:26:57] ManagerUI | Line not found.
-[2026-01-06 15:27:05] ManagerUI | Line not found.
-[2026-01-06 15:27:07] ManagerUI | Line not found.
-[2026-01-06 15:27:08] ManagerUI | Line not found.
-[2026-01-06 15:27:09] ManagerUI | Line not found.
-[2026-01-06 15:27:09] ManagerUI | Line not found.
-[2026-01-06 15:27:37] ManagerUI | Line ID already exists!
-[2026-01-06 15:39:07] ManagerUI | Line not found.
-[2026-01-06 15:44:24] ManagerUI | Line not found.
-[2026-01-06 15:46:31] Line with ID 4 not found!
-[2026-01-06 15:53:05] Line with ID 22 not found.
-[2026-01-06 15:53:50] Line with ID 22 not found.
-[2026-01-06 15:56:23] ManagerUI | Invalid ID format!
-[2026-01-06 16:18:01] ManagerUI | No production lines available to save notes and rating.
-[2026-01-06 16:23:16] ManagerUI | No production lines available.
-[2026-01-06 16:40:37] Task 3 canceled due to line state change.
-[2026-01-06 17:26:15] Line 1 | Task 2 | Task can only be started from PENDING state
-[2026-01-06 17:27:29] Line 1 | Task 2 | Task must be IN_PROGRESS to complete
-[2026-01-06 17:33:15] Line 1 | Task 2 | Task can only be started from PENDING state
-[2026-01-06 17:34:29] Line 1 | Task 2 | Task must be IN_PROGRESS to complete
+[2026-01-23 16:05:54] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:06:07] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:06:17] ProductReportGUI | Error date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-23 16:17:33] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:24:19] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:35:51] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:36:02] ProductReportGUI | Error no Product!
+[2026-01-23 16:36:05] ProductReportGUI | Error date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-23 16:36:07] ProductReportGUI | Error no Product!
+[2026-01-23 16:36:11] ProductReportGUI | Error no Product!
+[2026-01-23 16:36:16] ProductReportGUI | Error no Product!
+[2026-01-23 16:36:32] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:36:40] ProductReportGUI | Error no Product!
+[2026-01-23 16:36:56] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:38:18] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:38:26] ProductReportGUI | Error no Product!
+[2026-01-23 16:48:22] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:50:32] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:51:13] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:55:00] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:55:17] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:57:04] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:58:39] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 17:40:19] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 17:41:36] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 17:41:51] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 17:46:55] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 17:53:51] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 18:00:36] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 18:06:07] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 18:16:36] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 18:21:38] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 18:55:30] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 18:57:56] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 19:00:45] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 19:04:02] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 19:09:18] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 19:10:09] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 19:10:54] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 19:49:15] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 19:49:52] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 19:51:14] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 19:51:45] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:00:56] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:05:32] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:08:40] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:15:51] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:18:28] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:23:32] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:29:44] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:30:13] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:32:24] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:34:06] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:36:10] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:36:35] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:42:58] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:43:50] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 20:57:08] Line 3 | Task 8 | Not enough inventory for Task 8

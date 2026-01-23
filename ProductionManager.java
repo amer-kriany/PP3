@@ -70,7 +70,7 @@ public class ProductionManager {
         }
     }
 
-    public void showProductsByLine(String lineName) {
+    public List<String> showProductsByLine(String lineName) {
 
         ProductLine line = chooseLine(lineName);
 
@@ -78,24 +78,22 @@ public class ProductionManager {
             throw new IllegalArgumentException("Product line not found");
         }
 
-        System.out.println("Products manufactured by line: " + line.getLineName());
-
         List<String> printedProducts = new ArrayList<>();
 
         for (Task task : line.getProductLineTasks()) {
             String productName = task.getDesireProduct();
 
             if (!printedProducts.contains(productName)) {
-                System.out.println("Product: " + productName);
                 printedProducts.add(productName);
             }
         }
 
         if (printedProducts.isEmpty())
             throw new IllegalArgumentException("There are no products manufactured using this line.");
+        return printedProducts;
     }
 
-    public void showAllManufacturedProducts() {
+    public List<String> showAllManufacturedProducts() {
 
         List<String> printedProducts = new ArrayList<>();
         boolean foundAny = false;
@@ -105,7 +103,7 @@ public class ProductionManager {
         for (ProductLine line : productLines) {
             for (Task task : line.getProductLineTasks()) {
 
-                if (task.getStatus() == Task.TaskStatus.COMPLETED) {
+                if (task.getStatus() == Status.taskStatus.COMPLETED) {
 
                     String productName = task.getDesireProduct();
 
@@ -122,6 +120,7 @@ public class ProductionManager {
             throw new IllegalArgumentException(
                     "No manufactured products found in any production line.");
         }
+        return printedProducts;
     }
 
     public String getMostRequestedProduct(
@@ -136,7 +135,7 @@ public class ProductionManager {
             synchronized (line.getProductLineTasks()) {
                 for (Task task : line.getProductLineTasks()) {
 
-                    if (task.getStatus() != Task.TaskStatus.COMPLETED) {
+                    if (task.getStatus() != Status.taskStatus.COMPLETED) {
                         continue;
                     }
 
