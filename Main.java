@@ -2,9 +2,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
-        //production manager
+        // production manager
         ProductionManager pm = new ProductionManager(new ArrayList<>());
         // Item
         Item cpu = new Item(1, "CPU", Item.Categories.TECHNOLOGY, 120.0, 100, 10);
@@ -30,7 +31,7 @@ public class Main {
         Inventory.addItem(sardines, 20);
         Inventory.addItem(chicken, 80);
         Inventory.addItem(cans, 100);
-        //Product Line
+        // Product Line
         ProductLine lineA = new ProductLine(1, "Technology line", ProductLine.State.ACTIVE);
         pm.addLine(lineA);
         ProductLine lineB = new ProductLine(2, "clothes line", ProductLine.State.ACTIVE);
@@ -47,7 +48,7 @@ public class Main {
         Task Tona = new Task("make 5 TONA", "Client 5", "tuna", 7, "26-01-2026 20:00:00");
         Task Sardines = new Task("make 5 sardines", "Client 6", "sardines", 7, "26-01-2026 20:00:00");
         Task Lanchun = new Task("make 5 Lanchun", "Client 6", "Lanchun", 7, "26-01-2026 20:00:00");
-        // add to production manager 
+        // add to production manager
         pm.addTask(Laptop, "Technology line");
         pm.addTask(Phone, "Technology line");
         pm.addTask(tablet, "Technology line");
@@ -61,13 +62,13 @@ public class Main {
         lineA.start();
         lineB.start();
         lineC.start();
-          try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        new LoginUI().setVisible(true);
-        // SwingUtilities.invokeLater(() -> new ManagerUI(pm).setVisible(true));
-        // SwingUtilities.invokeLater(() -> new InventoryManagerUI().setVisible(true));
+        // try {
+        //     UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        // }
+        // new LoginUI().setVisible(true);
+       new ManagerUI(pm).setVisible(true);
+     
     }
 }

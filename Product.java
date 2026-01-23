@@ -1,13 +1,10 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Product {
    private int proId;
     private String proName;
     private Map<Item,Integer> former;
-    private Inventory inventory;
 
     public int getProId() {
         return proId;
@@ -28,13 +25,13 @@ public class Product {
         
     }
     public void addFormerByName(String itemName,int quantity){
-        Item item=inventory.getItemByName(itemName);
+        Item item=Inventory.getItemByName(itemName);
         if(item !=null&&quantity>0){
             former.put(item,quantity);
         }else throw new IllegalArgumentException("the item does not exists or quantity entry error");
     }
     public void addFormerById(int itemId,int quantity){
-        Item item=inventory.getItemById(itemId);
+        Item item=Inventory.getItemById(itemId);
         if(item !=null&&quantity>0){
             former.put(item,quantity);
         }else throw new IllegalArgumentException("the item does not exists or quantity entry error");

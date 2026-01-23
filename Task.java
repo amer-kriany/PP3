@@ -113,7 +113,7 @@ public void complete() {
         );
     }
     State = Status.taskStatus.COMPLETED;
-    productionProgress = 100;
+    productionProgress = this.quantity;
 }
 
 public void cancel() {

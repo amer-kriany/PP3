@@ -86,7 +86,7 @@ public class ManagerUI extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         add(changeStateButton, gbc);
         // table
-        String[] columns = { "Line Name", "Performance %" };
+        String[] columns = { "Line Name", "Performance " };
         linePerformanceModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -245,13 +245,38 @@ public class ManagerUI extends JFrame {
         }
     }
 
-    private void refreshLinePerformance() {
-        linePerformanceModel.setRowCount(0);
-        for (ProductLine line : manager.getProductLines()) {
-            int progress = line.getLinePerformance();
-            linePerformanceModel.addRow(new Object[] { line.getLineName(), progress + "%" });
+ private void refreshLinePerformance() {
+    linePerformanceModel.setRowCount(0); 
+    
+    for (ProductLine line : manager.getProductLines()) { 
+        int progress = line.getLinePerformance(); 
+        
+        boolean allTasksDone = true;
+        java.util.List<Task> tasks = line.getProductLineTasks(); 
+        
+        if (tasks.isEmpty()) {
+            allTasksDone = false; 
+        } else {
+            for (Task task : tasks) {
+                if (task.getStatus() != Status.taskStatus.COMPLETED) { 
+                    allTasksDone = false;
+                    break;
+                }
+            }
         }
+
+        
+        String performanceDisplay = progress + "";
+        if (allTasksDone) {
+            performanceDisplay += " done";
+        }
+    
+        
+        
+        linePerformanceModel.addRow(new Object[] { line.getLineName(), performanceDisplay });
     }
+}
+
 
     private void saveNotesAndRating() {
 
@@ -309,9 +334,9 @@ public class ManagerUI extends JFrame {
         // ProductLine lineB = new ProductLine(2, "Line B", ProductLine.State.ACTIVE);
         // pm.addLine(lineB);
 
-        // Task t1 = new Task("add 5 laptop","Client 1", "Laptop", 5, "10-01-2026 20:00:00");
-        // Task t3 = new Task("add 4 laptop","Client 1", "Laptop", 15, "10-01-2026 20:00:00");
-        // Task t2 = new Task("add 6 phone","Client 2", "Phone", 5, "10-01-2026 20:00:00");
+        // Task t1 = new Task("Client 1", "Laptop", 5, "10-01-2026 20:00:00");
+        // Task t3 = new Task("Client 1", "Laptop", 15, "10-01-2026 20:00:00");
+        // Task t2 = new Task("Client 2", "Phone", 5, "10-01-2026 20:00:00");
 
         // lineA.addTask(t1);
         // lineA.addTask(t3);
@@ -320,6 +345,6 @@ public class ManagerUI extends JFrame {
         // lineA.start();
         // lineB.start();
 
-       
+        // SwingUtilities.invokeLater(() -> new ManagerUI(pm).setVisible(true));
     }
 }

@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LoginUI extends JFrame {
@@ -113,33 +114,48 @@ public class LoginUI extends JFrame {
 
         // Action
         loginButton.addActionListener(e -> {
-            String username = usernameField.getText().trim();
-            String password = new String(passwordField.getPassword());
-            String selectedRole = roleBox.getSelectedItem().toString();
+    String username = usernameField.getText().trim();
+    String password = new String(passwordField.getPassword());
+    String selectedRole = roleBox.getSelectedItem().toString();
 
-            if (users.containsKey(username)) {
-                String[] data = users.get(username);
+    if (users.containsKey(username)) {
+        String[] data = users.get(username);
 
-                if (!data[0].equals(password)) {
-                    JOptionPane.showMessageDialog(this, "Incorrect password!");
-                    return;
-                }
+        if (!data[0].equals(password)) {
+            JOptionPane.showMessageDialog(this, "Incorrect password!");
+            return;
+        }
 
-                if (!data[1].equals(selectedRole)) {
-                    JOptionPane.showMessageDialog(this,
-                            "Role mismatch!\nYou are not a " + selectedRole);
-                    return;
-                }
+        if (!data[1].equals(selectedRole)) {
+            JOptionPane.showMessageDialog(this,
+                    "Role mismatch!\nYou are not a " + selectedRole);
+            return;
+        }
 
-                JOptionPane.showMessageDialog(this,
-                        "Login Successful!\nWelcome " + selectedRole);
-            } else {
-                JOptionPane.showMessageDialog(this, "User not found!");
-            }
-        });
+        JOptionPane.showMessageDialog(this,
+                "Login Successful!\nWelcome " + selectedRole);
+
+        //  close login
+        this.dispose();
+
+        // open the next frame
+        if (selectedRole.equals("Manager")) {
+            ProductionManager manager = new ProductionManager(new ArrayList<>());
+            ManagerUI managerUI = new ManagerUI(manager);
+            managerUI.setVisible(true);
+        } else if (selectedRole.equals("Production Supervisor")) {
+            InventoryManagerUI inventoryUI = new InventoryManagerUI();
+            inventoryUI.setVisible(true);
+        }
+
+    } else {
+        JOptionPane.showMessageDialog(this, "User not found!");
+    }
+});
+
     }
 
-    // الميثود لتمكين زر Login عند إدخال النصوص
+    
     private void checkFields(JTextField username, JPasswordField password, JButton loginButton) {
         boolean enable =
                 !username.getText().trim().isEmpty() &&
@@ -148,13 +164,3 @@ public class LoginUI extends JFrame {
         loginButton.setEnabled(enable);
     }
 }
-
-//     public static void main(String[] args) {
-//         try {
-//             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-//         } catch (Exception e) {
-//             e.printStackTrace();
-//         }
-//         new LoginUI();
-//     }
-// }
