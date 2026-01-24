@@ -145,7 +145,7 @@ public class InventoryManagerUI extends JFrame {
         for (Item item : stock.keySet()) {
             boolean matchesSearch = item.getName().toLowerCase().contains(search);
             boolean matchesCat = cat.equals("All Categories") || item.getCategory().name().equals(cat);
-            int q = Inventory.getItemQuantity(item); // استخدام دالة Inventory لضمان الدقة
+            int q = Inventory.getItemQuantity(item); 
             int m = item.getMinQuantity();
             boolean matchesStat = switch (stat) {
                 case "Available" -> q >= m;

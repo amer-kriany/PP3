@@ -116,7 +116,7 @@ public class ManagerUI extends JFrame {
         add(new JLabel("Select Production Line:"), gbc);
 
         lineBox = new JComboBox<>();
-        updateLineBox(); // دالة لتعبئة الكومبو بوكس
+        updateLineBox(); 
 
         lineBox.setRenderer(new DefaultListCellRenderer() {
             @Override
@@ -167,7 +167,6 @@ public class ManagerUI extends JFrame {
         gbc.fill = GridBagConstraints.NONE;
         add(saveButton, gbc);
 
-        // Timer لتحديث الجدول تلقائياً كل ثانية
         Timer lineTimer = new Timer(1000, e -> refreshLinePerformance());
         lineTimer.start();
 
@@ -224,7 +223,6 @@ public class ManagerUI extends JFrame {
         }
     }
 
-    // الدالة المطلوبة: تحديث الجدول وإضافة (Done) بجانب الرقم
     private void refreshLinePerformance() {
         linePerformanceModel.setRowCount(0);
         for (ProductLine line : manager.getProductLines()) {
@@ -232,7 +230,6 @@ public class ManagerUI extends JFrame {
             String performanceText = String.valueOf(line.getLinePerformance());
             List<Task> tasks = line.getProductLineTasks();
             
-            // شرط الانتهاء: إذا كانت القائمة ليست فارغة وكل المهام COMPLETED
             if (!tasks.isEmpty()) {
                 boolean allDone = tasks.stream()
                         .allMatch(t -> t.getStatus() == Status.taskStatus.COMPLETED);

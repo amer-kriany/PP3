@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LoginUI extends JFrame {
@@ -90,7 +89,6 @@ public class LoginUI extends JFrame {
         add(mainPanel);
         setVisible(true);
 
-        // Document listeners لتمكين الزر تلقائيًا
         usernameField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
                 checkFields(usernameField, passwordField, loginButton);
@@ -146,11 +144,9 @@ public class LoginUI extends JFrame {
             ManagerUI managerUI = new ManagerUI(pm);
             managerUI.setVisible(true);
         } else if (selectedRole.equals("Production Supervisor")) {
-                // نمرر الـ pm نفسه لواجهة الاختيار
                 new SupervisorSelectionUI(this.pm).setVisible(true);
                 this.dispose();
             } else if (selectedRole.equals("Manager")) {
-                // نمرر الـ pm نفسه لواجهة المدير
                 new ManagerUI(this.pm).setVisible(true);
                 this.dispose();
             }

@@ -92,14 +92,12 @@ public class ProductionManagerGUI extends JFrame {
         table.setFont(strongFont);
         add(new JScrollPane(table), BorderLayout.CENTER);
 
-        // ===== BOTTOM PANEL (تعديل الطلب الثاني هنا) =====
-        JPanel bottomPanel = new JPanel(new BorderLayout()); // تغيير الـ Layout لإضافة زر في أقصى اليسار
+        // ===== BOTTOM PANEL ====
+        JPanel bottomPanel = new JPanel(new BorderLayout());   
         
-        // زر الطلب الثاني (أقصى اليسار)
         JButton btnProductHistory = createButton("Product Lines History", new Color(52, 73, 94));
         btnProductHistory.addActionListener(e -> new ProductHistoryFrame().setVisible(true));
         
-        // الأزرار الأصلية (في الوسط)
         JPanel centerButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
         JButton btnAdd = createButton("Add Task", new Color(46, 204, 113));
         JButton btnDelete = createButton("Delete Task", new Color(231, 76, 60));
@@ -110,7 +108,7 @@ public class ProductionManagerGUI extends JFrame {
         centerButtons.add(btnRefresh);
         centerButtons.add(btnReports);
 
-        bottomPanel.add(btnProductHistory, BorderLayout.WEST); // الزر الجديد في اليسار
+        bottomPanel.add(btnProductHistory, BorderLayout.WEST); 
         bottomPanel.add(centerButtons, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
 
@@ -140,7 +138,6 @@ public class ProductionManagerGUI extends JFrame {
         return btn;
     }
 
-    // --- نافذة الطلب الثاني (Product Lines History) ---
     class ProductHistoryFrame extends JFrame {
         private JComboBox<String> productBox;
         private DefaultListModel<String> listModel;
@@ -165,7 +162,7 @@ public class ProductionManagerGUI extends JFrame {
             add(top, BorderLayout.NORTH);
             add(new JScrollPane(lineList), BorderLayout.CENTER);
             
-            updateLines(); // التحديث الأولي
+            updateLines(); 
         }
 
         private void updateLines() {
@@ -190,7 +187,6 @@ public class ProductionManagerGUI extends JFrame {
         }
     }
 
-    // ميثود الحذف والـ Refresh كما هي في كودك الأصلي
     private void deleteSelectedTask() {
         int row = table.getSelectedRow();
         if (row != -1) {
