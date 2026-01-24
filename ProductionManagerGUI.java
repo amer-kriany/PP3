@@ -97,16 +97,25 @@ public class ProductionManagerGUI extends JFrame {
 
         add(new JScrollPane(table), BorderLayout.CENTER);
 
-        // --- 3. BOTTOM ACTION PANEL ---
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 15));
+        // --- 3. BOTTOM ACTION PANEL (Modified for Right Alignment) ---
+        JPanel bottomPanel = new JPanel(new BorderLayout()); // استخدام BorderLayout لتوزيع الأزرار
         
+        // الأزرار الأصلية في المنتصف
+        JPanel centerButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 15));
         JButton btnOpenAdd = createStyledButton("Add New Task +", new Color(46, 204, 113));
         JButton btnDelete = createStyledButton("Delete Selected Task -", new Color(231, 76, 60));
         JButton btnRefresh = createStyledButton("Refresh Data 🔄", new Color(52, 152, 219));
-        
-        bottomPanel.add(btnOpenAdd);
-        bottomPanel.add(btnDelete);
-        bottomPanel.add(btnRefresh);
+        centerButtons.add(btnOpenAdd);
+        centerButtons.add(btnDelete);
+        centerButtons.add(btnRefresh);
+
+        // زر التقارير في أقصى اليمين
+        JPanel rightButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 30, 15));
+        JButton btnGoToReports = createStyledButton("View Reports 📊", new Color(155, 89, 182));
+        rightButtonPanel.add(btnGoToReports);
+
+        bottomPanel.add(centerButtons, BorderLayout.CENTER);
+        bottomPanel.add(rightButtonPanel, BorderLayout.EAST);
         add(bottomPanel, BorderLayout.SOUTH);
 
         // --- 4. LISTENERS ---
@@ -138,6 +147,11 @@ public class ProductionManagerGUI extends JFrame {
         });
 
         btnRefresh.addActionListener(e -> refreshTable());
+
+        // برمجة زر الانتقال للتقارير
+        btnGoToReports.addActionListener(e -> {
+            new ProductReportGUI(this.pm).setVisible(true);
+        });
 
         refreshTable();
     }

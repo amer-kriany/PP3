@@ -12,7 +12,6 @@ public class ProductionManager {
         ProductLine taskLine = chooseLine(lineName);
         if (taskLine == null)
             throw new IllegalArgumentException("Product line not found");
-        task.setProductLine(taskLine);
         taskLine.addTask(task);
 
     }
@@ -71,7 +70,7 @@ public class ProductionManager {
         }
     }
 
-    public void showProductsByLine(String lineName) {
+    public List<String> showProductsByLine(String lineName) {
 
         ProductLine line = chooseLine(lineName);
 
@@ -79,53 +78,23 @@ public class ProductionManager {
             throw new IllegalArgumentException("Product line not found");
         }
 
-        System.out.println("Products manufactured by line: " + line.getLineName());
-
         List<String> printedProducts = new ArrayList<>();
 
         for (Task task : line.getProductLineTasks()) {
             String productName = task.getDesireProduct();
 
             if (!printedProducts.contains(productName)) {
-                System.out.println("Product: " + productName);
                 printedProducts.add(productName);
             }
         }
 
         if (printedProducts.isEmpty())
             throw new IllegalArgumentException("There are no products manufactured using this line.");
+        return printedProducts;
     }
 
-    public void showAllManufacturedProducts() {
-
-        List<String> printedProducts = new ArrayList<>();
-        boolean foundAny = false;
-
-        System.out.println("Products manufactured by all production lines:");
-
-        for (ProductLine line : productLines) {
-            for (Task task : line.getProductLineTasks()) {
-
-                if (task.getStatus() == Status.taskStatus.COMPLETED) {
-
-                    String productName = task.getDesireProduct();
-
-                    if (!printedProducts.contains(productName)) {
-                        System.out.println("Product: " + productName);
-                        printedProducts.add(productName);
-                        foundAny = true;
-                    }
-                }
-            }
-        }
-
-        if (!foundAny) {
-            throw new IllegalArgumentException(
-                    "No manufactured products found in any production line.");
-        }
-    }
-
-    public String getMostRequestedProduct(
+   
+    public ProductSale getMostRequestedProduct(
             LocalDateTime from,
             LocalDateTime to) {
         if (from.isAfter(to)) {
@@ -167,9 +136,9 @@ public class ProductionManager {
         }
 
         if (mostRequestedProduct != null) {
-            return mostRequestedProduct + " (Total ordered: " + maxQty + ")";
+            return new ProductSale(mostRequestedProduct, maxQty);
         } else {
-            return "No orders in this period";
+            throw new IllegalArgumentException("No products found in the given date range.");
         }
     }
 

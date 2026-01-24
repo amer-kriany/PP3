@@ -8,73 +8,80 @@ public class Task {
     private String clientName;
     private String desireProduct;
     private int quantity;
-    static int counter=0;
+    static int counter = 0;
     int taskID;
     LocalDateTime startAppointment;
-    LocalDateTime deadLine =null;
-    
-    
+    LocalDateTime deadLine = null;
+
     Status.taskStatus State;
     // progressing percentage
     private int productionProgress = 0;
-    
-    
-    Task(){}
-    Task(String TaskName,String clientName,String desireProduct, int quantity , String endDate){
-        
-        this.desireProduct=desireProduct;
-        this.clientName=clientName;
-        this.quantity=quantity;
-        taskID=++counter;
-        this.TaskName=TaskName;
-        this.State= Status.taskStatus.PENDING;
-        
-        //========================================= start/end date/time
-       startAppointment=LocalDateTime.now();   
-      
-         setDeadLine(endDate); 
-         
-        }
+
+    Task() {
+    }
+
+    Task(String TaskName, String clientName, String desireProduct, int quantity, String endDate) {
+
+        this.desireProduct = desireProduct;
+        this.clientName = clientName;
+        this.quantity = quantity;
+        taskID = ++counter;
+        this.TaskName = TaskName;
+        this.State = Status.taskStatus.PENDING;
+
+        // ========================================= start/end date/time
+        startAppointment = LocalDateTime.now();
+
+        setDeadLine(endDate);
+
+    }
+
     // deadLine
-    public void setDeadLine(String endLine){
+    public void setDeadLine(String endLine) {
         DateTimeFormatter formatterEnd = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-             try {
-           LocalDateTime parsed = LocalDateTime.parse(endLine, formatterEnd);
-            if(parsed.isBefore(LocalDateTime.now())){
+        try {
+            LocalDateTime parsed = LocalDateTime.parse(endLine, formatterEnd);
+            if (parsed.isBefore(LocalDateTime.now())) {
                 throw new IllegalArgumentException("Deadline cannot be before today");
             }
-            this.deadLine=parsed;
-        } 
-        catch (DateTimeParseException e) {
+            this.deadLine = parsed;
+        } catch (DateTimeParseException e) {
             throw new IllegalArgumentException(" Invalid date format. Please use dd-MM-yyyy HH:mm:ss");
-            
+
         }
     }
-        // setter
-        public void updateProductionProgress(int progress){
-            this.productionProgress+=progress;
-            
-            
-        }
+
+    // setter
+    public void updateProductionProgress(int progress) {
+        this.productionProgress += progress;
+
+    }
+
     // getters
-    public String getClientName(){
+    public String getClientName() {
         return this.clientName;
     }
-    public String getDesireProduct(){
+
+    public String getDesireProduct() {
         return this.desireProduct;
     }
-    public int getQuantity(){
+
+    public int getQuantity() {
         return this.quantity;
     }
-    public Status.taskStatus getStatus(){
+
+    public Status.taskStatus getStatus() {
         return this.State;
     }
-    public int getProductionProgress(){
+
+    public int getProductionProgress() {
         return productionProgress;
     }
-    public int getTaskID(){
+
+    public int getTaskID() {
         return taskID;
     }
+
     public LocalDateTime getStartAppointment() {
         return startAppointment;
     }
@@ -82,65 +89,57 @@ public class Task {
     public LocalDateTime getDeadLine() {
         return deadLine;
     }
-    public String getTaskName(){
+
+    public String getTaskName() {
         return TaskName;
     }
-    public ProductLine getProductLine() {
-    return productLine;
-}
-
 
     public void setProductLine(ProductLine productLine) {
-    if (productLine == null) {
-        throw new IllegalArgumentException("ProductLine cannot be null");
+        if (productLine == null) {
+            throw new IllegalArgumentException("ProductLine cannot be null");
+        }
+        this.productLine = productLine;
     }
-    this.productLine = productLine;
-}
 
-    
-    //============================================== Task lifecycle methods
+    // ============================================== Task lifecycle methods
     public void start() {
-    if (State != Status.taskStatus.PENDING) {
-        throw new IllegalStateException(
-                "Task can only be started from PENDING state"
-        );
+        if (State != Status.taskStatus.PENDING) {
+            throw new IllegalStateException(
+                    "Task can only be started from PENDING state");
+        }
+        productionProgress = 0;
+        State = Status.taskStatus.IN_PROGRESS;
     }
-    productionProgress = 0;
-    State = Status.taskStatus.IN_PROGRESS;
-}
 
-public void complete() {
-    if (State != Status.taskStatus.IN_PROGRESS) {
-        throw new IllegalStateException(
-                "Task must be IN_PROGRESS to complete"
-        );
+    public void complete() {
+        if (State != Status.taskStatus.IN_PROGRESS) {
+            throw new IllegalStateException(
+                    "Task must be IN_PROGRESS to complete");
+        }
+        State = Status.taskStatus.COMPLETED;
+        productionProgress = this.quantity;
     }
-    State = Status.taskStatus.COMPLETED;
-    productionProgress = this.quantity;
-}
 
-public void cancel() {
-    if (State == Status.taskStatus.COMPLETED) {
-        throw new IllegalStateException(
-                "Completed task cannot be canceled"
-        );
+    public void cancel() {
+        if (State == Status.taskStatus.COMPLETED) {
+            throw new IllegalStateException(
+                    "Completed task cannot be canceled");
+        }
+        State = Status.taskStatus.CANCELED;
+        productionProgress = 0;
+        productLine.cancelTask(this);
     }
-    State = Status.taskStatus.CANCELED;
-    productionProgress = 0;
-    productLine.cancelTask(this);
-}
 
-  @Override
-public String toString() {
-    return "Task{" +
-           "id=" + getTaskID() +
-           ", client= " + getClientName()  +
-           ", product=" + getDesireProduct()  +
-           ", quantity=" + getQuantity() +
-           ", status=" + getStatus() +
-           ", startDate=" + getStartAppointment() +
-           ", deadLine=" + getDeadLine() +
-           "}";
-}   
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + getTaskID() +
+                ", client= " + getClientName() +
+                ", product=" + getDesireProduct() +
+                ", quantity=" + getQuantity() +
+                ", status=" + getStatus() +
+                ", startDate=" + getStartAppointment() +
+                ", deadLine=" + getDeadLine() +
+                "}";
+    }
 }
-
