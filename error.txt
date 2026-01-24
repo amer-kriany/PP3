@@ -1,0 +1,74 @@
+[2026-01-22 12:09:54] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 12:11:06] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 12:36:52] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 12:37:31] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 12:40:43] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 12:41:35] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 12:41:45] Line 1 | Task 2 | Task can only be started from PENDING state
+[2026-01-22 16:07:37] Line 3 | Task 7 | No recipe found for product: tona
+[2026-01-22 16:07:37] Line 3 | Task 8 | No recipe found for product: sardines
+[2026-01-22 16:07:37] Line 2 | Task 5 | No recipe found for product: JEANSE
+[2026-01-22 16:07:37] Line 2 | Task 4 | No recipe found for product: HOODIE
+[2026-01-22 16:07:37] Line 2 | Task 6 | No recipe found for product: JACKET
+[2026-01-22 16:07:37] Line 3 | Task 9 | No recipe found for product: Lanchun
+[2026-01-22 16:07:37] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-22 16:36:06] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-22 16:36:06] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-22 16:37:28] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-22 16:37:28] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-22 16:37:56] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-22 16:37:56] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-22 16:44:56] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-22 16:44:56] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-22 16:46:12] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-22 16:46:12] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-22 16:46:12] Error loading inventory: No enum constant Item.Categories.medicine
+[2026-01-23 12:28:44] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 12:28:44] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 12:28:44] Error loading inventory: No enum constant Item.Categories.medicine
+[2026-01-23 12:47:01] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 12:47:01] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 13:19:27] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 13:19:27] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 13:55:06] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 13:55:06] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 14:01:34] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 14:01:34] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 14:02:12] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 14:02:12] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 14:04:48] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 14:04:48] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 14:06:41] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 14:06:41] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 14:09:01] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 14:09:01] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 14:17:22] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 14:17:22] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 14:29:04] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 14:29:04] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 14:29:44] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 14:29:44] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 14:33:44] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 14:33:44] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 14:44:05] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 14:44:05] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 16:10:33] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 16:10:33] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 17:19:08] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 17:19:08] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 17:40:25] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 17:40:25] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 18:34:27] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 18:34:27] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 18:43:24] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 18:43:24] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 18:50:55] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-23 18:50:55] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 10:25:23] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 10:25:23] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-24 10:28:15] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-24 10:28:15] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 10:30:01] Line 1 | Task 3 | No recipe found for product: tablet
+[2026-01-24 10:30:01] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 10:36:24] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 10:36:24] Line 1 | Task 3 | No recipe found for product: tablet
