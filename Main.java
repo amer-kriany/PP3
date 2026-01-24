@@ -34,25 +34,21 @@ public class Main {
 
         // ===================== Products
         Product Laptop = new Product(1, "Laptop");
-       
+
         Product Phone = new Product(2, "Phone");
-      
 
         Product Tablet = new Product(3, "Tablet");
-     
 
         Product HOODIE = new Product(4, "HOODIE");
-       
+
         Product JEANSE = new Product(5, "JEANSE");
-       
+
         Product JACKET = new Product(6, "JACKET");
-      
 
         Product Tuna = new Product(7, "Tuna");
         Product Sardines = new Product(8, "Sardines");
-     
+
         Product LanchunProduct = new Product(9, "Lanchun");
-    
 
         // ===================== Product Lines
         ProductLine lineA = new ProductLine(1, "Technology line", ProductLine.State.ACTIVE);
