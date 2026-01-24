@@ -93,37 +93,8 @@ public class ProductionManager {
         return printedProducts;
     }
 
-    public List<String> showAllManufacturedProducts() {
-
-        List<String> printedProducts = new ArrayList<>();
-        boolean foundAny = false;
-
-        System.out.println("Products manufactured by all production lines:");
-
-        for (ProductLine line : productLines) {
-            for (Task task : line.getProductLineTasks()) {
-
-                if (task.getStatus() == Status.taskStatus.COMPLETED) {
-
-                    String productName = task.getDesireProduct();
-
-                    if (!printedProducts.contains(productName)) {
-                        System.out.println("Product: " + productName);
-                        printedProducts.add(productName);
-                        foundAny = true;
-                    }
-                }
-            }
-        }
-
-        if (!foundAny) {
-            throw new IllegalArgumentException(
-                    "No manufactured products found in any production line.");
-        }
-        return printedProducts;
-    }
-
-    public String getMostRequestedProduct(
+   
+    public ProductSale getMostRequestedProduct(
             LocalDateTime from,
             LocalDateTime to) {
         if (from.isAfter(to)) {
@@ -165,9 +136,9 @@ public class ProductionManager {
         }
 
         if (mostRequestedProduct != null) {
-            return mostRequestedProduct + " (Total ordered: " + maxQty + ")";
+            return new ProductSale(mostRequestedProduct, maxQty);
         } else {
-            return "No orders in this period";
+            throw new IllegalArgumentException("No products found in the given date range.");
         }
     }
 

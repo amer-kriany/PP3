@@ -56,3 +56,112 @@
 [2026-01-23 20:42:58] Line 3 | Task 8 | Not enough inventory for Task 8
 [2026-01-23 20:43:50] Line 3 | Task 8 | Not enough inventory for Task 8
 [2026-01-23 20:57:08] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 21:10:42] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-23 21:12:55] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 09:54:21] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 09:54:27] ManagerUI | Invalid Id!
+[2026-01-24 09:55:01] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 09:58:12] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 09:58:58] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 09:59:22] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 10:02:07] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 10:06:19] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 10:21:58] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 10:24:52] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 10:27:44] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 10:32:15] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 10:35:02] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:01:08] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:01:17] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:01:18] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:01:19] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:01:19] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:01:21] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:01:23] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:01:32] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:06:42] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:09:04] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:09:56] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:10:58] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:13:49] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:13:59] ProductReportGUI | Error showing most requested product!
+[2026-01-24 11:16:36] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:16:41] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:16:43] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:16:44] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:16:45] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:17:19] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:17:41] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:17:51] ProductReportGUI | Error showing most requested product!
+[2026-01-24 11:20:41] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:20:46] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:21:14] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:21:52] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:24:11] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:24:36] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:24:36] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:24:37] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 11:25:53] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 11:26:00] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:31:22] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 12:32:07] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 12:32:50] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 12:34:59] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 12:35:35] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:36:10] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:36:22] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:42:08] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 12:42:45] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:43:39] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 12:43:53] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:24] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 12:46:33] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:34] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:34] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:35] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:36] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:37] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:38] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:39] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:40] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:41] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:42] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:45] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:47] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:48] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:50] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:46:57] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 12:47:05] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:47:05] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:47:09] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:56:56] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 12:57:05] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:57:05] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:57:17] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 12:57:26] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 13:01:28] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:01:39] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 13:01:40] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 13:09:00] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:09:17] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:09:47] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:18:36] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:19:32] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:19:47] ProductReportGUI | No products found in the given date range.
+[2026-01-24 13:19:48] ProductReportGUI | No products found in the given date range.
+[2026-01-24 13:20:00] ProductReportGUI | No products found in the given date range.
+[2026-01-24 13:24:52] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:25:16] ProductReportGUI | No products found in the given date range.
+[2026-01-24 13:25:17] ProductReportGUI | No products found in the given date range.
+[2026-01-24 13:29:57] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:31:37] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:32:02] ProductReportGUI | No products found in the given date range.
+[2026-01-24 13:32:02] ProductReportGUI | No products found in the given date range.
+[2026-01-24 13:32:46] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:33:10] ProductReportGUI | No products found in the given date range.
+[2026-01-24 13:33:13] ProductReportGUI | No products found in the given date range.
+[2026-01-24 13:59:09] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:59:22] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:59:32] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 13:59:56] ProductReportGUI | No products found in the given date range.
+[2026-01-24 13:59:56] ProductReportGUI | No products found in the given date range.

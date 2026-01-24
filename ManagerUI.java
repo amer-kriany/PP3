@@ -277,8 +277,10 @@ public class ManagerUI extends JFrame {
 
             JOptionPane.showMessageDialog(this, "Notes & Rating saved successfully!");
             noteArea.setText("");
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Error saving to file: " + ex.getMessage());
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error saving to file ", "Error", JOptionPane.ERROR_MESSAGE);
+            FileManager.logError("ManagerUI | Error saving to file");
+
         } catch (IllegalStateException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             FileManager.logError("ManagerUI | " + e.getMessage());

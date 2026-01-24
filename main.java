@@ -46,7 +46,7 @@ public class Main {
         Task HOODIE = new Task("make 5 HOODIE", "Client 4", "HOODIE", 5, "26-11-2026 20:00:00");
         Task JEANSE = new Task("make 5 JEANSE", "Client 4", "JEANSE", 5, "26-11-2026 20:00:00");
         Task JACKET = new Task("make 5 JACKET", "Client 4", "JACKET", 5, "26-11-2026 20:00:00");
-        Task Tona = new Task("make 5 TONA", "Client 5", "tuna", 7, "26-11-2026 20:00:00");
+        Task Tona = new Task("make 5 TONA", "Client 5", "tuna", 8, "26-11-2026 20:00:00");
         Task Sardines = new Task("make 5 sardines", "Client 6", "sardines", 7, "26-11-2026 20:00:00");
         Task Lanchun = new Task("make 5 Lanchun", "Client 6", "Lanchun", 7, "26-11-2026 20:00:00");
 
@@ -65,6 +65,6 @@ public class Main {
         lineC.start();
         // RecipeManager.getRecipe("HOODIE");
 
-        SwingUtilities.invokeLater(() -> new ProductReportGUI (pm).setVisible(true));
+        SwingUtilities.invokeLater(() -> new ProductReportGUI(pm).setVisible(true));
     }
 }

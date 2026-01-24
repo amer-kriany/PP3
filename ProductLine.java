@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 public class ProductLine extends Thread {
     private int lineId;
     private String lineName;
@@ -52,29 +51,10 @@ public class ProductLine extends Thread {
         }
     }
 
-    // public List<Integer> getProducedUnitsPerTask() {
-    // List<Integer> producedList = new ArrayList<>();
-    // synchronized (productLineTasks) {
-    // for (Task task : productLineTasks) {
-    // int produced = task.getProductionProgress();
-
-    // // الشرط: ما تتجاوز الكمية المطلوبة
-    // if (produced > task.getQuantity()) {
-    // produced = task.getQuantity();
-    // }
-
-    // producedList.add(produced);
-    // }
-    // }
-    // return producedList;
-    // }
-
     public int getLinePerformance() {
         int totalProduced = 0;
         for (Task task : getProductLineTasks()) {
-            int progress = task.getProductionProgress();
-            int quantity = task.getQuantity();
-            totalProduced += Math.min(progress, quantity); // لا تسمح بأن يتجاوز quantity
+            totalProduced += task.getProductionProgress();
         }
         return totalProduced;
     }
@@ -116,7 +96,7 @@ public class ProductLine extends Thread {
             synchronized (productLineTasks) {
                 for (Task task : productLineTasks) {
                     if (task.getStatus() == Status.taskStatus.PENDING) {
-                        
+
                         new Thread(() -> {
                             try {
                                 executeTask(task);

@@ -101,8 +101,6 @@ public class Task {
         this.productLine = productLine;
     }
 
-    
-
     // ============================================== Task lifecycle methods
     public void start() {
         if (State != Status.taskStatus.PENDING) {
@@ -119,7 +117,7 @@ public class Task {
                     "Task must be IN_PROGRESS to complete");
         }
         State = Status.taskStatus.COMPLETED;
-        productionProgress = 100;
+        productionProgress = this.quantity;
     }
 
     public void cancel() {
