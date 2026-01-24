@@ -33,7 +33,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return this.proName; // اسم المنتج فقط
+        return this.proName; 
     }
 }
 
