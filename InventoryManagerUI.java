@@ -17,6 +17,7 @@ public class InventoryManagerUI extends JFrame {
     private JComboBox<String> statusFilter;
 
     public InventoryManagerUI() {
+        inventory = new Inventory();
         FileManager.loadInventory();
 
         setTitle("Production Supervisor/Inventory Manager");
