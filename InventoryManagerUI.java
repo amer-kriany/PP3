@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +17,6 @@ public class InventoryManagerUI extends JFrame {
     private JComboBox<String> statusFilter;
 
     public InventoryManagerUI() {
-        // inventory = new Inventory();
         FileManager.loadInventory();
 
         setTitle("Production Supervisor/Inventory Manager");
@@ -34,20 +32,48 @@ public class InventoryManagerUI extends JFrame {
         table.setFont(new Font("Arial", Font.PLAIN, 16));
         table.setRowHeight(28);
 
-        // Coloring the rows below the minimum
+      
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus,
                     int row, int column) {
+                
+                // استدعاء الـ parent أولاً
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                int quantity = Integer.parseInt(table.getValueAt(row, 4).toString());
-                int min = Integer.parseInt(table.getValueAt(row, 5).toString());
-                if (quantity < min) {
-                    c.setBackground(new Color(255, 100, 100)); // Light red
-                } else {
-                    c.setBackground(Color.WHITE);
+                
+                // التأكد من وجود القيم قبل القراءة
+                if (table.getValueAt(row, 4) != null && table.getValueAt(row, 5) != null) {
+                    try {
+                        int quantity = Integer.parseInt(table.getValueAt(row, 4).toString());
+                        int min = Integer.parseInt(table.getValueAt(row, 5).toString());
+                        
+                        // أولوية للتحديد - إذا السطر محدد، استخدم ألوان التحديد
+                        if (isSelected) {
+                            c.setBackground(table.getSelectionBackground());
+                            c.setForeground(table.getSelectionForeground());
+                        } else {
+                            // إذا لم يكن محدد، طبق منطق الألوان المخصص
+                            if (quantity < min) {
+                                c.setBackground(new Color(255, 100, 100)); // Light red
+                                c.setForeground(Color.BLACK);
+                            } else {
+                                c.setBackground(Color.WHITE);
+                                c.setForeground(Color.BLACK);
+                            }
+                        }
+                    } catch (NumberFormatException e) {
+                        // في حال كانت القيمة مش رقم، استخدم الألوان الافتراضية
+                        if (isSelected) {
+                            c.setBackground(table.getSelectionBackground());
+                            c.setForeground(table.getSelectionForeground());
+                        } else {
+                            c.setBackground(Color.WHITE);
+                            c.setForeground(Color.BLACK);
+                        }
+                    }
                 }
+                
                 return c;
             }
         });
@@ -146,18 +172,21 @@ public class InventoryManagerUI extends JFrame {
     private void showAddItemDialog() {
         JTextField idField = new JTextField();
         JTextField nameField = new JTextField();
-        JTextField categoryField = new JTextField();
+        
+        
+        JComboBox<Item.Categories> categoryCombo = new JComboBox<>(Item.Categories.values());
+        
         JTextField priceField = new JTextField();
         JTextField quantityField = new JTextField();
         JTextField minField = new JTextField();
 
-        JPanel panel = new JPanel(new GridLayout(0, 2));
+        JPanel panel = new JPanel(new GridLayout(6, 2));
         panel.add(new JLabel("ID:"));
         panel.add(idField);
         panel.add(new JLabel("Name:"));
         panel.add(nameField);
         panel.add(new JLabel("Category:"));
-        panel.add(categoryField);
+        panel.add(categoryCombo);  // استخدام ComboBox بدل TextField
         panel.add(new JLabel("Price:"));
         panel.add(priceField);
         panel.add(new JLabel("Quantity:"));
@@ -169,7 +198,7 @@ public class InventoryManagerUI extends JFrame {
         
         if (result == JOptionPane.OK_OPTION) {
             try {
-                // 1. التحقق من الحقول الفارغة
+                // التحقق من الحقول الفارغة
                 String idText = idField.getText().trim();
                 String name = nameField.getText().trim();
 
@@ -178,39 +207,58 @@ public class InventoryManagerUI extends JFrame {
                 }
 
                 int id = Integer.parseInt(idText);
-
-                // 2. فحص الـ ID مكرر (باستخدام Inventory الـ Static)
-                if (Inventory.getItemById(id) != null) {
-                    JOptionPane.showMessageDialog(this, "Error: This ID (" + id + ") is already assigned!", "Duplicate ID", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // 3. فحص الاسم مكرر
-                if (Inventory.getItemByName(name) != null) {
-                    JOptionPane.showMessageDialog(this, "Error: The name '" + name + "' already exists!", "Duplicate Name", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // 4. قراءة باقي البيانات
-                String categoryStr = categoryField.getText().trim();
                 double price = Double.parseDouble(priceField.getText().trim());
                 int quantity = Integer.parseInt(quantityField.getText().trim());
                 int min = Integer.parseInt(minField.getText().trim());
+                
+                // الحصول على الـ Category من ComboBox
+                Item.Categories category = (Item.Categories) categoryCombo.getSelectedItem();
+                if (category == null) {
+                    throw new IllegalArgumentException("Please select a Category!");
+                }
 
-                // 5. تحديد القسم
-                Item.Categories category = null;
-                for (Item.Categories c : Item.Categories.values()) {
-                    if (c.name().equalsIgnoreCase(categoryStr)) {
-                        category = c;
-                        break;
+                //  فحص الـ ID المكرر + جمع الكميات للعناصر الموجودة
+                Item existingItemById = Inventory.getItemById(id);
+                Item existingItemByName = Inventory.getItemByName(name);
+
+                // حالة 1: الـ ID موجود
+                if (existingItemById != null) {
+                    // التحقق: هل نفس العنصر (نفس الاسم والفئة)؟
+                    if (existingItemById.getName().equalsIgnoreCase(name) && 
+                        existingItemById.getCategory() == category) {
+                        
+                        // نفس العنصر → نجمع الكميات
+                        int currentQty = Inventory.getItemQuantity(existingItemById);
+                        Inventory.addItem(existingItemById, quantity);
+                        existingItemById.setQuantity(currentQty + quantity);
+                        
+                        refreshTable();
+                        JOptionPane.showMessageDialog(this, 
+                            "Added " + quantity + " to existing item!\nNew Quantity: " + (currentQty + quantity),
+                            "Item Updated", 
+                            JOptionPane.INFORMATION_MESSAGE);
+                        return;
+                        
+                    } else {
+                        
+                        JOptionPane.showMessageDialog(this, 
+                            "Error: ID (" + id + ") already exists for another item!", 
+                            "Duplicate ID", 
+                            JOptionPane.ERROR_MESSAGE);
+                        return;
                     }
                 }
-                
-                if (category == null) {
-                    throw new IllegalArgumentException("Invalid category: " + categoryStr);
+
+         
+                if (existingItemByName != null) {
+                    JOptionPane.showMessageDialog(this, 
+                        "Error: Name '" + name + "' already exists with ID: " + existingItemByName.getId(), 
+                        "Duplicate Name", 
+                        JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
 
-                // 6. إضافة المنتج للمخزن
+                
                 Item newItem = new Item(id, name, category, price, quantity, min);
                 Inventory.addItem(newItem, quantity);
                 
@@ -218,9 +266,17 @@ public class InventoryManagerUI extends JFrame {
                 JOptionPane.showMessageDialog(this, "Item added successfully!");
 
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Please enter valid numbers for ID, Price, and Quantity.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, 
+                    "Please enter valid numbers for ID, Price, Quantity, and Min Quantity.", 
+                    "Input Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, 
+                    "An unexpected error occurred: " + ex.getMessage(), 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
             }
         }
     }

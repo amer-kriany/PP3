@@ -7,8 +7,11 @@ public class LoginUI extends JFrame {
 
     // username -> [password, role]
     private HashMap<String, String[]> users = new HashMap<>();
+    private ProductionManager pm;
+    
 
-    public LoginUI() {
+    public LoginUI(ProductionManager pm) {
+        this.pm=pm;
         setTitle("Company Login");
         setSize(450, 400);
         setLocationRelativeTo(null);
@@ -140,14 +143,17 @@ public class LoginUI extends JFrame {
 
         // open the next frame
         if (selectedRole.equals("Manager")) {
-            ProductionManager manager = new ProductionManager(new ArrayList<>());
-            ManagerUI managerUI = new ManagerUI(manager);
+            ManagerUI managerUI = new ManagerUI(pm);
             managerUI.setVisible(true);
         } else if (selectedRole.equals("Production Supervisor")) {
-            InventoryManagerUI inventoryUI = new InventoryManagerUI();
-            inventoryUI.setVisible(true);
-        }
-
+                // نمرر الـ pm نفسه لواجهة الاختيار
+                new SupervisorSelectionUI(this.pm).setVisible(true);
+                this.dispose();
+            } else if (selectedRole.equals("Manager")) {
+                // نمرر الـ pm نفسه لواجهة المدير
+                new ManagerUI(this.pm).setVisible(true);
+                this.dispose();
+            }
     } else {
         JOptionPane.showMessageDialog(this, "User not found!");
     }

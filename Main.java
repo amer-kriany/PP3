@@ -12,12 +12,12 @@ public class Main {
         Item ssd = new Item(3, "SSD128", Item.Categories.TECHNOLOGY, 80.0, 150, 5);
         Item screen = new Item(4, "Screen", Item.Categories.TECHNOLOGY, 100.0, 100, 5);
         Item cotton = new Item(5, "cotton", Item.Categories.CLOTHES, 90.0, 100, 5);
-        Item polyster = new Item(7, "polyster", Item.Categories.CLOTHES, 90.0, 100, 5);
-        Item wool = new Item(8, "wool", Item.Categories.CLOTHES, 90.0, 100, 5);
+        Item polyster = new Item(6, "polyster", Item.Categories.CLOTHES, 90.0, 100, 5);
+        Item wool = new Item(7, "wool", Item.Categories.CLOTHES, 90.0, 100, 5);
         Item chicken = new Item(8, "chicken", Item.Categories.CANNED_FOOD, 70.0, 100, 5);
         Item tuna = new Item(9, "Fishtuna", Item.Categories.CANNED_FOOD, 100.0, 100, 5);
         Item sardines = new Item(10, "Fishsardine", Item.Categories.CANNED_FOOD, 60.0, 100, 5);
-        Item cans = new Item(10, "cans", Item.Categories.CANNED_FOOD, 10.0, 100, 5);
+        Item cans = new Item(11, "cans", Item.Categories.CANNED_FOOD, 10.0, 100, 5);
         // Add Item to Inventory
         Inventory.addItem(cpu, 100);
         Inventory.addItem(ram, 150);
@@ -38,8 +38,8 @@ public class Main {
         ProductLine lineC = new ProductLine(3, "food line", ProductLine.State.ACTIVE);
         pm.addLine(lineC);
         // Tasks
-        Task Laptop = new Task("add 5 laptop", "Client 1", "Laptop", 5, "26-01-2026 20:00:00");
-        Task Phone = new Task("add 8 Phone", "Client 2", "Phone", 5, "26-01-2026 20:00:00");
+        Task Laptop = new Task("make 5 laptop", "Client 1", "Laptop", 5, "26-01-2026 20:00:00");
+        Task Phone = new Task("make 8 Phone", "Client 2", "Phone", 5, "26-01-2026 20:00:00");
         Task tablet = new Task("make 5 tablet", "Client 1", "Tablet", 5, "26-01-2026 20:00:00");
         Task HOODIE = new Task("make 5 HOODIE", "Client 4", "HOODIE", 5, "26-01-2026 20:00:00");
         Task JEANSE = new Task("make 5 JEANSE", "Client 4", "JEANSE", 5, "26-01-2026 20:00:00");
@@ -61,15 +61,11 @@ public class Main {
         lineA.start();
         lineB.start();
         lineC.start();
-        // try {
-        //     UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        // } catch (Exception e) {
-        //     e.printStackTrace();
-        // }
-        // new LoginUI().setVisible(true);
-    //    new ManagerUI(pm).setVisible(true);
-            SwingUtilities.invokeLater(() -> new ProductionManagerGUI(pm).setVisible(true));
 
-     
+        
+       SwingUtilities.invokeLater(() -> {
+        new LoginUI(pm).setVisible(true); 
+    });
+       
     }
 }

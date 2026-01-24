@@ -55,6 +55,9 @@ public  class Inventory {
      return true;
 }
     public static void consume(Recipe recipe ,int taskqty){
+    if(!hasEnough(recipe , taskqty)){
+        throw new IllegalStateException("Not enough items in inventory");
+    }
         for(Map.Entry<Item,Integer> e : recipe.getRequiredItem().entrySet()){
             int needed= e.getValue() * taskqty ;
             stock.put(e.getKey(), stock.get(e.getKey())-needed);

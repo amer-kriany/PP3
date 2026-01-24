@@ -1,9 +1,11 @@
-6,citamol4,medicine,4000.0,4,2
-3,prufein,medicine,4000.0,10,1
-5,citamol,medicine,300.0,0,3
-33,asdf,afdsa,222.0,200,10
-8,paracetamol,medicine,6500.0,3,2
-1,raw plastic,medical resources,6000.0,4,2
-2,Medicine Base,MEDICINE,50.0,50,10
-5,asfds,afas,299.0,100,50
-19,m;oha,oha,1000.0,100,20
+11,kkk,TECHNOLOGY,12.0,100,10
+7,polyster,CLOTHES,90.0,100,5
+10,cans,CANNED_FOOD,10.0,100,5
+8,wool,CLOTHES,90.0,100,5
+10,Fishsardine,CANNED_FOOD,60.0,100,5
+4,Screen,TECHNOLOGY,100.0,100,5
+2,RAM8,TECHNOLOGY,50.0,150,10
+3,SSD128,TECHNOLOGY,80.0,150,5
+9,Fishtuna,CANNED_FOOD,100.0,100,5
+8,chicken,CANNED_FOOD,70.0,100,5
+1,CPU,TECHNOLOGY,120.0,100,10
