@@ -85,6 +85,9 @@ public class Task {
     public String getTaskName(){
         return TaskName;
     }
+    public ProductLine getProductLine() {
+    return productLine;
+}
 
 
     public void setProductLine(ProductLine productLine) {
