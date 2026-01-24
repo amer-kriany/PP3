@@ -15,8 +15,8 @@ public class Main {
         Item polyster = new Item(6, "polyster", Item.Categories.CLOTHES, 90.0, 100, 5);
         Item wool = new Item(7, "wool", Item.Categories.CLOTHES, 90.0, 100, 5);
         Item chicken = new Item(8, "chicken", Item.Categories.CANNED_FOOD, 70.0, 100, 5);
-        Item fishtuna = new Item(9, "Tuna", Item.Categories.CANNED_FOOD, 100.0, 100, 5);
-        Item fishSardines = new Item(10, "Sardines", Item.Categories.CANNED_FOOD, 60.0, 100, 5);
+        Item fishtuna = new Item(9, "Fishtuna", Item.Categories.CANNED_FOOD, 100.0, 100, 5);
+        Item fishSardines = new Item(10, "Fishsardine", Item.Categories.CANNED_FOOD, 60.0, 100, 5);
         Item cans = new Item(11, "cans", Item.Categories.CANNED_FOOD, 10.0, 100, 5);
 
         // Add Items to Inventory
@@ -45,8 +45,8 @@ public class Main {
 
         Product JACKET = new Product(6, "JACKET");
 
-        Product Tuna = new Product(7, "Tuna");
-        Product Sardines = new Product(8, "Sardines");
+        Product Tuna = new Product(7, "tuna");
+        Product Sardines = new Product(8, "sardines");
 
         Product LanchunProduct = new Product(9, "Lanchun");
 
@@ -79,7 +79,6 @@ public class Main {
         pm.addTask(tunaTask, "food line");
         pm.addTask(sardinesTask, "food line");
         pm.addTask(lanchunTask, "food line");
-
         // ===================== Start Production Lines
         lineA.start();
         lineB.start();

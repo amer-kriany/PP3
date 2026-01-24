@@ -3,6 +3,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 public class ManagerUI extends JFrame {
 
@@ -85,6 +86,7 @@ public class ManagerUI extends JFrame {
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         add(changeStateButton, gbc);
+
         // table
         String[] columns = { "Line Id", "Line Name", "Performance" };
         linePerformanceModel = new DefaultTableModel(columns, 0) {
@@ -94,11 +96,11 @@ public class ManagerUI extends JFrame {
             }
         };
         linePerformanceTable = new JTable(linePerformanceModel);
-
         linePerformanceTable.setRowHeight(30);
+        
         JScrollPane lineScroll = new JScrollPane(linePerformanceTable);
         GridBagConstraints gbcLine = new GridBagConstraints();
-        lineScroll.setPreferredSize(new Dimension(200, 100));
+        lineScroll.setPreferredSize(new Dimension(200, 150));
         gbcLine.gridx = 0;
         gbcLine.gridy = 5;
         gbcLine.gridwidth = 2;
@@ -107,14 +109,15 @@ public class ManagerUI extends JFrame {
         gbcLine.fill = GridBagConstraints.BOTH;
         add(lineScroll, gbcLine);
 
+        // Selection
+        gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 6;
         add(new JLabel("Select Production Line:"), gbc);
 
         lineBox = new JComboBox<>();
-        for (ProductLine line : manager.getProductLines()) {
-            lineBox.addItem(line);
-        }
+        updateLineBox(); // دالة لتعبئة الكومبو بوكس
+
         lineBox.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index,
@@ -131,7 +134,7 @@ public class ManagerUI extends JFrame {
         gbc.gridy = 6;
         add(lineBox, gbc);
 
-        // rat
+        // Rating
         gbc.gridx = 0;
         gbc.gridy = 7;
         add(new JLabel("Rating (0-10):"), gbc);
@@ -141,7 +144,7 @@ public class ManagerUI extends JFrame {
         gbc.gridy = 7;
         add(ratingSpinner, gbc);
 
-        // note
+        // Note
         gbc.gridx = 0;
         gbc.gridy = 8;
         gbc.gridwidth = 2;
@@ -155,60 +158,49 @@ public class ManagerUI extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         add(scroll, gbc);
 
-        // save
+        // Save
         JButton saveButton = new JButton("Save Rating & Notes");
         saveButton.addActionListener(e -> saveNotesAndRating());
         gbc.gridx = 0;
         gbc.gridy = 10;
         gbc.gridwidth = 2;
-        gbcLine.weighty = 0;
         gbc.fill = GridBagConstraints.NONE;
         add(saveButton, gbc);
 
+        // Timer لتحديث الجدول تلقائياً كل ثانية
         Timer lineTimer = new Timer(1000, e -> refreshLinePerformance());
         lineTimer.start();
+
         addButton.addActionListener(e -> addLine());
         changeStateButton.addActionListener(e -> changeLineState());
+        
+        refreshLinePerformance();
+    }
+
+    private void updateLineBox() {
+        lineBox.removeAllItems();
+        for (ProductLine line : manager.getProductLines()) {
+            lineBox.addItem(line);
+        }
     }
 
     private void addLine() {
         try {
             int id = Integer.parseInt(idField.getText());
             String name = nameField.getText().trim();
-            if (name.isEmpty()) {
-                throw new IllegalArgumentException("Please enter the line name!");
-            }
+            if (name.isEmpty()) throw new IllegalArgumentException("Please enter the line name!");
+            
             ProductLine.State state = (ProductLine.State) stateBox.getSelectedItem();
-
             ProductLine line = new ProductLine(id, name, state);
             manager.addLine(line);
 
-            lineBox.addItem(line);
-
+            updateLineBox();
             refreshLinePerformance();
-            JOptionPane.showMessageDialog(this,
-                    "Line added successfully!",
-                    "Success",
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Line added successfully!");
 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Invalid ID!",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ManagerUI | Invalid Id!");
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this,
-                    e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ManagerUI | " + e.getMessage());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Invalid input!",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ManagerUI | Invalid input!");
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            FileManager.logError("ManagerUI | AddLine Error: " + e.getMessage());
         }
     }
 
@@ -217,60 +209,63 @@ public class ManagerUI extends JFrame {
             int id = Integer.parseInt(idField.getText().trim());
             ProductLine.State newState = (ProductLine.State) stateBox.getSelectedItem();
 
-            ProductLine line = manager.getProductLines()
-                    .stream()
+            ProductLine line = manager.getProductLines().stream()
                     .filter(l -> l.getLineId() == id)
-                    .findFirst()
-                    .orElse(null);
+                    .findFirst().orElse(null);
 
             if (line != null) {
                 line.setState(newState);
-                JOptionPane.showMessageDialog(this,
-                        "State updated successfully.",
-                        "Success",
-                        JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "State updated successfully.");
             } else {
                 throw new NullPointerException("Line with ID " + id + " not found!");
             }
-
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ManagerUI | " + e.getMessage());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Invalid ID!", "Error", JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ManagerUI | Invalid ID!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error updating line state!", "Error", JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ManagerUI | Error updating line state: ");
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
+    // الدالة المطلوبة: تحديث الجدول وإضافة (Done) بجانب الرقم
     private void refreshLinePerformance() {
         linePerformanceModel.setRowCount(0);
         for (ProductLine line : manager.getProductLines()) {
-            linePerformanceModel
-                    .addRow(new Object[] { line.getLineId(), line.getLineName(), line.getLinePerformance() });
+            
+            String performanceText = String.valueOf(line.getLinePerformance());
+            List<Task> tasks = line.getProductLineTasks();
+            
+            // شرط الانتهاء: إذا كانت القائمة ليست فارغة وكل المهام COMPLETED
+            if (!tasks.isEmpty()) {
+                boolean allDone = tasks.stream()
+                        .allMatch(t -> t.getStatus() == Status.taskStatus.COMPLETED);
+                
+                if (allDone) {
+                    performanceText += " (Done)";
+                }
+            }
+
+            linePerformanceModel.addRow(new Object[] { 
+                line.getLineId(), 
+                line.getLineName(), 
+                performanceText 
+            });
         }
     }
 
     private void saveNotesAndRating() {
-
         ProductLine selectedLine = (ProductLine) lineBox.getSelectedItem();
+        if (selectedLine == null) {
+            JOptionPane.showMessageDialog(this, "No line selected!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         int rating = (int) ratingSpinner.getValue();
         String note = noteArea.getText();
 
         try {
-            if (lineBox.getItemCount() == 0) {
-                throw new IllegalStateException("No production lines available to save notes and rating.");
-            }
             if (!note.isEmpty()) {
                 try (FileWriter noteWriter = new FileWriter("notes.txt", true)) {
                     noteWriter.write("Line: " + selectedLine.getLineName() + " | Note: " + note + "\n");
-                } catch (IOException e) {
-                    FileManager.logError("ManagerUI | Error writing note to file: ");
                 }
             }
-
             try (FileWriter ratingWriter = new FileWriter("rating.txt", true)) {
                 ratingWriter.write("Line: " + selectedLine.getLineName() + " | Rating: " + rating + "\n");
             }
@@ -278,15 +273,8 @@ public class ManagerUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Notes & Rating saved successfully!");
             noteArea.setText("");
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error saving to file ", "Error", JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ManagerUI | Error saving to file");
-
-        } catch (IllegalStateException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ManagerUI | " + e.getMessage());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error saving notes and rating!", "Error", JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ManagerUI | Error saving notes and rating!");
+            JOptionPane.showMessageDialog(this, "Error saving to file", "Error", JOptionPane.ERROR_MESSAGE);
+            FileManager.logError("ManagerUI | Save Error: " + e.getMessage());
         }
     }
 }
