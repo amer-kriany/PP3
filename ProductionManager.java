@@ -12,6 +12,7 @@ public class ProductionManager {
         ProductLine taskLine = chooseLine(lineName);
         if (taskLine == null)
             throw new IllegalArgumentException("Product line not found");
+        task.setProductLine(taskLine);
         taskLine.addTask(task);
     }
 
