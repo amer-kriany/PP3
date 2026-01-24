@@ -82,7 +82,7 @@ public class ProductLine extends Thread {
                 }
             }
 
-            task.updateProductionProgress(1); // خطوة واحدة
+            task.updateProductionProgress(1); 
 
             Thread.sleep(5000);
         }
@@ -102,7 +102,7 @@ public class ProductLine extends Thread {
                                 executeTask(task);
                             } catch (Exception e) {
                                 FileManager.logError(
-                                        "Line " + lineId +
+                                                "Line " + lineId +
                                                 " | Task " + task.taskID +
                                                 " | " + e.getMessage());
                                 task.cancel();

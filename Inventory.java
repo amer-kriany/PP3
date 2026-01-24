@@ -5,11 +5,6 @@ public  class Inventory {
     private static final Map< Item,Integer> stock = new HashMap<>();
     private static final Map<Product, Integer> finishedProducts = new HashMap<>();
 
-    
-    
-
-
-
     public static int getItemQuantity(Item item) {
         return stock.getOrDefault(item, 0);
     }
@@ -37,8 +32,6 @@ public  class Inventory {
         return null;
     }
     public static synchronized void removeItem(int id) {
-   
-    // ولضمان عدم حدوث ConcurrentModificationException
     stock.keySet().removeIf(item -> item.getId() == id);
 }
 

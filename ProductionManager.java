@@ -33,10 +33,8 @@ public class ProductionManager {
     }
 
     public void showLinesForSelectedTasksStrict(String productName, List<Integer> taskIds) {
-        System.out.println("Searching tasks for product: " + productName + " | Task IDs: " + taskIds);
         for (ProductLine line : productLines) {
             boolean linePrinted = false;
-
             for (Integer id : taskIds) {
                 boolean found = false;
 
@@ -46,16 +44,11 @@ public class ProductionManager {
                         throw new IllegalArgumentException("There is no product by that name.");
                     if (taskProductName.equalsIgnoreCase(productName) && task.getTaskID() == id) {
                         if (!linePrinted) {
-                            System.out.println("Line ID: " + line.getLineId() +
-                                    " | Name: " + line.getLineName());
                             linePrinted = true;
                         }
-
-                        System.out.println("   Task: " + task);
                         found = true;
                     }
                 }
-
                 if (!found)
                     throw new IllegalArgumentException("This task does not exist.");
             }

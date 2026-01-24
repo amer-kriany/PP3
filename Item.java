@@ -4,13 +4,13 @@ public class Item {
 
     private String name;
 
-    private Categories category;// فئة
+    private Categories category;
 
     private double price;
 
-    private int quantity;// الكمية المتوفرة
+    private int quantity; 
 
-    private int minQuantity;// الحد االادنى المسموح فيه
+    private int minQuantity; 
 
     static enum Categories {
         TECHNOLOGY,
@@ -44,8 +44,6 @@ public class Item {
         this.quantity = quantity;
     }
 
-    // هون مشان ترجع قيمة true/false اذا الكمية اقل رح ترجع true اذا كافيةاواكتر
-    // false
 
     public boolean belowMinQuantity() {
 

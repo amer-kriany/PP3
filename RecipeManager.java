@@ -3,7 +3,6 @@ import java.util.HashMap;
 public class RecipeManager {
 
     private static final Map<String, Recipe> recipes = new HashMap<>();
-    // to load firstly
      static{
        
                Map<Item, Integer> laptopItems = new HashMap<>();
