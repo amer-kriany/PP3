@@ -214,3 +214,80 @@
 [2026-01-24 15:42:24] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
 [2026-01-24 15:42:25] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
 [2026-01-24 15:42:26] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:50:58] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:50:59] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:00] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:01] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:02] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:03] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:04] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:05] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:06] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:07] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:08] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:09] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:10] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:11] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:12] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:13] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:14] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:15] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:16] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:17] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:18] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:19] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:20] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:21] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:22] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:23] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:24] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:25] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:26] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:27] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 18:51:28] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-24 19:26:17] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 19:26:17] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:26:48] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 19:26:48] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:33:24] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 19:33:24] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:35:26] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 19:35:26] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:41:54] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:41:54] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 19:43:22] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:43:22] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 19:43:57] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 19:43:57] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:45:40] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:45:40] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 19:48:21] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:48:21] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 19:49:07] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:49:07] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 19:51:05] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:51:05] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 19:53:50] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:53:50] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 19:54:57] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 19:54:57] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 20:09:03] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 20:09:03] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 20:09:29] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 20:09:29] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 20:09:34] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 20:09:34] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 20:11:43] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 20:11:43] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 20:24:13] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 20:24:13] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 20:26:11] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 20:26:11] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 20:26:26] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 20:26:26] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 20:29:25] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 20:29:25] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 20:33:41] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 20:33:41] Line 3 | Task 8 | Not enough inventory for Task 8
+[2026-01-24 20:37:43] Line 3 | Task 7 | Not enough inventory for Task 7
+[2026-01-24 20:37:43] Line 3 | Task 8 | Not enough inventory for Task 8

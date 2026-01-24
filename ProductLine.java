@@ -4,7 +4,7 @@ public class ProductLine extends Thread {
     private int lineId;
     private String lineName;
     private volatile State state;
-    private Object PauseLock = new Object();
+    private final Object PauseLock = new Object();
 
     enum State {
         ACTIVE, STOP, MAINTENANCE;
@@ -19,75 +19,74 @@ public class ProductLine extends Thread {
         this.productLineTasks = Collections.synchronizedList(new ArrayList<>());
     }
 
-    public String getLineName() {
-        return lineName;
-    }
+    public String getLineName() { return lineName; }
+    public int getLineId() { return lineId; }
 
-    public int getLineId() {
-        return lineId;
-    }
-
-    public void addTask(Task task) {
-        productLineTasks.add(task);
-    }
-
-    public List<Task> getProductLineTasks() {
-        return productLineTasks;
-    }
+    public void addTask(Task task) { 
+         task.setProductLine(this); 
+        productLineTasks.add(task); }
+    public List<Task> getProductLineTasks() { 
+        return productLineTasks; }
 
     public void cancelTask(Task task) {
         boolean removed = productLineTasks.remove(task);
-        if (!removed) {
-            throw new NoSuchElementException("task not found");
-        }
+        if (!removed) throw new NoSuchElementException("task not found");
     }
 
     public void setState(State newState) {
         this.state = newState;
         if (newState == State.ACTIVE) {
-            synchronized (PauseLock) {
-                PauseLock.notifyAll();
-            }
+            synchronized (PauseLock) { PauseLock.notifyAll(); }
         }
     }
 
     public int getLinePerformance() {
-        int totalProduced = 0;
-        for (Task task : getProductLineTasks()) {
+        List<Task> tasks = getProductLineTasks();
+        if (tasks == null || tasks.isEmpty()) return 0;
+
+        double totalRequired = 0;
+        double totalProduced = 0;
+
+        for (Task task : tasks) {
+            totalRequired += task.getQuantity();
             totalProduced += task.getProductionProgress();
         }
-        return totalProduced;
+
+        if (totalRequired == 0) return 0;
+
+        return (int) Math.round((totalProduced / totalRequired) * 100);
     }
 
     private void executeTask(Task task) throws Exception {
-        Recipe recipe = RecipeManager.getRecipe(task.getDesireProduct());
+        // استخدم اسم المنتج من Task
+        Recipe recipe = RecipeManager.getRecipe(task.getProduct().getProName());
         if (recipe == null)
             throw new IllegalArgumentException(
-                    "No recipe found for product: " + task.getDesireProduct());
+                    "No recipe found for product: " + task.getProduct().getProName()
+            );
 
         synchronized (Inventory.class) {
             if (!Inventory.hasEnough(recipe, task.getQuantity())) {
                 throw new IllegalStateException(
-                        "Not enough inventory for Task " + task.taskID);
+                        "Not enough inventory for Task " + task.getTaskID()
+                );
             }
             Inventory.consume(recipe, task.getQuantity());
         }
 
         task.start();
 
-        while (task.getProductionProgress() < task.getQuantity()) {
+        for (int i = task.getProductionProgress(); i < task.getQuantity(); i++) {
             synchronized (PauseLock) {
-                while (state != State.ACTIVE) {
-                    PauseLock.wait();
-                }
+                while (state != State.ACTIVE) PauseLock.wait();
             }
 
-            task.updateProductionProgress(1); // خطوة واحدة
+            task.updateProductionProgress(1);
 
             Thread.sleep(5000);
         }
 
-        task.complete();
+        task.complete(); // المنتج النهائي يضاف للمخزون داخل Task الآن
     }
 
     @Override
@@ -96,15 +95,15 @@ public class ProductLine extends Thread {
             synchronized (productLineTasks) {
                 for (Task task : productLineTasks) {
                     if (task.getStatus() == Status.taskStatus.PENDING) {
-
                         new Thread(() -> {
                             try {
                                 executeTask(task);
                             } catch (Exception e) {
                                 FileManager.logError(
                                         "Line " + lineId +
-                                                " | Task " + task.taskID +
-                                                " | " + e.getMessage());
+                                        " | Task " + task.getTaskID() +
+                                        " | " + e.getMessage()
+                                );
                                 task.cancel();
                             }
                         }).start();
@@ -116,19 +115,16 @@ public class ProductLine extends Thread {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 FileManager.logError(
-                        "Line :" + lineId + " interrupted :" + e.getMessage());
+                        "Line :" + lineId + " interrupted :" + e.getMessage()
+                );
                 Thread.currentThread().interrupt();
             }
         }
 
-        if (state == State.STOP) {
-            throw new IllegalStateException(
-                    "Line " + lineId + " is STOPPED.");
-        }
+        if (state == State.STOP)
+            throw new IllegalStateException("Line " + lineId + " is STOPPED.");
 
-        if (state == State.MAINTENANCE) {
-            throw new IllegalStateException(
-                    "Line " + lineId + " is under MAINTENANCE.");
-        }
+        if (state == State.MAINTENANCE)
+            throw new IllegalStateException("Line " + lineId + " is under MAINTENANCE.");
     }
 }

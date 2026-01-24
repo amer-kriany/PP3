@@ -6,7 +6,7 @@ public class Task {
     private ProductLine productLine;
     private String TaskName;
     private String clientName;
-    private String desireProduct;
+    private Product product; 
     private int quantity;
     static int counter = 0;
     int taskID;
@@ -14,26 +14,21 @@ public class Task {
     LocalDateTime deadLine = null;
 
     Status.taskStatus State;
-    // progressing percentage
     private int productionProgress = 0;
 
-    Task() {
-    }
+    // Constructors
+    Task() {}
 
-    Task(String TaskName, String clientName, String desireProduct, int quantity, String endDate) {
-
-        this.desireProduct = desireProduct;
+    Task(String TaskName, String clientName, Product product, int quantity, String endDate) {
+        this.product = product;
         this.clientName = clientName;
         this.quantity = quantity;
-        taskID = ++counter;
         this.TaskName = TaskName;
+        taskID = ++counter;
         this.State = Status.taskStatus.PENDING;
 
-        // ========================================= start/end date/time
         startAppointment = LocalDateTime.now();
-
         setDeadLine(endDate);
-
     }
 
     // deadLine
@@ -46,53 +41,25 @@ public class Task {
             }
             this.deadLine = parsed;
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException(" Invalid date format. Please use dd-MM-yyyy HH:mm:ss");
-
+            throw new IllegalArgumentException("Invalid date format. Please use dd-MM-yyyy HH:mm:ss");
         }
     }
 
     // setter
     public void updateProductionProgress(int progress) {
         this.productionProgress += progress;
-
     }
 
     // getters
-    public String getClientName() {
-        return this.clientName;
-    }
-
-    public String getDesireProduct() {
-        return this.desireProduct;
-    }
-
-    public int getQuantity() {
-        return this.quantity;
-    }
-
-    public Status.taskStatus getStatus() {
-        return this.State;
-    }
-
-    public int getProductionProgress() {
-        return productionProgress;
-    }
-
-    public int getTaskID() {
-        return taskID;
-    }
-
-    public LocalDateTime getStartAppointment() {
-        return startAppointment;
-    }
-
-    public LocalDateTime getDeadLine() {
-        return deadLine;
-    }
-
-    public String getTaskName() {
-        return TaskName;
-    }
+    public String getClientName() { return this.clientName; }
+    public Product getProduct() { return this.product; }
+    public int getQuantity() { return this.quantity; }
+    public Status.taskStatus getStatus() { return this.State; }
+    public int getProductionProgress() { return productionProgress; }
+    public int getTaskID() { return taskID; }
+    public LocalDateTime getStartAppointment() { return startAppointment; }
+    public LocalDateTime getDeadLine() { return deadLine; }
+    public String getTaskName() { return TaskName; }
 
     public void setProductLine(ProductLine productLine) {
         if (productLine == null) {
@@ -101,11 +68,10 @@ public class Task {
         this.productLine = productLine;
     }
 
-    // ============================================== Task lifecycle methods
+    // Task lifecycle methods
     public void start() {
         if (State != Status.taskStatus.PENDING) {
-            throw new IllegalStateException(
-                    "Task can only be started from PENDING state");
+            throw new IllegalStateException("Task can only be started from PENDING state");
         }
         productionProgress = 0;
         State = Status.taskStatus.IN_PROGRESS;
@@ -113,17 +79,18 @@ public class Task {
 
     public void complete() {
         if (State != Status.taskStatus.IN_PROGRESS) {
-            throw new IllegalStateException(
-                    "Task must be IN_PROGRESS to complete");
+            throw new IllegalStateException("Task must be IN_PROGRESS to complete");
         }
         State = Status.taskStatus.COMPLETED;
         productionProgress = this.quantity;
+
+        // بعد إكمال التصنيع: إضافة المنتج النهائي للمخزون
+        Inventory.addFinishedProduct(this.product, this.quantity);
     }
 
     public void cancel() {
         if (State == Status.taskStatus.COMPLETED) {
-            throw new IllegalStateException(
-                    "Completed task cannot be canceled");
+            throw new IllegalStateException("Completed task cannot be canceled");
         }
         State = Status.taskStatus.CANCELED;
         productionProgress = 0;
@@ -134,8 +101,8 @@ public class Task {
     public String toString() {
         return "Task{" +
                 "id=" + getTaskID() +
-                ", client= " + getClientName() +
-                ", product=" + getDesireProduct() +
+                ", client=" + getClientName() +
+                ", product=" + product.getProName() +
                 ", quantity=" + getQuantity() +
                 ", status=" + getStatus() +
                 ", startDate=" + getStartAppointment() +

@@ -3,6 +3,8 @@ import java.util.Map;
 
 public  class Inventory {
     private static final Map< Item,Integer> stock = new HashMap<>();
+    private static final Map<Product, Integer> finishedProducts = new HashMap<>();
+
     
     
 
@@ -39,6 +41,27 @@ public  class Inventory {
     // ولضمان عدم حدوث ConcurrentModificationException
     stock.keySet().removeIf(item -> item.getId() == id);
 }
+
+public static synchronized void addFinishedProduct(Product product, int qty) {
+    finishedProducts.put(
+        product,
+        finishedProducts.getOrDefault(product, 0) + qty
+    );
+}
+
+public static int getFinishedProductQty(Product product) {
+    return finishedProducts.getOrDefault(product, 0);
+}
+
+public static Product getFinishedProductByName(String name) {
+    for (Product p : finishedProducts.keySet()) {
+        if (p.getProName().equalsIgnoreCase(name)) {
+            return p;
+        }
+    }
+    return null;
+}
+
   
 
 

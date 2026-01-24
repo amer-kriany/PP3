@@ -21,7 +21,7 @@ public class SupervisorSelectionUI extends JFrame {
         // Inventory Button
         JButton btnInventory = createStyledButton("Inventory System", new Color(41, 128, 185));
         btnInventory.addActionListener(e -> {
-            new InventoryManagerUI().setVisible(true);
+            new InventoryManagerUI(pm).setVisible(true);
             this.dispose();
            
         });

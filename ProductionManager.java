@@ -13,7 +13,6 @@ public class ProductionManager {
         if (taskLine == null)
             throw new IllegalArgumentException("Product line not found");
         taskLine.addTask(task);
-
     }
 
     public ArrayList<ProductLine> getProductLines() {
@@ -22,24 +21,17 @@ public class ProductionManager {
 
     public void addLine(ProductLine newLine) {
         for (ProductLine line : productLines) {
-
             if (line.getLineId() == newLine.getLineId()) {
-                throw new IllegalArgumentException(
-                        "Line ID already exists!");
+                throw new IllegalArgumentException("Line ID already exists!");
             }
-
-            if (line.getLineName().equalsIgnoreCase(
-                    newLine.getLineName())) {
-                throw new IllegalArgumentException(
-                        "Line name already exists!");
+            if (line.getLineName().equalsIgnoreCase(newLine.getLineName())) {
+                throw new IllegalArgumentException("Line name already exists!");
             }
         }
-
         productLines.add(newLine);
     }
 
     public void showLinesForSelectedTasksStrict(String productName, List<Integer> taskIds) {
-
         System.out.println("Searching tasks for product: " + productName + " | Task IDs: " + taskIds);
         for (ProductLine line : productLines) {
             boolean linePrinted = false;
@@ -48,10 +40,10 @@ public class ProductionManager {
                 boolean found = false;
 
                 for (Task task : line.getProductLineTasks()) {
-                    if (!task.getDesireProduct().equalsIgnoreCase(productName))
+                    String taskProductName = task.getProduct().getProName();
+                    if (!taskProductName.equalsIgnoreCase(productName))
                         throw new IllegalArgumentException("There is no product by that name.");
-                    if (task.getDesireProduct().equalsIgnoreCase(productName)
-                            && task.taskID == id) {
+                    if (taskProductName.equalsIgnoreCase(productName) && task.getTaskID() == id) {
                         if (!linePrinted) {
                             System.out.println("Line ID: " + line.getLineId() +
                                     " | Name: " + line.getLineName());
@@ -65,13 +57,11 @@ public class ProductionManager {
 
                 if (!found)
                     throw new IllegalArgumentException("This task does not exist.");
-
             }
         }
     }
 
     public List<String> showProductsByLine(String lineName) {
-
         ProductLine line = chooseLine(lineName);
 
         if (line == null) {
@@ -81,7 +71,7 @@ public class ProductionManager {
         List<String> printedProducts = new ArrayList<>();
 
         for (Task task : line.getProductLineTasks()) {
-            String productName = task.getDesireProduct();
+            String productName = task.getProduct().getProName();
 
             if (!printedProducts.contains(productName)) {
                 printedProducts.add(productName);
@@ -93,10 +83,7 @@ public class ProductionManager {
         return printedProducts;
     }
 
-   
-    public ProductSale getMostRequestedProduct(
-            LocalDateTime from,
-            LocalDateTime to) {
+    public ProductSale getMostRequestedProduct(LocalDateTime from, LocalDateTime to) {
         if (from.isAfter(to)) {
             throw new IllegalArgumentException("From date must be before To date");
         }
@@ -105,23 +92,15 @@ public class ProductionManager {
         for (ProductLine line : productLines) {
             synchronized (line.getProductLineTasks()) {
                 for (Task task : line.getProductLineTasks()) {
-
-                    if (task.getStatus() != Status.taskStatus.COMPLETED) {
-                        continue;
-                    }
+                    if (task.getStatus() != Status.taskStatus.COMPLETED) continue;
 
                     LocalDateTime taskDate = task.getStartAppointment();
+                    if (taskDate.isBefore(from) || taskDate.isAfter(to)) continue;
 
-                    if (taskDate.isBefore(from) || taskDate.isAfter(to)) {
-                        continue;
-                    }
-
-                    String product = task.getDesireProduct();
+                    String product = task.getProduct().getProName();
                     int quantity = task.getQuantity();
 
-                    productCount.put(
-                            product,
-                            productCount.getOrDefault(product, 0) + quantity);
+                    productCount.put(product, productCount.getOrDefault(product, 0) + quantity);
                 }
             }
         }
@@ -150,5 +129,4 @@ public class ProductionManager {
         }
         return null;
     }
-
 }
