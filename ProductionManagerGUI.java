@@ -4,11 +4,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ProductionManagerGUI extends JFrame {
     private ProductionManager pm;
@@ -17,6 +17,7 @@ public class ProductionManagerGUI extends JFrame {
     private JTextField searchField;
     private JComboBox<String> filterCategoryCombo;
     private JComboBox<String> filterProductCombo;
+    private JComboBox<String> filterStatusCombo;
 
     private final Font strongFont = new Font("Segoe UI", Font.BOLD, 14);
     private final Font headerFont = new Font("Segoe UI", Font.BOLD, 16);
@@ -28,27 +29,15 @@ public class ProductionManagerGUI extends JFrame {
 
     private void initUI() {
         setTitle("Production Manager");
-        setSize(900, 500);
+        setSize(1100, 600); 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
 
-        // ===== TOP PANEL (BACK ARROW + FILTERS) =====
+        // ===== TOP PANEL =====
         JPanel topPanel = new JPanel(new BorderLayout());
-
-        // Back arrow
         JLabel backLabel = new JLabel();
-backLabel.setIcon(UIManager.getIcon("OptionPane.errorIcon")); // مؤقت، نقدر نحط أي صورة سهم
-backLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-backLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-backLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-    public void mouseClicked(java.awt.event.MouseEvent e) {
-        dispose();
-        new SupervisorSelectionUI(pm).setVisible(true);
-    }
-});
-        backLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        backLabel.setForeground(Color.BLUE);
+        backLabel.setIcon(UIManager.getIcon("OptionPane.errorIcon")); 
         backLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         backLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         backLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -59,7 +48,6 @@ backLabel.addMouseListener(new java.awt.event.MouseAdapter() {
         });
         topPanel.add(backLabel, BorderLayout.WEST);
 
-        // Search & Filters
         JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         searchField = new JTextField(10);
         searchField.setFont(strongFont);
@@ -76,12 +64,20 @@ backLabel.addMouseListener(new java.awt.event.MouseAdapter() {
         String[] prods = { "Laptop", "Phone", "Tablet", "JACKET", "JEANSE", "HOODIE", "tuna", "sardines", "Lanchun" };
         for (String p : prods) filterProductCombo.addItem(p);
 
+        filterStatusCombo = new JComboBox<>();
+        filterStatusCombo.setFont(strongFont);
+        filterStatusCombo.addItem("All Statuses");
+        for (Status.taskStatus s : Status.taskStatus.values())
+            filterStatusCombo.addItem(s.name());
+
         filterPanel.add(new JLabel("Search:"));
         filterPanel.add(searchField);
         filterPanel.add(new JLabel("Category:"));
         filterPanel.add(filterCategoryCombo);
         filterPanel.add(new JLabel("Product:"));
         filterPanel.add(filterProductCombo);
+        filterPanel.add(new JLabel("Status:"));
+        filterPanel.add(filterStatusCombo);
 
         topPanel.add(filterPanel, BorderLayout.CENTER);
         add(topPanel, BorderLayout.NORTH);
@@ -91,39 +87,32 @@ backLabel.addMouseListener(new java.awt.event.MouseAdapter() {
         model = new DefaultTableModel(columns, 0) {
             public boolean isCellEditable(int row, int col) { return false; }
         };
-
         table = new JTable(model);
         table.setRowHeight(30);
         table.getTableHeader().setFont(headerFont);
         table.setFont(strongFont);
-
-        // Status column coloring
-        table.getColumnModel().getColumn(5).setCellRenderer(new DefaultTableCellRenderer() {
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (value != null) {
-                    String s = value.toString();
-                    if (s.equals("COMPLETED")) c.setForeground(new Color(0, 150, 0));
-                    else if (s.equals("CANCELED")) c.setForeground(Color.RED);
-                    else if (s.equals("IN_PROGRESS")) c.setForeground(Color.BLUE);
-                    else c.setForeground(Color.BLACK);
-                }
-                return c;
-            }
-        });
-
         add(new JScrollPane(table), BorderLayout.CENTER);
 
-        // ===== BOTTOM PANEL (BUTTONS) =====
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+        // ===== BOTTOM PANEL (تعديل الطلب الثاني هنا) =====
+        JPanel bottomPanel = new JPanel(new BorderLayout()); // تغيير الـ Layout لإضافة زر في أقصى اليسار
+        
+        // زر الطلب الثاني (أقصى اليسار)
+        JButton btnProductHistory = createButton("Product Lines History", new Color(52, 73, 94));
+        btnProductHistory.addActionListener(e -> new ProductHistoryFrame().setVisible(true));
+        
+        // الأزرار الأصلية (في الوسط)
+        JPanel centerButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
         JButton btnAdd = createButton("Add Task", new Color(46, 204, 113));
         JButton btnDelete = createButton("Delete Task", new Color(231, 76, 60));
         JButton btnRefresh = createButton("Refresh", new Color(52, 152, 219));
         JButton btnReports = createButton("Reports", new Color(155, 89, 182));
-        bottomPanel.add(btnAdd);
-        bottomPanel.add(btnDelete);
-        bottomPanel.add(btnRefresh);
-        bottomPanel.add(btnReports);
+        centerButtons.add(btnAdd);
+        centerButtons.add(btnDelete);
+        centerButtons.add(btnRefresh);
+        centerButtons.add(btnReports);
+
+        bottomPanel.add(btnProductHistory, BorderLayout.WEST); // الزر الجديد في اليسار
+        bottomPanel.add(centerButtons, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
 
         // ===== LISTENERS =====
@@ -134,7 +123,7 @@ backLabel.addMouseListener(new java.awt.event.MouseAdapter() {
         });
         filterCategoryCombo.addActionListener(e -> refreshTable());
         filterProductCombo.addActionListener(e -> refreshTable());
-
+        filterStatusCombo.addActionListener(e -> refreshTable());
         btnRefresh.addActionListener(e -> refreshTable());
         btnAdd.addActionListener(e -> new AddTaskDialog(this).setVisible(true));
         btnDelete.addActionListener(e -> deleteSelectedTask());
@@ -152,6 +141,57 @@ backLabel.addMouseListener(new java.awt.event.MouseAdapter() {
         return btn;
     }
 
+    // --- نافذة الطلب الثاني (Product Lines History) ---
+    class ProductHistoryFrame extends JFrame {
+        private JComboBox<String> productBox;
+        private DefaultListModel<String> listModel;
+
+        public ProductHistoryFrame() {
+            setTitle("Lines by Product");
+            setSize(400, 400);
+            setLocationRelativeTo(null);
+            setLayout(new BorderLayout(10, 10));
+
+            JPanel top = new JPanel(new FlowLayout());
+            productBox = new JComboBox<>(new String[]{"Laptop", "Phone", "Tablet", "JACKET", "JEANSE", "HOODIE", "tuna", "sardines", "Lanchun"});
+            top.add(new JLabel("Select Product:"));
+            top.add(productBox);
+
+            listModel = new DefaultListModel<>();
+            JList<String> lineList = new JList<>(listModel);
+            lineList.setFont(strongFont);
+
+            productBox.addActionListener(e -> updateLines());
+            
+            add(top, BorderLayout.NORTH);
+            add(new JScrollPane(lineList), BorderLayout.CENTER);
+            
+            updateLines(); // التحديث الأولي
+        }
+
+        private void updateLines() {
+            listModel.clear();
+            String selectedProd = (String) productBox.getSelectedItem();
+            Set<String> foundLines = new HashSet<>();
+
+            for (ProductLine pl : pm.getProductLines()) {
+                for (Task t : pl.productLineTasks) {
+                    if (t.getProduct().toString().equalsIgnoreCase(selectedProd)) {
+                        foundLines.add(pl.getLineName() + " (ID: " + pl.getLineId() + ")");
+                        break; 
+                    }
+                }
+            }
+
+            if (foundLines.isEmpty()) {
+                listModel.addElement("No lines have produced this product.");
+            } else {
+                for (String line : foundLines) listModel.addElement(line);
+            }
+        }
+    }
+
+    // ميثود الحذف والـ Refresh كما هي في كودك الأصلي
     private void deleteSelectedTask() {
         int row = table.getSelectedRow();
         if (row != -1) {
@@ -175,13 +215,18 @@ backLabel.addMouseListener(new java.awt.event.MouseAdapter() {
         String search = searchField.getText().toLowerCase();
         String catFilter = (String) filterCategoryCombo.getSelectedItem();
         String prodFilter = (String) filterProductCombo.getSelectedItem();
+        String statusFilter = (String) filterStatusCombo.getSelectedItem();
 
         for (Task t : allTasks) {
             String name = t.getTaskName().toLowerCase();
             Product prod = t.getProduct();
+            String currentStatus = t.getStatus().toString();
+
             boolean matches = name.contains(search)
                     && (catFilter.equals("All Categories") || isProductInCategory(prod.toString(), catFilter))
-                    && (prodFilter.equals("All Products") || prodFilter.equalsIgnoreCase(prod.toString()));
+                    && (prodFilter.equals("All Products") || prodFilter.equalsIgnoreCase(prod.toString()))
+                    && (statusFilter.equals("All Statuses") || statusFilter.equals(currentStatus));
+
             if (matches) {
                 String lineName = "N/A";
                 for (ProductLine pl : pm.getProductLines()) if (pl.productLineTasks.contains(t)) { lineName = pl.getLineName(); break; }
@@ -199,7 +244,6 @@ backLabel.addMouseListener(new java.awt.event.MouseAdapter() {
         return false;
     }
 
-    // ----- AddTaskDialog (مصغرة) -----
     class AddTaskDialog extends JDialog {
         public AddTaskDialog(JFrame parent) {
             super(parent, "Add Task", true);

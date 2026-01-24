@@ -15,8 +15,8 @@ public class Main {
         Item polyster = new Item(6, "polyster", Item.Categories.CLOTHES, 90.0, 100, 5);
         Item wool = new Item(7, "wool", Item.Categories.CLOTHES, 90.0, 100, 5);
         Item chicken = new Item(8, "chicken", Item.Categories.CANNED_FOOD, 70.0, 100, 5);
-        Item tuna = new Item(9, "tuna", Item.Categories.CANNED_FOOD, 100.0, 100, 5);
-        Item sardines = new Item(10, "sardines", Item.Categories.CANNED_FOOD, 60.0, 100, 5);
+        Item fishtuna = new Item(9, "Tuna", Item.Categories.CANNED_FOOD, 100.0, 100, 5);
+        Item fishSardines = new Item(10, "Sardines", Item.Categories.CANNED_FOOD, 60.0, 100, 5);
         Item cans = new Item(11, "cans", Item.Categories.CANNED_FOOD, 10.0, 100, 5);
 
         // Add Items to Inventory
@@ -28,41 +28,31 @@ public class Main {
         Inventory.addItem(polyster, 100);
         Inventory.addItem(wool, 100);
         Inventory.addItem(chicken, 100);
-        Inventory.addItem(tuna, 100);
-        Inventory.addItem(sardines, 100);
+        Inventory.addItem(fishtuna, 100);
+        Inventory.addItem(fishSardines, 100);
         Inventory.addItem(cans, 100);
 
         // ===================== Products
         Product Laptop = new Product(1, "Laptop");
-        Laptop.addFormerByName("CPU", 1);
-        Laptop.addFormerByName("RAM8", 2);
-        Laptop.addFormerByName("SSD128", 1);
-        Laptop.addFormerByName("Screen", 1);
-
+       
         Product Phone = new Product(2, "Phone");
-        Phone.addFormerByName("CPU", 1);
-        Phone.addFormerByName("RAM8", 1);
-        Phone.addFormerByName("Screen", 1);
+      
 
         Product Tablet = new Product(3, "Tablet");
-        Tablet.addFormerByName("CPU", 1);
-        Tablet.addFormerByName("RAM8", 2);
-        Tablet.addFormerByName("Screen", 1);
+     
 
         Product HOODIE = new Product(4, "HOODIE");
-        HOODIE.addFormerByName("cotton", 3);
+       
         Product JEANSE = new Product(5, "JEANSE");
-        JEANSE.addFormerByName("polyster", 3);
+       
         Product JACKET = new Product(6, "JACKET");
-        JACKET.addFormerByName("wool", 4);
+      
 
-        Product TunaProduct = new Product(7, "tuna");
-        TunaProduct.addFormerByName("tuna", 2);
-        Product SardinesProduct = new Product(8, "sardines");
-        SardinesProduct.addFormerByName("sardines", 3);
+        Product Tuna = new Product(7, "Tuna");
+        Product Sardines = new Product(8, "Sardines");
+     
         Product LanchunProduct = new Product(9, "Lanchun");
-        LanchunProduct.addFormerByName("cans", 3);
-        LanchunProduct.addFormerByName("chicken", 2);
+    
 
         // ===================== Product Lines
         ProductLine lineA = new ProductLine(1, "Technology line", ProductLine.State.ACTIVE);
@@ -79,8 +69,8 @@ public class Main {
         Task hoodieTask = new Task("make 5 HOODIE", "Client 4", HOODIE, 5, "26-01-2026 20:00:00");
         Task jeanseTask = new Task("make 5 JEANSE", "Client 4", JEANSE, 5, "26-01-2026 20:00:00");
         Task jacketTask = new Task("make 5 JACKET", "Client 4", JACKET, 5, "26-01-2026 20:00:00");
-        Task tunaTask = new Task("make 5 TUNA", "Client 5", TunaProduct, 7, "26-01-2026 20:00:00");
-        Task sardinesTask = new Task("make 5 Sardines", "Client 6", SardinesProduct, 7, "26-01-2026 20:00:00");
+        Task tunaTask = new Task("make 5 Tuna", "Client 5", Tuna, 7, "26-01-2026 20:00:00");
+        Task sardinesTask = new Task("make 5 Sardines", "Client 6", Sardines, 7, "26-01-2026 20:00:00");
         Task lanchunTask = new Task("make 5 Lanchun", "Client 6", LanchunProduct, 7, "26-01-2026 20:00:00");
 
         // add Tasks to Production Manager

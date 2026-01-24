@@ -245,13 +245,36 @@ public class ManagerUI extends JFrame {
         }
     }
 
-    private void refreshLinePerformance() {
-        linePerformanceModel.setRowCount(0);
-        for (ProductLine line : manager.getProductLines()) {
-            linePerformanceModel
-                    .addRow(new Object[] { line.getLineId(), line.getLineName(), line.getLinePerformance() });
+   private void refreshLinePerformance() {
+    linePerformanceModel.setRowCount(0);
+    for (ProductLine line : manager.getProductLines()) {
+        
+        // حساب إجمالي المطلوب وإجمالي المنجز لمهام هذا الخط
+        int totalRequired = 0;
+        int totalProduced = 0;
+        
+        for (Task task : line.getProductLineTasks()) {
+            totalRequired += task.getQuantity();
+            totalProduced += task.getProductionProgress();
         }
+
+        Object displayValue;
+        
+        // الشرط: إذا كان المنجز يساوي المطلوب (وكلاهما أكبر من صفر)
+        if (totalProduced > 0 && totalProduced == totalRequired) {
+            displayValue = totalProduced + " / " + totalRequired + " Done";
+        } else {
+            // عرض الرقم الحالي (مثلاً 2 / 10)
+            displayValue = totalProduced + " / " + totalRequired;
+        }
+
+        linePerformanceModel.addRow(new Object[] { 
+            line.getLineId(), 
+            line.getLineName(), 
+            displayValue 
+        });
     }
+}
 
     private void saveNotesAndRating() {
 
