@@ -32,7 +32,7 @@ public class InventoryManagerUI extends JFrame {
         table.setFont(new Font("Arial", Font.PLAIN, 16));
         table.setRowHeight(28);
 
-        // ✅ FIX 1: إصلاح مشكلة السطر الفارغ عند التحديد (محسّن ومضمون)
+      
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -173,7 +173,7 @@ public class InventoryManagerUI extends JFrame {
         JTextField idField = new JTextField();
         JTextField nameField = new JTextField();
         
-        // ✅ FIX 2: استبدال TextField بـ ComboBox للـ Categories
+        
         JComboBox<Item.Categories> categoryCombo = new JComboBox<>(Item.Categories.values());
         
         JTextField priceField = new JTextField();
@@ -217,7 +217,7 @@ public class InventoryManagerUI extends JFrame {
                     throw new IllegalArgumentException("Please select a Category!");
                 }
 
-                // ✅ FIX 3: فحص الـ ID المكرر + جمع الكميات للعناصر الموجودة
+                //  فحص الـ ID المكرر + جمع الكميات للعناصر الموجودة
                 Item existingItemById = Inventory.getItemById(id);
                 Item existingItemByName = Inventory.getItemByName(name);
 
@@ -240,7 +240,7 @@ public class InventoryManagerUI extends JFrame {
                         return;
                         
                     } else {
-                        // ID موجود لكن بيانات مختلفة
+                        
                         JOptionPane.showMessageDialog(this, 
                             "Error: ID (" + id + ") already exists for another item!", 
                             "Duplicate ID", 
@@ -249,7 +249,7 @@ public class InventoryManagerUI extends JFrame {
                     }
                 }
 
-                // حالة 2: الاسم موجود لكن بـ ID مختلف
+         
                 if (existingItemByName != null) {
                     JOptionPane.showMessageDialog(this, 
                         "Error: Name '" + name + "' already exists with ID: " + existingItemByName.getId(), 
@@ -258,7 +258,7 @@ public class InventoryManagerUI extends JFrame {
                     return;
                 }
 
-                // حالة 3: عنصر جديد تماماً
+                
                 Item newItem = new Item(id, name, category, price, quantity, min);
                 Inventory.addItem(newItem, quantity);
                 
