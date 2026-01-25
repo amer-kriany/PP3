@@ -65,9 +65,9 @@ public class Main {
         Task hoodieTask = new Task("make 5 HOODIE", "Client 4", HOODIE, 5, "26-01-2026 20:00:00");
         Task jeanseTask = new Task("make 5 JEANSE", "Client 4", JEANSE, 5, "26-01-2026 20:00:00");
         Task jacketTask = new Task("make 5 JACKET", "Client 4", JACKET, 5, "26-01-2026 20:00:00");
-        Task tunaTask = new Task("make 5 Tuna", "Client 5", Tuna, 7, "26-01-2026 20:00:00");
-        Task sardinesTask = new Task("make 5 Sardines", "Client 6", Sardines, 7, "26-01-2026 20:00:00");
-        Task lanchunTask = new Task("make 5 Lanchun", "Client 6", LanchunProduct, 7, "26-01-2026 20:00:00");
+        Task tunaTask = new Task("make 8 Tuna", "Client 5", Tuna, 8, "26-01-2026 20:00:00");
+        Task sardinesTask = new Task("make 7 Sardines", "Client 6", Sardines, 7, "26-01-2026 20:00:00");
+        Task lanchunTask = new Task("make 7 Lanchun", "Client 6", LanchunProduct, 7, "26-01-2026 20:00:00");
 
         // add Tasks to Production Manager
         pm.addTask(laptopTask, "Technology line");

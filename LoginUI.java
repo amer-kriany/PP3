@@ -7,10 +7,9 @@ public class LoginUI extends JFrame {
     // username -> [password, role]
     private HashMap<String, String[]> users = new HashMap<>();
     private ProductionManager pm;
-    
 
     public LoginUI(ProductionManager pm) {
-        this.pm=pm;
+        this.pm = pm;
         setTitle("Company Login");
         setSize(450, 400);
         setLocationRelativeTo(null);
@@ -19,7 +18,7 @@ public class LoginUI extends JFrame {
 
         // Predefined users
         users.put("amer", new String[]{"1234", "Manager"});
-        users.put("mohammed", new String[]{"pass", "Manager"});
+        users.put("mohammed", new String[]{"123", "Manager"});
         users.put("fadi", new String[]{"abcd", "Production Supervisor"});
         users.put("alaa", new String[]{"prod123", "Production Supervisor"});
 
@@ -115,49 +114,49 @@ public class LoginUI extends JFrame {
 
         // Action
         loginButton.addActionListener(e -> {
-    String username = usernameField.getText().trim();
-    String password = new String(passwordField.getPassword());
-    String selectedRole = roleBox.getSelectedItem().toString();
+            String username = usernameField.getText().trim();
+            String password = new String(passwordField.getPassword());
+            String selectedRole = roleBox.getSelectedItem().toString();
 
-    if (users.containsKey(username)) {
-        String[] data = users.get(username);
+            if (users.containsKey(username)) {
+                String[] data = users.get(username);
 
-        if (!data[0].equals(password)) {
-            JOptionPane.showMessageDialog(this, "Incorrect password!");
-            return;
-        }
+                if (!data[0].equals(password)) {
+                    JOptionPane.showMessageDialog(this, "Incorrect password!");
+                    // --- إضافة السطر التالي لطباعة الخطأ ---
+                    FileManager.logError("Login Attempt: Incorrect password for user '" + username + "'");
+                    return;
+                }
 
-        if (!data[1].equals(selectedRole)) {
-            JOptionPane.showMessageDialog(this,
-                    "Role mismatch!\nYou are not a " + selectedRole);
-            return;
-        }
+                if (!data[1].equals(selectedRole)) {
+                    JOptionPane.showMessageDialog(this,
+                            "Role mismatch!\nYou are not a " + selectedRole);
+                    // --- إضافة السطر التالي لطباعة الخطأ ---
+                    FileManager.logError("Login Attempt: Role mismatch for user '" + username + "'. Expected: " + data[1] + ", Selected: " + selectedRole);
+                    return;
+                }
 
-        JOptionPane.showMessageDialog(this,
-                "Login Successful!\nWelcome " + selectedRole);
+                JOptionPane.showMessageDialog(this,
+                        "Login Successful!\nWelcome " + selectedRole);
 
-        //  close login
-        this.dispose();
-
-        // open the next frame
-        if (selectedRole.equals("Manager")) {
-            ManagerUI managerUI = new ManagerUI(pm);
-            managerUI.setVisible(true);
-        } else if (selectedRole.equals("Production Supervisor")) {
-                new SupervisorSelectionUI(this.pm).setVisible(true);
+                //  close login
                 this.dispose();
-            } else if (selectedRole.equals("Manager")) {
-                new ManagerUI(this.pm).setVisible(true);
-                this.dispose();
+
+                // open the next frame
+                if (selectedRole.equals("Manager")) {
+                    ManagerUI managerUI = new ManagerUI(pm);
+                    managerUI.setVisible(true);
+                } else if (selectedRole.equals("Production Supervisor")) {
+                    new SupervisorSelectionUI(this.pm).setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "User not found!");
+                // --- إضافة السطر التالي لطباعة الخطأ ---
+                FileManager.logError("Login Attempt: Username '" + username + "' not found in system.");
             }
-    } else {
-        JOptionPane.showMessageDialog(this, "User not found!");
-    }
-});
-
+        });
     }
 
-    
     private void checkFields(JTextField username, JPasswordField password, JButton loginButton) {
         boolean enable =
                 !username.getText().trim().isEmpty() &&

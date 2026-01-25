@@ -239,19 +239,64 @@ public class ProductionManagerGUI extends JFrame {
         return false;
     }
 
-    class AddTaskDialog extends JDialog {
+   class AddTaskDialog extends JDialog {
+        // تعريف الحقول هنا لنتمكن من الوصول إليها عند الضغط على Save
+        private JTextField txtTaskName = new JTextField();
+        private JTextField txtClient = new JTextField();
+        private JComboBox<String> comboProduct = new JComboBox<>(new String[]{"Laptop", "Phone", "Tablet", "JACKET", "JEANSE", "HOODIE", "tuna", "sardines", "Lanchun"});
+        private JTextField txtQty = new JTextField();
+        private JTextField txtDeadline = new JTextField("30-12-2026 00:00:00"); // مثال للتنسيق
+
         public AddTaskDialog(JFrame parent) {
-            super(parent, "Add Task", true);
-            setSize(400, 300);
+            super(parent, "Add New Task", true);
+            setSize(400, 350);
             setLocationRelativeTo(parent);
-            setLayout(new GridLayout(5, 2, 10, 10));
-            add(new JLabel("Task Name:")); add(new JTextField());
-            add(new JLabel("Client:")); add(new JTextField());
-            add(new JLabel("Product:")); add(new JComboBox<>(new String[]{"Laptop","Phone","Tablet"}));
-            add(new JLabel("Quantity:")); add(new JTextField());
-            JButton btnSave = new JButton("Save");
-            add(btnSave); JButton btnCancel = new JButton("Cancel"); add(btnCancel);
+            setLayout(new GridLayout(6, 2, 10, 10));
+
+            // إضافة العناصر للواجهة
+            add(new JLabel(" Task Name:")); add(txtTaskName);
+            add(new JLabel(" Client Name:")); add(txtClient);
+            add(new JLabel(" Product:")); add(comboProduct);
+            add(new JLabel(" Quantity:")); add(txtQty);
+            add(new JLabel(" Deadline (dd-MM-yyyy HH:mm:ss):")); add(txtDeadline);
+
+            JButton btnSave = createButton("Save", new Color(46, 204, 113));
+            JButton btnCancel = createButton("Cancel", new Color(231, 76, 60));
+
+            // برمجة زر الحفظ
+            btnSave.addActionListener(e -> {
+                try {
+                    String name = txtTaskName.getText();
+                    String client = txtClient.getText();
+                    String prodName = (String) comboProduct.getSelectedItem();
+                    int qty = Integer.parseInt(txtQty.getText());
+                    String deadline = txtDeadline.getText();
+
+                    // 1. إنشاء منتج بناءً على الاختيار
+                    Product product = new Product(100, prodName); // يمكنك تحسين تحديد الـ ID
+
+                    // 2. إنشاء التاسك
+                    Task newTask = new Task(name, client, product, qty, deadline);
+
+                    // 3. إضافة التاسك لأول خط إنتاج متاح كمثال (أو اختيار خط محدد)
+                    if (!pm.getProductLines().isEmpty()) {
+                        pm.addTask(newTask, pm.getProductLines().get(0).getLineName());
+                        JOptionPane.showMessageDialog(this, "Task Added Successfully!");
+                        refreshTable(); // تحديث الجدول في الواجهة الرئيسية
+                        dispose(); // إغلاق النافذة
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No Production Lines available!");
+                    }
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+                }
+            });
+
             btnCancel.addActionListener(e -> dispose());
+
+            add(btnSave);
+            add(btnCancel);
         }
     }
 }

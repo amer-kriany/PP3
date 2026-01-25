@@ -84,7 +84,6 @@ public class Task {
         State = Status.taskStatus.COMPLETED;
         productionProgress = this.quantity;
 
-        // بعد إكمال التصنيع: إضافة المنتج النهائي للمخزون
         Inventory.addFinishedProduct(this.product, this.quantity);
     }
 

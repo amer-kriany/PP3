@@ -84,7 +84,7 @@ public class ProductLine extends Thread {
 
             task.updateProductionProgress(1); 
 
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         }
 
         task.complete();

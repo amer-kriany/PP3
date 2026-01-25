@@ -359,3 +359,16 @@
 [2026-01-24 22:15:37] Line 3 | Task 7 | No recipe found for product: Tuna
 [2026-01-24 22:17:20] Line 3 | Task 7 | No recipe found for product: Tuna
 [2026-01-24 22:17:20] Line 3 | Task 8 | No recipe found for product: Sardines
+[2026-01-25 08:46:47] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-25 08:46:48] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-25 08:46:49] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-25 08:46:50] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-25 08:46:51] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-25 08:46:52] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-25 08:46:53] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-25 08:46:54] ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss
+[2026-01-25 08:56:52] ManagerUI | AddLine Error: For input string: ""
+[2026-01-25 08:58:01] ManagerUI | AddLine Error: For input string: ""
+[2026-01-25 09:01:23] ManagerUI | AddLine Error: Please enter the line name!
+[2026-01-25 14:53:51] Login Attempt: Incorrect password for user 'amer'
+[2026-01-25 14:54:12] Login Attempt: Username 'amerr' not found in system.
