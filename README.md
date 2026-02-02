@@ -89,11 +89,7 @@ This project was developed as a **group university project** and presented durin
 
 ---
 
-## 🖼 Screenshots
 
-> Add UI screenshots here to showcase the main dashboard, task creation dialog, and reports.
-
----
 
 ## 👥 Team Members
 
