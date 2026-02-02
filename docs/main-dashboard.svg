@@ -1,0 +1,35 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="700" fill="#f5f7fa"/>
+  <rect y="620" width="1200" height="80" fill="#34495e"/>
+  <text x="30" y="665" font-family="Arial, sans-serif" font-size="22" fill="#ffffff">Production Management System</text>
+
+  <rect width="260" height="620" fill="#ecf0f1"/>
+  <text x="30" y="560" font-family="Arial, sans-serif" font-size="16" fill="#2c3e50">Dashboard</text>
+  <text x="30" y="500" font-family="Arial, sans-serif" font-size="16" fill="#2c3e50">Tasks</text>
+  <text x="30" y="440" font-family="Arial, sans-serif" font-size="16" fill="#2c3e50">Production Lines</text>
+  <text x="30" y="380" font-family="Arial, sans-serif" font-size="16" fill="#2c3e50">Reports</text>
+  <text x="30" y="320" font-family="Arial, sans-serif" font-size="16" fill="#2c3e50">Settings</text>
+
+  <rect x="300" y="460" width="260" height="140" fill="#ffffff" stroke="#bdc3c7"/>
+  <rect x="590" y="460" width="260" height="140" fill="#ffffff" stroke="#bdc3c7"/>
+  <rect x="300" y="290" width="260" height="140" fill="#ffffff" stroke="#bdc3c7"/>
+  <rect x="590" y="290" width="260" height="140" fill="#ffffff" stroke="#bdc3c7"/>
+
+  <text x="320" y="510" font-family="Arial, sans-serif" font-size="14" fill="#34495e">Pending Tasks</text>
+  <text x="320" y="555" font-family="Arial, sans-serif" font-size="22" fill="#2980b9">12</text>
+
+  <text x="610" y="510" font-family="Arial, sans-serif" font-size="14" fill="#34495e">In Progress</text>
+  <text x="610" y="555" font-family="Arial, sans-serif" font-size="22" fill="#2980b9">5</text>
+
+  <text x="320" y="340" font-family="Arial, sans-serif" font-size="14" fill="#34495e">Completed</text>
+  <text x="320" y="385" font-family="Arial, sans-serif" font-size="22" fill="#2980b9">38</text>
+
+  <text x="610" y="340" font-family="Arial, sans-serif" font-size="14" fill="#34495e">Canceled</text>
+  <text x="610" y="385" font-family="Arial, sans-serif" font-size="22" fill="#2980b9">2</text>
+
+  <rect x="300" y="140" width="860" height="200" fill="#ffffff" stroke="#bdc3c7"/>
+  <rect x="300" y="300" width="860" height="40" fill="#ecf0f1"/>
+  <text x="320" y="327" font-family="Arial, sans-serif" font-size="14" fill="#2c3e50">Recent Tasks</text>
+
+  <text x="820" y="24" font-family="Arial, sans-serif" font-size="12" fill="#7f8c8d">Sample UI mockup for documentation</text>
+</svg>
