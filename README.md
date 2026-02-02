@@ -54,19 +54,51 @@ This project was developed as a **group university project** and presented durin
 
 ## ▶️ How to Run the Project
 
+### Prerequisites
+- Java Development Kit (JDK) 8 or newer
+
+### Run from the command line
 1. Clone the repository:
    ```bash
    git clone https://github.com/USERNAME/REPOSITORY_NAME.git
+   cd REPOSITORY_NAME
+   ```
+2. Compile the source files:
+   ```bash
+   javac *.java
+   ```
+3. Start the application:
+   ```bash
+   java Main
+   ```
 
+### Run from an IDE
+1. Open the project folder in your IDE (IntelliJ IDEA, Eclipse, or VS Code).
+2. Make sure the project uses a JDK (8+).
+3. Run the `Main` class.
 
+---
 
+## 🧭 Usage Walkthrough
 
-👥 Team Members
+1. **Log in** (if prompted) and open the main dashboard.
+2. **Add tasks** with product info, quantities, and deadlines.
+3. **Assign tasks** to production lines and track status changes.
+4. **Filter/search** tasks by product line or status.
+5. **Generate reports** to review production history and performance.
 
-Amer 
+---
 
-Mohammed 
+## 🖼 Screenshots
 
-Fadi 
- 
+> Add UI screenshots here to showcase the main dashboard, task creation dialog, and reports.
+
+---
+
+## 👥 Team Members
+
+- Amer
+- Mohammed
+- Fadi
+
 Each team member contributed to the development, design, and testing phases of the project.
