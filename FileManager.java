@@ -31,7 +31,6 @@ public class FileManager {
                     Inventory.addItem(item, quantity);
                 }
             }
-            
         } catch (IOException  | IllegalArgumentException e) {
             logError("Error loading inventory: " + e.getMessage());
         }
