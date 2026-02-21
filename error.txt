@@ -372,3 +372,4 @@
 [2026-01-25 09:01:23] ManagerUI | AddLine Error: Please enter the line name!
 [2026-01-25 14:53:51] Login Attempt: Incorrect password for user 'amer'
 [2026-01-25 14:54:12] Login Attempt: Username 'amerr' not found in system.
+[2026-01-24 13:59:56] ProductReportGUI | No products found in the given date range.

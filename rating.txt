@@ -1,2 +1,14 @@
 Line: Technology line | Rating: 5
 Line: Technology line | Rating: 5
+Line A: 5
+Line A: 5
+Line A: 5
+Line A: 5
+Line A: 5
+Line A: 6
+Line A: 5
+Line A: 5
+Line A: 5
+Line A: 5
+Line A: 5
+Line: clothes line | Rating: 5

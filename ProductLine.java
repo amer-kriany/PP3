@@ -4,10 +4,10 @@ public class ProductLine extends Thread {
     private int lineId;
     private String lineName;
     private volatile State state;
-    private Object PauseLock = new Object();
+    private final Object pauseLock = new Object();
 
     enum State {
-        ACTIVE, STOP, MAINTENANCE;
+        ACTIVE, STOP, MAINTENANCE
     }
 
     public List<Task> productLineTasks;
@@ -45,8 +45,8 @@ public class ProductLine extends Thread {
     public void setState(State newState) {
         this.state = newState;
         if (newState == State.ACTIVE) {
-            synchronized (PauseLock) {
-                PauseLock.notifyAll();
+            synchronized (pauseLock) {
+                pauseLock.notifyAll();
             }
         }
     }
@@ -60,15 +60,14 @@ public class ProductLine extends Thread {
     }
 
     private void executeTask(Task task) throws Exception {
-        Recipe recipe = RecipeManager.getRecipe(task.getProduct().toString());
-        if (recipe == null)
-            throw new IllegalArgumentException(
-                    "No recipe found for product: " + task.getProduct());
+        Recipe recipe = RecipeManager.getRecipe(task.getProduct().getProName());
+        if (recipe == null) {
+            throw new IllegalArgumentException("No recipe found for product: " + task.getProduct().getProName());
+        }
 
         synchronized (Inventory.class) {
             if (!Inventory.hasEnough(recipe, task.getQuantity())) {
-                throw new IllegalStateException(
-                        "Not enough inventory for Task " + task.taskID);
+                throw new IllegalStateException("Not enough inventory for Task " + task.getTaskID());
             }
             Inventory.consume(recipe, task.getQuantity());
         }
@@ -76,15 +75,14 @@ public class ProductLine extends Thread {
         task.start();
 
         while (task.getProductionProgress() < task.getQuantity()) {
-            synchronized (PauseLock) {
+            synchronized (pauseLock) {
                 while (state != State.ACTIVE) {
-                    PauseLock.wait();
+                    pauseLock.wait();
                 }
             }
 
-            task.updateProductionProgress(1); 
-
-            Thread.sleep(10000);
+            task.updateProductionProgress(1);
+            Thread.sleep(5000);
         }
 
         task.complete();
@@ -96,16 +94,15 @@ public class ProductLine extends Thread {
             synchronized (productLineTasks) {
                 for (Task task : productLineTasks) {
                     if (task.getStatus() == Status.taskStatus.PENDING) {
-
                         new Thread(() -> {
                             try {
                                 executeTask(task);
                             } catch (Exception e) {
-                                FileManager.logError(
-                                                "Line " + lineId +
-                                                " | Task " + task.taskID +
-                                                " | " + e.getMessage());
-                                task.cancel();
+                                FileManager.logError("Line " + lineId + " | Task " + task.getTaskID() + " | " + e.getMessage());
+                                try {
+                                    task.cancel();
+                                } catch (Exception ignore) {
+                                }
                             }
                         }).start();
                     }
@@ -115,20 +112,18 @@ public class ProductLine extends Thread {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                FileManager.logError(
-                        "Line :" + lineId + " interrupted :" + e.getMessage());
+                FileManager.logError("Line: " + lineId + " interrupted: " + e.getMessage());
                 Thread.currentThread().interrupt();
+                break;
             }
         }
 
         if (state == State.STOP) {
-            throw new IllegalStateException(
-                    "Line " + lineId + " is STOPPED.");
+            throw new IllegalStateException("Line " + lineId + " is STOPPED.");
         }
 
         if (state == State.MAINTENANCE) {
-            throw new IllegalStateException(
-                    "Line " + lineId + " is under MAINTENANCE.");
+            throw new IllegalStateException("Line " + lineId + " is under MAINTENANCE.");
         }
     }
 }

@@ -75,20 +75,14 @@ public class ManagerUI extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
         add(addButton, gbc);
 
-        // state
         JButton changeStateButton = new JButton("Change State");
         changeStateButton.setFont(font);
-        gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
         add(changeStateButton, gbc);
 
-        // table
-        String[] columns = { "Line Id", "Line Name", "Performance" };
+        String[] columns = {"Line Id", "Line Name", "Performance"};
         linePerformanceModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -97,7 +91,7 @@ public class ManagerUI extends JFrame {
         };
         linePerformanceTable = new JTable(linePerformanceModel);
         linePerformanceTable.setRowHeight(30);
-        
+
         JScrollPane lineScroll = new JScrollPane(linePerformanceTable);
         GridBagConstraints gbcLine = new GridBagConstraints();
         lineScroll.setPreferredSize(new Dimension(200, 150));
@@ -109,15 +103,13 @@ public class ManagerUI extends JFrame {
         gbcLine.fill = GridBagConstraints.BOTH;
         add(lineScroll, gbcLine);
 
-        // Selection
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 6;
         add(new JLabel("Select Production Line:"), gbc);
 
         lineBox = new JComboBox<>();
-        updateLineBox(); 
-
+        updateLineBox();
         lineBox.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index,
@@ -134,17 +126,14 @@ public class ManagerUI extends JFrame {
         gbc.gridy = 6;
         add(lineBox, gbc);
 
-        // Rating
         gbc.gridx = 0;
         gbc.gridy = 7;
         add(new JLabel("Rating (0-10):"), gbc);
 
         ratingSpinner = new JSpinner(new SpinnerNumberModel(5, 0, 10, 1));
         gbc.gridx = 1;
-        gbc.gridy = 7;
         add(ratingSpinner, gbc);
 
-        // Note
         gbc.gridx = 0;
         gbc.gridy = 8;
         gbc.gridwidth = 2;
@@ -154,16 +143,13 @@ public class ManagerUI extends JFrame {
         JScrollPane scroll = new JScrollPane(noteArea);
         gbc.gridx = 0;
         gbc.gridy = 9;
-        gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.BOTH;
         add(scroll, gbc);
 
-        // Save
         JButton saveButton = new JButton("Save Rating & Notes");
         saveButton.addActionListener(e -> saveNotesAndRating());
         gbc.gridx = 0;
         gbc.gridy = 10;
-        gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.NONE;
         add(saveButton, gbc);
 
@@ -172,7 +158,7 @@ public class ManagerUI extends JFrame {
 
         addButton.addActionListener(e -> addLine());
         changeStateButton.addActionListener(e -> changeLineState());
-        
+
         refreshLinePerformance();
     }
 
@@ -187,8 +173,10 @@ public class ManagerUI extends JFrame {
         try {
             int id = Integer.parseInt(idField.getText());
             String name = nameField.getText().trim();
-            if (name.isEmpty()) throw new IllegalArgumentException("Please enter the line name!");
-            
+            if (name.isEmpty()) {
+                throw new IllegalArgumentException("Please enter the line name!");
+            }
+
             ProductLine.State state = (ProductLine.State) stateBox.getSelectedItem();
             ProductLine line = new ProductLine(id, name, state);
             manager.addLine(line);
@@ -216,34 +204,28 @@ public class ManagerUI extends JFrame {
                 line.setState(newState);
                 JOptionPane.showMessageDialog(this, "State updated successfully.");
             } else {
-                throw new NullPointerException("Line with ID " + id + " not found!");
+                throw new IllegalArgumentException("Line with ID " + id + " not found!");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            FileManager.logError("ManagerUI | ChangeState Error: " + e.getMessage());
         }
     }
 
     private void refreshLinePerformance() {
         linePerformanceModel.setRowCount(0);
         for (ProductLine line : manager.getProductLines()) {
-            
             String performanceText = String.valueOf(line.getLinePerformance());
             List<Task> tasks = line.getProductLineTasks();
-            
+
             if (!tasks.isEmpty()) {
-                boolean allDone = tasks.stream()
-                        .allMatch(t -> t.getStatus() == Status.taskStatus.COMPLETED);
-                
+                boolean allDone = tasks.stream().allMatch(t -> t.getStatus() == Status.taskStatus.COMPLETED);
                 if (allDone) {
                     performanceText += " (Done)";
                 }
             }
 
-            linePerformanceModel.addRow(new Object[] { 
-                line.getLineId(), 
-                line.getLineName(), 
-                performanceText 
-            });
+            linePerformanceModel.addRow(new Object[]{line.getLineId(), line.getLineName(), performanceText});
         }
     }
 
@@ -263,6 +245,7 @@ public class ManagerUI extends JFrame {
                     noteWriter.write("Line: " + selectedLine.getLineName() + " | Note: " + note + "\n");
                 }
             }
+
             try (FileWriter ratingWriter = new FileWriter("rating.txt", true)) {
                 ratingWriter.write("Line: " + selectedLine.getLineName() + " | Rating: " + rating + "\n");
             }

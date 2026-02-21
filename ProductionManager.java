@@ -10,8 +10,9 @@ public class ProductionManager {
 
     public void addTask(Task task, String lineName) {
         ProductLine taskLine = chooseLine(lineName);
-        if (taskLine == null)
+        if (taskLine == null) {
             throw new IllegalArgumentException("Product line not found");
+        }
         task.setProductLine(taskLine);
         taskLine.addTask(task);
     }
@@ -34,23 +35,20 @@ public class ProductionManager {
 
     public void showLinesForSelectedTasksStrict(String productName, List<Integer> taskIds) {
         for (ProductLine line : productLines) {
-            boolean linePrinted = false;
             for (Integer id : taskIds) {
                 boolean found = false;
 
                 for (Task task : line.getProductLineTasks()) {
                     String taskProductName = task.getProduct().getProName();
-                    if (!taskProductName.equalsIgnoreCase(productName))
-                        throw new IllegalArgumentException("There is no product by that name.");
                     if (taskProductName.equalsIgnoreCase(productName) && task.getTaskID() == id) {
-                        if (!linePrinted) {
-                            linePrinted = true;
-                        }
                         found = true;
+                        break;
                     }
                 }
-                if (!found)
-                    throw new IllegalArgumentException("This task does not exist.");
+
+                if (!found) {
+                    throw new IllegalArgumentException("Task " + id + " for product " + productName + " not found.");
+                }
             }
         }
     }
@@ -66,14 +64,14 @@ public class ProductionManager {
 
         for (Task task : line.getProductLineTasks()) {
             String productName = task.getProduct().getProName();
-
             if (!printedProducts.contains(productName)) {
                 printedProducts.add(productName);
             }
         }
 
-        if (printedProducts.isEmpty())
+        if (printedProducts.isEmpty()) {
             throw new IllegalArgumentException("There are no products manufactured using this line.");
+        }
         return printedProducts;
     }
 
@@ -81,19 +79,23 @@ public class ProductionManager {
         if (from.isAfter(to)) {
             throw new IllegalArgumentException("From date must be before To date");
         }
+
         Map<String, Integer> productCount = new HashMap<>();
 
         for (ProductLine line : productLines) {
             synchronized (line.getProductLineTasks()) {
                 for (Task task : line.getProductLineTasks()) {
-                    if (task.getStatus() != Status.taskStatus.COMPLETED) continue;
+                    if (task.getStatus() != Status.taskStatus.COMPLETED) {
+                        continue;
+                    }
 
                     LocalDateTime taskDate = task.getStartAppointment();
-                    if (taskDate.isBefore(from) || taskDate.isAfter(to)) continue;
+                    if (taskDate.isBefore(from) || taskDate.isAfter(to)) {
+                        continue;
+                    }
 
                     String product = task.getProduct().getProName();
                     int quantity = task.getQuantity();
-
                     productCount.put(product, productCount.getOrDefault(product, 0) + quantity);
                 }
             }
@@ -108,11 +110,11 @@ public class ProductionManager {
             }
         }
 
-        if (mostRequestedProduct != null) {
-            return new ProductSale(mostRequestedProduct, maxQty);
-        } else {
+        if (mostRequestedProduct == null) {
             throw new IllegalArgumentException("No products found in the given date range.");
         }
+
+        return new ProductSale(mostRequestedProduct, maxQty);
     }
 
     public ProductLine chooseLine(String lineName) {

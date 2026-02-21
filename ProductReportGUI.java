@@ -11,9 +11,6 @@ public class ProductReportGUI extends JFrame {
     private JComboBox<ProductLine> lineComboBox;
     private JTable productTable;
     private DefaultTableModel productTableModel;
-    private JButton showByLineBtn;
-    private JButton showAllBtn;
-    private JButton showMostRequestedBtn;
     private JTextField fromField;
     private JTextField toField;
     Timer refreshTimer;
@@ -24,7 +21,7 @@ public class ProductReportGUI extends JFrame {
         MOST_REQUESTED
     }
 
-    private ViewMode Mode = ViewMode.BY_LINE;
+    private ViewMode mode = ViewMode.BY_LINE;
 
     public ProductReportGUI(ProductionManager manager) {
         this.manager = manager;
@@ -63,16 +60,15 @@ public class ProductReportGUI extends JFrame {
             }
         });
         gbc.gridx = 1;
-        gbc.gridy = 0;
         add(lineComboBox, gbc);
 
-        showByLineBtn = new JButton("Show Products by Line");
+        JButton showByLineBtn = new JButton("Show Products by Line");
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
         add(showByLineBtn, gbc);
 
-        showAllBtn = new JButton("Show All Manufactured Products");
+        JButton showAllBtn = new JButton("Show All Manufactured Products");
         gbc.gridy = 2;
         add(showAllBtn, gbc);
 
@@ -86,14 +82,13 @@ public class ProductReportGUI extends JFrame {
         periodPanel.add(toField);
 
         gbc.gridy = 3;
-        gbc.gridwidth = 2;
         add(periodPanel, gbc);
 
-        showMostRequestedBtn = new JButton("Show Most Requested Product");
+        JButton showMostRequestedBtn = new JButton("Show Most Requested Product");
         gbc.gridy = 4;
         add(showMostRequestedBtn, gbc);
 
-        String[] columns = { "Product Name", "Quantity" };
+        String[] columns = {"Product Name", "Quantity"};
         productTableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -110,15 +105,15 @@ public class ProductReportGUI extends JFrame {
         add(scrollPane, gbc);
 
         showByLineBtn.addActionListener(e -> {
-            Mode = ViewMode.BY_LINE;
+            mode = ViewMode.BY_LINE;
             refreshTable();
         });
         showAllBtn.addActionListener(e -> {
-            Mode = ViewMode.ALL_PRODUCTS;
+            mode = ViewMode.ALL_PRODUCTS;
             refreshTable();
         });
         showMostRequestedBtn.addActionListener(e -> {
-            Mode = ViewMode.MOST_REQUESTED;
+            mode = ViewMode.MOST_REQUESTED;
             refreshTable();
         });
 
@@ -128,24 +123,21 @@ public class ProductReportGUI extends JFrame {
 
     private void showProductsByLine() {
         ProductLine line = (ProductLine) lineComboBox.getSelectedItem();
-        if (line == null)
+        if (line == null) {
             return;
+        }
+
         productTableModel.setRowCount(0);
         try {
             for (Task task : line.getProductLineTasks()) {
-                Product name = task.getProduct();
-                int Product = task.getProductionProgress();
+                String name = task.getProduct().getProName();
+                int produced = task.getProductionProgress();
                 int total = task.getQuantity();
-                productTableModel.addRow(new Object[] { name, Product+ "/" + total });
+                productTableModel.addRow(new Object[]{name, produced + " / " + total});
             }
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ProductReportGUI | " + e.getMessage());
-            stopRefreshAndShowError();
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error showing products by line!", "Error", JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ProductReportGUI | Error showing products by line!");
+            FileManager.logError("ProductReportGUI | Error showing products by line: " + e.getMessage());
             stopRefreshAndShowError();
         }
     }
@@ -156,30 +148,18 @@ public class ProductReportGUI extends JFrame {
         try {
             for (ProductLine line : manager.getProductLines()) {
                 for (Task task : line.getProductLineTasks()) {
-
                     int produced = task.getProductionProgress();
-
                     if (produced > 0) {
-                        Product name = task.getProduct();
+                        String name = task.getProduct().getProName();
                         int total = task.getQuantity();
-
-                        productTableModel.addRow(new Object[] {
-                                name,
-                                produced + " / " + total
-                        });
+                        productTableModel.addRow(new Object[]{name, produced + " / " + total});
                     }
                 }
             }
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "No manufactured products found!", "Error", JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ProductReportGUI | No manufactured products found!");
-            stopRefreshAndShowError();
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error not found any Product!", "Error", JOptionPane.ERROR_MESSAGE);
-            FileManager.logError("ProductReportGUI | Error not found any Product!");
+            FileManager.logError("ProductReportGUI | Error not found any Product: " + e.getMessage());
             stopRefreshAndShowError();
-
         }
     }
 
@@ -194,44 +174,35 @@ public class ProductReportGUI extends JFrame {
 
             ProductSale mostRequested = manager.getMostRequestedProduct(from, to);
             productTableModel.setRowCount(0);
-            productTableModel.addRow(new Object[] { mostRequested.productName, mostRequested.quantity });
+            productTableModel.addRow(new Object[]{mostRequested.productName, mostRequested.quantity});
 
         } catch (IllegalArgumentException e) {
             productTableModel.setRowCount(0);
-            productTableModel.addRow(new Object[] { "Error: " + e.getMessage(), "0" });
+            productTableModel.addRow(new Object[]{"Error: " + e.getMessage(), "0"});
             FileManager.logError("ProductReportGUI | " + e.getMessage());
         } catch (DateTimeParseException e) {
             productTableModel.setRowCount(0);
-            productTableModel.addRow(new Object[] { "Invalid date format", "0" });
+            productTableModel.addRow(new Object[]{"Invalid date format", "0"});
             FileManager.logError("ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss");
         } catch (Exception e) {
             productTableModel.setRowCount(0);
-            productTableModel.addRow(new Object[] { "System error", "0" });
-            FileManager.logError("ProductReportGUI | Invalid date format! Use dd-MM-yyyy HH:mm:ss");
+            productTableModel.addRow(new Object[]{"System error", "0"});
+            FileManager.logError("ProductReportGUI | System error: " + e.getMessage());
         }
     }
 
     private void refreshTable() {
         productTableModel.setRowCount(0);
-
-        switch (Mode) {
-
+        switch (mode) {
             case BY_LINE -> showProductsByLine();
-
             case ALL_PRODUCTS -> showAllProducts();
             case MOST_REQUESTED -> showMostRequestedProduct();
-
         }
     }
 
     private void stopRefreshAndShowError() {
-        try {
-            if (refreshTimer != null && refreshTimer.isRunning()) {
-                refreshTimer.stop();
-            }
-        } catch (Exception e) {
-            FileManager.logError("ProductReportGUI | " + e.getMessage());
+        if (refreshTimer != null && refreshTimer.isRunning()) {
+            refreshTimer.stop();
         }
     }
-
 }
